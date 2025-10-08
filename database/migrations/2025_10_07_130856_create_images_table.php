@@ -14,7 +14,7 @@ return new class extends Migration
             $table->string('name');
             $table->text('url');
             $table->string('alt');
-            $table->text('discription');
+            $table->text('description');
             $table->timestamps();
         });
     }

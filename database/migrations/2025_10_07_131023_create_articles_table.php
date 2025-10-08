@@ -11,7 +11,7 @@ return new class extends Migration
         Schema::create('articles', function (Blueprint $table) 
         {
             $table->id();
-            $table->foreignId('categorie_id')->constrained('categories')->cascadeOnDelete();
+            $table->foreignId('category_id')->constrained('categories')->cascadeOnDelete();
             $table->text('name');
             $table->foreignId('video_id')->nullable()->constrained('videos')->nullOnDelete();
             $table->foreignId('cover')->nullable()->constrained('images')->nullOnDelete();

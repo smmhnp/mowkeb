@@ -1,4 +1,4 @@
-@extends('base.baseFormat')
+@extends('clientBase.baseFormat')
 @section('content')
 
     <!-- Hero Image Section -->
