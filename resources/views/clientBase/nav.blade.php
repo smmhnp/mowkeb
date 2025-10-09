@@ -1,33 +1,40 @@
-<!-- Navigation -->
-<nav class="navbar navbar-expand-lg navbar-dark fixed-top navbar-glass">
-    <div class="container">
-        <a class="navbar-brand d-flex align-items-center" href="#">
-            <div class="bg-gradient rounded me-2 ms-2" style="width: 32px; height: 32px; background: linear-gradient(135deg, #3b82f6 0%, #8b5cf6 100%);"></div>
-            <span class="fw-bold text-black">مثل اربعین</span>
-        </a>
-        
-        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
-            <span class="navbar-toggler-icon"></span>
-        </button>
-        
-        <div class="collapse navbar-collapse" id="navbarNav">
-            <ul class="navbar-nav ms-auto">
-                <li class="nav-item">
-                    <a class="nav-link text-black" href="#">موکب‌مغازه‌ای</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link text-black" href="#">موکب‌ماشینی</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link text-black" href="#">موکب‌قرآنی</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link text-black" href="#">کارناول</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link text-black" href="#">ارتباط‌با‌ما</a>
-                </li>
-            </ul>
+    <!-- هدر سایت -->
+    <header class="site-header">
+        <div class="header-container">
+            <a href="#" class="logo">
+                <i class="fas fa-newspaper"></i>
+                <h1>سایت خبری</h1>
+            </a>
+
+            <nav class="nav-desktop">
+                <ul class="nav-menu">
+                    <li><a href="#" class="active">خانه</a></li>
+                    <li><a href="#">سیاسی</a></li>
+                    <li><a href="#">اقتصادی</a></li>
+                    <li><a href="#">فرهنگی</a></li>
+                    <li><a href="#">ورزشی</a></li>
+                    <li><a href="#">بین‌الملل</a></li>
+                </ul>
+            </nav>
+            <button class="menu-toggle" id="menuToggle">
+                <i class="fas fa-bars"></i>
+            </button>
         </div>
+    </header>
+
+    <!-- منوی موبایل -->
+    <div class="mobile-overlay" id="mobileOverlay"></div>
+    <div class="mobile-menu" id="mobileMenu">
+        <button class="close-menu" id="closeMenu">
+            <i class="fas fa-times"></i>
+        </button>
+        <ul class="mobile-nav">
+            <li><a href="#" class="active">خانه</a></li>
+            <li><a href="#">سیاسی</a></li>
+            <li><a href="#">اقتصادی</a></li>
+            <li><a href="#">فرهنگی</a></li>
+            <li><a href="#">ورزشی</a></li>
+            <li><a href="#">بین‌الملل</a></li>
+            <li><a href="#">علم و تکنولوژی</a></li>
+        </ul>
     </div>
-</nav>

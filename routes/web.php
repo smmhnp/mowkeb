@@ -10,7 +10,6 @@ Route::get('/article', function () {
     return view('client.article');
 });
 
-
 Route::group(['prefix' => 'admin'], function() 
 {
     Route::get('', function () {
