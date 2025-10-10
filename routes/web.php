@@ -51,4 +51,8 @@ Route::group(['prefix' => 'admin'], function()
     Route::get('/comment', function () {
         return view('admin.comment');
     });
+       
+    Route::get('/home', function () {
+        return view('admin.home');
+    });
 });

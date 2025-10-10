@@ -12,11 +12,11 @@ return new class extends Migration
         {
             $table->id();
             $table->foreignId('category_id')->constrained('categories')->cascadeOnDelete();
-            $table->text('name');
             $table->foreignId('video_id')->nullable()->constrained('videos')->nullOnDelete();
-            $table->foreignId('cover')->nullable()->constrained('images')->nullOnDelete();
             $table->foreignId('user_id')->constrained('users')->cascadeOnDelete();
+            $table->text('name');
             $table->text('content');
+            $table->string('cover')->nullable();
             $table->integer('view')->default(0);
             $table->string('status');
             $table->timestamps();
