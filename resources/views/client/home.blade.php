@@ -12,61 +12,25 @@
         <!-- بخش هیرو -->
         <section class="hero-section">
             <div class="hero-content">
-                <h2>تازه‌ترین اخبار ایران و جهان را با ما دنبال کنید</h2>
-                <p>دریافت سریع و مطمئن آخرین اخبار از معتبرترین منابع خبری. تحلیل‌های تخصصی و گزارش‌های ویژه از مهم‌ترین رویدادهای روز.</p>
+                <h2>{{ $hero->title }}</h2>
+                <p>{{ $hero->sub_title }}</p>
                 <button class="btn btn-primary">
                     <i class="fas fa-newspaper"></i>
-                    مشاهده آخرین اخبار
+                    {{ $hero->btn_text }}
                 </button>
             </div>
-            <div class="hero-image">
-                <i class="fas fa-globe"></i>
-            </div>
+            <div class="hero-image" style="background-image: url('{{ $hero->photo }}'); background-size: cover"></div>
         </section>
 
         <!-- خبر فوری -->
-        <div class="breaking-news">
-            <div class="breaking-badge">خبر فوری</div>
-            <div class="breaking-text">سخنگوی دولت: رشد اقتصادی در سه ماهه اول سال به ۴.۲ درصد رسید</div>
-        </div>
-
-        <!-- دسته‌بندی‌ها -->
-        <section class="categories-section">
-            <h2 class="section-title">
-                <i class="fas fa-folder"></i>
-                دسته‌بندی‌های خبری
-            </h2>
-            <div class="categories-grid">
-                <div class="category-card">
-                    <div class="category-icon">
-                        <i class="fas fa-landmark"></i>
-                    </div>
-                    <h3>سیاسی</h3>
-                    <span>۲۴۵ خبر جدید</span>
-                </div>
-                <div class="category-card">
-                    <div class="category-icon">
-                        <i class="fas fa-chart-line"></i>
-                    </div>
-                    <h3>اقتصادی</h3>
-                    <span>۱۸۷ خبر جدید</span>
-                </div>
-                <div class="category-card">
-                    <div class="category-icon">
-                        <i class="fas fa-palette"></i>
-                    </div>
-                    <h3>فرهنگی</h3>
-                    <span>۹۸ خبر جدید</span>
-                </div>
-                <div class="category-card">
-                    <div class="category-icon">
-                        <i class="fas fa-futbol"></i>
-                    </div>
-                    <h3>ورزشی</h3>
-                    <span>۳۲۱ خبر جدید</span>
-                </div>
+        @if($special->status == 'active')
+            <div class="breaking-news">
+                <div class="breaking-badge">خبر فوری</div>
+                <div class="breaking-text">{{ $special->title }}</div>
             </div>
-        </section>
+        @endif
+
+       
 
         <div class="layout-container">
             <!-- محتوای اصلی -->
@@ -78,71 +42,31 @@
                         داغ‌ترین اخبار
                     </h2>
                     <div class="news-grid">
-                        <!-- خبر ۱ -->
-                        <article class="news-card">
-                            <div class="news-image">
-                                <span class="news-badge">ویژه</span>
-                            </div>
-                            <div class="news-content">
-                                <div class="news-meta">
-                                    <span class="news-category">سیاسی</span>
-                                    <span>۲ ساعت پیش</span>
-                                </div>
-                                <h3 class="news-title">اجلاس سران کشورهای منطقه با موضوع امنیت خلیج فارس</h3>
-                                <p class="news-excerpt">سران کشورهای حاشیه خلیج فارس در اجلاس ویژه‌ای در ریاض گرد هم آمدند تا درباره مسائل امنیتی منطقه گفتگو کنند.</p>
-                                <div class="news-footer">
-                                    <div class="news-author">
-                                        <div class="author-avatar">م</div>
-                                        <span>محمد رضایی</span>
-                                    </div>
-                                    <span>۱,۲۴۵ بازدید</span>
-                                </div>
-                            </div>
-                        </article>
+                        @foreach($articles as $article)
 
-                        <!-- خبر ۲ -->
-                        <article class="news-card">
-                            <div class="news-image">
-                                <span class="news-badge">اقتصادی</span>
-                            </div>
-                            <div class="news-content">
-                                <div class="news-meta">
-                                    <span class="news-category">اقتصادی</span>
-                                    <span>۴ ساعت پیش</span>
+                            <article class="news-card">
+                                <div class="news-image" style="background-image: url('{{ $article->cover }}'); background-size: cover">
+                                    <span class="special-badge">ویژه</span>
                                 </div>
-                                <h3 class="news-title">رشد ۱۵ درصدی صادرات غیرنفتی در سه ماهه اول سال</h3>
-                                <p class="news-excerpt">بر اساس آمارهای رسمی، صادرات غیرنفتی کشور در سه ماهه اول امسال نسبت به مدت مشابه سال گذشته ۱۵ درصد رشد داشته است.</p>
-                                <div class="news-footer">
-                                    <div class="news-author">
-                                        <div class="author-avatar">ف</div>
-                                        <span>فاطمه کریمی</span>
-                                    </div>
-                                    <span>۹۸۷ بازدید</span>
-                                </div>
-                            </div>
-                        </article>
 
-                        <!-- خبر ۳ -->
-                        <article class="news-card">
-                            <div class="news-image">
-                                <span class="news-badge">ورزشی</span>
-                            </div>
-                            <div class="news-content">
-                                <div class="news-meta">
-                                    <span class="news-category">ورزشی</span>
-                                    <span>۶ ساعت پیش</span>
-                                </div>
-                                <h3 class="news-title">قهرمانی تیم ملی والیبال در مسابقات آسیایی</h3>
-                                <p class="news-excerpt">تیم ملی والیبال ایران با پیروزی در فینال مسابقات قهرمانی آسیا، برای چهارمین بار قهرمان این رقابت‌ها شد.</p>
-                                <div class="news-footer">
-                                    <div class="news-author">
-                                        <div class="author-avatar">ع</div>
-                                        <span>علی محمدی</span>
+                                <div class="news-content">
+                                    <div class="news-meta">
+                                        <span class="news-category">{{ $article->category->name }}</span>
+                                        <span>{{ jDate($article->created_at)->ago() }}</span>
                                     </div>
-                                    <span>۲,۳۴۱ بازدید</span>
+                                    <h3 class="news-title">{{ $article->name }}</h3>
+                                    <p class="news-excerpt">{{ $article->summery }}</p>
+                                    <div class="news-footer">
+                                        <div class="news-author">
+                                            <div class="author-avatar"></div>
+                                            <span>{{ $article->user->fname . " " . $article->user->lname }}</span>
+                                        </div>
+                                        <span>{{ $article->view }} بازدید</span>
+                                    </div>
                                 </div>
-                            </div>
-                        </article>
+                            </article>
+
+                        @endforeach
                     </div>
                 </section>
             </div>
@@ -204,6 +128,25 @@
                 </div>
             </aside>
         </div>
+
+        <!-- دسته‌بندی‌ها -->
+        <section class="categories-section">
+            <h2 class="section-title">
+                <i class="fas fa-folder"></i>
+                دسته‌بندی‌های
+            </h2>
+            <div class="categories-grid">
+                @foreach($categorys as $category)
+                    <div class="category-card">
+                        <div class="category-icon">
+                            <i class="fas fa-landmark"></i>
+                        </div>
+                        <h3>{{ $category->name }}</h3>
+                    </div>
+                @endforeach
+            </div>
+        </section>
+
     </main>
 
 @endsection

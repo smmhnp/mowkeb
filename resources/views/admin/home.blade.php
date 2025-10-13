@@ -1,5 +1,16 @@
 @extends('adminBase.baseFormat')
 
+@php
+    if(isset($images) and isset($hero)){
+        foreach($images as $image){
+            if($image->url === $hero->photo){
+                $photo_id = $image->id;
+                $photo_name = $image->name;
+            }
+        }
+    }
+@endphp
+
 @section('style')
 
     <link href="{{ asset('css/homeDesign.css') }}" rel="stylesheet">
@@ -8,213 +19,207 @@
 
 @section('content')
 
+        @if ($errors->any())
+            <div class="alert alert-danger" role="alert">
+                {{ $errors->first() }}
+            </div>
+        @endif
+
     <main class="main-content">
         <div class="page-title">
             <h2>مدیریت محتوای صفحه اصلی</h2>
-            <button class="btn btn-primary">
-                <i class="fas fa-eye"></i>
-                پیش‌نمایش سایت
-            </button>
         </div>
 
-        <!-- بخش مدیریت محتوا -->
+        <!-- content management -->
         <section class="admin-section">
             <div class="admin-tabs">
                 <button class="tab-btn active" data-tab="hero">بخش هیرو</button>
                 <button class="tab-btn" data-tab="breaking">خبر فوری</button>
                 <button class="tab-btn" data-tab="featured">اخبار ویژه</button>
-                <button class="tab-btn" data-tab="categories">دسته‌بندی‌ها</button>
             </div>
 
-            <!-- تب بخش هیرو -->
+            <!-- hero tab management -->
             <div class="tab-content active" id="hero-tab">
                 <div class="form-grid">
-                    <div class="form-group">
-                        <label for="hero-title">عنوان اصلی</label>
-                        <input type="text" id="hero-title" class="form-control" placeholder="عنوان بخش هیرو را وارد کنید" value="تازه‌ترین اخبار ایران و جهان را با ما دنبال کنید">
-                    </div>
-                    <div class="form-group">
-                        <label for="hero-subtitle">زیرعنوان</label>
-                        <input type="text" id="hero-subtitle" class="form-control" placeholder="زیرعنوان بخش هیرو را وارد کنید" value="دریافت سریع و مطمئن آخرین اخبار از معتبرترین منابع خبری">
-                    </div>
-                    <div class="form-group">
-                        <label for="hero-button-text">متن دکمه</label>
-                        <input type="text" id="hero-button-text" class="form-control" placeholder="متن دکمه را وارد کنید" value="مشاهده آخرین اخبار">
-                    </div>
-                    <div class="form-group">
-                        <label for="hero-image">تصویر هیرو</label>
-                        <div class="image-upload">
-                            <i class="fas fa-cloud-upload-alt"></i>
-                            <p>برای آپلود تصویر کلیک کنید</p>
-                            <small>فرمت‌های مجاز: JPG, PNG, GIF (حداکثر 5MB)</small>
+                    <form action="{{ route('HomeController.homeHeroManage') }}" method="post">
+                        @csrf
+                        <div class="form-group">
+                            <label for="hero-title">عنوان اصلی</label>
+                            <input name="title" type="text" id="hero-title" class="form-control" placeholder="عنوان بخش هیرو را وارد کنید" value="{{ $hero->title ?? ''}}">
+                        </div>
+                        <div class="form-group">
+                            <label for="hero-subtitle">زیرعنوان</label>
+                            <input name="subTitle" type="text" id="hero-subtitle" class="form-control" placeholder="زیرعنوان بخش هیرو را وارد کنید" value="{{ $hero->sub_title ?? '' }}">
+                        </div>
+                        <div class="form-group">
+                            <label for="hero-button-text">متن دکمه</label>
+                            <input name="btnText" type="text" id="hero-button-text" class="form-control" placeholder="متن دکمه را وارد کنید" value="{{ $hero->btn_text ?? '' }}">
+                        </div>
+                        <div class="form-group">
+                            <label>تصویر هیرو</label>
+                            <div class="gallery-section">
+                                <div class="gallery-header">
+                                    <div class="gallery-title">گالری تصاویر</div>
+                                    <div class="gallery-actions">
+                                        <a href="{{ route('addImage') }}" class="btn btn-outline btn-sm" onclick="openImageManager()">
+                                            <i class="fas fa-plus"></i>
+                                            افزودن تصویر جدید
+                                        </a>
+                                    </div>
+                                </div>
+                                
+                                <div class="gallery-grid" id="imageGallery">
+                                    <!-- photo added by js -->
+                                </div>
+                                
+                                @if(isset($hero) and $hero->photo)
+                                    <div class="selected-image-preview active" id="selectedPreview">
+                                        <strong>تصویر انتخاب شده:</strong>
+                                        <div id="previewContainer">
+
+                                            <div style="display: flex; align-items: center; gap: 15px; margin-top: 10px;">
+                                                <img id="select" src="{{ $hero->photo ?? '' }}" alt="" class="preview-image">
+                                                <input name="photo" type="hidden" value="{{ $hero->photo }}">
+                                                <div>
+                                                    <div><strong>{{ $photo_name ?? '' }}</strong></div>
+                                                    <div style="font-size: 0.8rem; color: #666;">شناسه: {{ $photo_id ?? '' }}</div>
+                                                    <button class="btn btn-outline btn-sm" onclick="deselectImage()" style="margin-top: 8px;">
+                                                        <i class="fas fa-times"></i>
+                                                        حذف انتخاب
+                                                    </button>
+                                                </div>
+                                            </div>
+
+                                        </div>
+                                    </div>
+                                @else
+                                    <div class="selected-image-preview" id="selectedPreview">
+                                        <strong>تصویر انتخاب شده:</strong>
+                                        <div id="previewContainer"></div>
+                                    </div>
+                                @endif
+                            </div>
                         </div>
                     </div>
-                </div>
 
-                <div class="news-preview">
-                    <h3 class="preview-title">
-                        <i class="fas fa-eye"></i>
-                        پیش‌نمایش بخش هیرو
-                    </h3>
-                    <div class="preview-content">
-                        <h2 id="preview-hero-title">تازه‌ترین اخبار ایران و جهان را با ما دنبال کنید</h2>
-                        <p id="preview-hero-subtitle">دریافت سریع و مطمئن آخرین اخبار از معتبرترین منابع خبری. تحلیل‌های تخصصی و گزارش‌های ویژه از مهم‌ترین رویدادهای روز.</p>
-                        <button class="btn btn-primary" id="preview-hero-button">
-                            <i class="fas fa-newspaper"></i>
-                            مشاهده آخرین اخبار
+                    <div class="news-preview">
+                        <h3 class="preview-title">
+                            <i class="fas fa-eye"></i>
+                            پیش‌نمایش بخش هیرو
+                        </h3>
+                        <div class="preview-content">
+                            <h2 id="preview-hero-title">{{ $hero->title ?? '' }}</h2>
+                            <p id="preview-hero-subtitle">{{ $hero->sub_title ?? '' }}</p>
+                            <div class="btn btn-primary" id="preview-hero-button">
+                                <i class="fas fa-newspaper"></i>
+                                {{ $hero->btn_text ?? '' }}
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="form-actions">
+                        <button class="btn btn-success">
+                            <i class="fas fa-save"></i>
+                            ذخیره تغییرات
                         </button>
+                        <a href="{{ route('dashboard') }}" class="btn btn-outline">
+                            <i class="fas fa-times"></i>
+                            انصراف
+                        </a>
                     </div>
-                </div>
-
-                <div class="form-actions">
-                    <button class="btn btn-success">
-                        <i class="fas fa-save"></i>
-                        ذخیره تغییرات
-                    </button>
-                    <button class="btn btn-outline">
-                        <i class="fas fa-times"></i>
-                        انصراف
-                    </button>
-                </div>
+                </form>
             </div>
 
-            <!-- تب خبر فوری -->
+            <!-- force article management -->
             <div class="tab-content" id="breaking-tab">
-                <div class="form-grid">
-                    <div class="form-group">
-                        <label for="breaking-text">متن خبر فوری</label>
-                        <input type="text" id="breaking-text" class="form-control" placeholder="متن خبر فوری را وارد کنید" value="سخنگوی دولت: رشد اقتصادی در سه ماهه اول سال به ۴.۲ درصد رسید">
-                    </div>
-                    <div class="form-group">
-                        <label for="breaking-status">وضعیت نمایش</label>
-                        <select id="breaking-status" class="form-control">
-                            <option value="active">فعال</option>
-                            <option value="inactive">غیرفعال</option>
-                        </select>
-                    </div>
-                </div>
-
-                <div class="news-preview">
-                    <h3 class="preview-title">
-                        <i class="fas fa-eye"></i>
-                        پیش‌نمایش خبر فوری
-                    </h3>
-                    <div class="preview-content">
-                        <div style="background: linear-gradient(135deg, var(--danger), var(--warning)); color: white; padding: 15px; border-radius: 8px; display: flex; align-items: center; gap: 15px;">
-                            <div style="background: rgba(255, 255, 255, 0.2); padding: 5px 12px; border-radius: 6px; font-weight: 700;">خبر فوری</div>
-                            <div style="flex: 1; font-weight: 600;" id="preview-breaking-text">سخنگوی دولت: رشد اقتصادی در سه ماهه اول سال به ۴.۲ درصد رسید</div>
+                <form action="{{ route('HomeController.homeSpecialStore') }}" method="post">
+                    @csrf
+                    <div class="form-grid">
+                        <div class="form-group">
+                            <label for="breaking-text">متن خبر فوری</label>
+                            <input name="title" type="text" id="breaking-text" class="form-control" placeholder="متن خبر فوری را وارد کنید" value="{{ $special->title ?? '' }}">
+                        </div>
+                        <div class="form-group">
+                            <label for="breaking-status">وضعیت نمایش</label>
+                            <select name="status" id="breaking-status" class="form-control">
+                                @if($special->status ?? '' === 'active')
+                                    <option value="active">فعال</option>
+                                    <option value="inactive">غیرفعال</option>
+                                @else
+                                    <option value="inactive">غیرفعال</option>
+                                    <option value="active">فعال</option>
+                                @endif
+                            </select>
                         </div>
                     </div>
-                </div>
 
-                <div class="form-actions">
-                    <button class="btn btn-success">
-                        <i class="fas fa-save"></i>
-                        ذخیره تغییرات
-                    </button>
-                    <button class="btn btn-outline">
-                        <i class="fas fa-times"></i>
-                        انصراف
-                    </button>
-                </div>
+                    <div class="news-preview">
+                        <h3 class="preview-title">
+                            <i class="fas fa-eye"></i>
+                            پیش‌نمایش خبر فوری
+                        </h3>
+                        <div class="preview-content">
+                            <div style="background: linear-gradient(135deg, var(--danger), var(--warning)); color: white; padding: 15px; border-radius: 8px; display: flex; align-items: center; gap: 15px;">
+                                <div style="background: rgba(255, 255, 255, 0.2); padding: 5px 12px; border-radius: 6px; font-weight: 700;">خبر فوری</div>
+                                <div style="flex: 1; font-weight: 600;" id="preview-breaking-text">{{ $special->title ?? '' }}</div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="form-actions">
+                        <button class="btn btn-success">
+                            <i class="fas fa-save"></i>
+                            ذخیره تغییرات
+                        </button>
+                        <a href="{{ route('dashboard') }}" class="btn btn-outline">
+                            <i class="fas fa-times"></i>
+                            انصراف
+                        </a>
+                    </div>
+                </form>
             </div>
 
-            <!-- تب اخبار ویژه -->
+            <!-- special article management -->
             <div class="tab-content" id="featured-tab">
                 <div class="form-group">
-                    <label>انتخاب اخبار ویژه</label>
-                    <div style="display: grid; grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); gap: 15px; margin-top: 10px;">
-                        <div style="background: rgba(255, 255, 255, 0.3); padding: 15px; border-radius: 8px;">
-                            <div style="display: flex; gap: 10px; align-items: flex-start;">
-                                <input type="checkbox" id="news1" checked>
-                                <div>
-                                    <label for="news1" style="font-weight: 600; cursor: pointer;">اجلاس سران کشورهای منطقه با موضوع امنیت خلیج فارس</label>
-                                    <div style="font-size: 0.8rem; color: #666; margin-top: 5px;">۲ ساعت پیش - ۱,۲۴۵ بازدید</div>
-                                </div>
-                            </div>
-                        </div>
-                        <div style="background: rgba(255, 255, 255, 0.3); padding: 15px; border-radius: 8px;">
-                            <div style="display: flex; gap: 10px; align-items: flex-start;">
-                                <input type="checkbox" id="news2" checked>
-                                <div>
-                                    <label for="news2" style="font-weight: 600; cursor: pointer;">رشد ۱۵ درصدی صادرات غیرنفتی در سه ماهه اول سال</label>
-                                    <div style="font-size: 0.8rem; color: #666; margin-top: 5px;">۴ ساعت پیش - ۹۸۷ بازدید</div>
-                                </div>
-                            </div>
-                        </div>
-                        <div style="background: rgba(255, 255, 255, 0.3); padding: 15px; border-radius: 8px;">
-                            <div style="display: flex; gap: 10px; align-items: flex-start;">
-                                <input type="checkbox" id="news3">
-                                <div>
-                                    <label for="news3" style="font-weight: 600; cursor: pointer;">قهرمانی تیم ملی والیبال در مسابقات آسیایی</label>
-                                    <div style="font-size: 0.8rem; color: #666; margin-top: 5px;">۶ ساعت پیش - ۲,۳۴۱ بازدید</div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
+                    <form action="{{ route('HomeController.homeArticleStore') }}" method="post">
+                        @csrf
+                        <label>انتخاب اخبار ویژه</label>
+                        
+                        <div style="display: grid; grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); gap: 15px; margin-top: 10px;">
+                            
+                            @foreach($articles as $article)
+                                @if($article->tag === "special")
+                                    <div style="background: rgba(255, 255, 255, 0.3); padding: 15px; border-radius: 8px;">
+                                        <div style="display: flex; gap: 10px; align-items: flex-start;">
+                                            <input type="checkbox" name="article_ids[]" value="{{ $article->id ?? '' }}">
+                                            <div>
+                                                <label for="news1" style="font-weight: 600; cursor: pointer;">{{$article->name ?? ''}}</label>
+                                                <div style="font-size: 0.8rem; color: #666; margin-top: 5px;">بازدید {{$article->view ?? ''}}</div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                @endif
+                            @endforeach
 
-                <div class="form-actions">
-                    <button class="btn btn-success">
-                        <i class="fas fa-save"></i>
-                        ذخیره تغییرات
-                    </button>
-                    <button class="btn btn-outline">
-                        <i class="fas fa-times"></i>
-                        انصراف
-                    </button>
+                        </div>
+
+                        <div class="form-actions">
+                            <button class="btn btn-success">
+                                <i class="fas fa-save"></i>
+                                ذخیره تغییرات
+                            </button>
+                            <a href="{{ route('dashboard') }}" class="btn btn-outline">
+                                <i class="fas fa-times"></i>
+                                انصراف
+                            </a>
+                        </div>
+
+                    </form>
                 </div>
             </div>
-
-            <!-- تب دسته‌بندی‌ها -->
-            <div class="tab-content" id="categories-tab">
-                <div class="form-grid">
-                    <div class="form-group">
-                        <label for="cat1-name">دسته‌بندی ۱ - نام</label>
-                        <input type="text" id="cat1-name" class="form-control" value="سیاسی">
-                    </div>
-                    <div class="form-group">
-                        <label for="cat1-count">دسته‌بندی ۱ - تعداد اخبار</label>
-                        <input type="number" id="cat1-count" class="form-control" value="245">
-                    </div>
-                    <div class="form-group">
-                        <label for="cat2-name">دسته‌بندی ۲ - نام</label>
-                        <input type="text" id="cat2-name" class="form-control" value="اقتصادی">
-                    </div>
-                    <div class="form-group">
-                        <label for="cat2-count">دسته‌بندی ۲ - تعداد اخبار</label>
-                        <input type="number" id="cat2-count" class="form-control" value="187">
-                    </div>
-                    <div class="form-group">
-                        <label for="cat3-name">دسته‌بندی ۳ - نام</label>
-                        <input type="text" id="cat3-name" class="form-control" value="فرهنگی">
-                    </div>
-                    <div class="form-group">
-                        <label for="cat3-count">دسته‌بندی ۳ - تعداد اخبار</label>
-                        <input type="number" id="cat3-count" class="form-control" value="98">
-                    </div>
-                    <div class="form-group">
-                        <label for="cat4-name">دسته‌بندی ۴ - نام</label>
-                        <input type="text" id="cat4-name" class="form-control" value="ورزشی">
-                    </div>
-                    <div class="form-group">
-                        <label for="cat4-count">دسته‌بندی ۴ - تعداد اخبار</label>
-                        <input type="number" id="cat4-count" class="form-control" value="321">
-                    </div>
-                </div>
-
-                <div class="form-actions">
-                    <button class="btn btn-success">
-                        <i class="fas fa-save"></i>
-                        ذخیره تغییرات
-                    </button>
-                    <button class="btn btn-outline">
-                        <i class="fas fa-times"></i>
-                        انصراف
-                    </button>
-                </div>
-            </div>
-        </section>
+        </section> 
+        
     </main>
 
 @endsection
@@ -222,7 +227,7 @@
 
 @section('script')
 
-    <script>
+    <script>   
         // مدیریت منوی کشویی
         const menuToggle = document.getElementById('menuToggle');
         const sidebar = document.getElementById('sidebar');
@@ -284,12 +289,95 @@
             previewBreakingText.textContent = breakingText.value;
         });
 
-        // مدیریت آپلود تصویر
-        const imageUpload = document.querySelector('.image-upload');
-        
-        imageUpload.addEventListener('click', () => {
-            alert('قابلیت آپلود تصویر در این نسخه دمو فعال نیست. در نسخه کامل سیستم، این قابلیت به طور کامل پیاده‌سازی خواهد شد.');
-        });
+        // گالری تصاویر
+        const imageGallery = document.getElementById('imageGallery');
+        const selectedPreview = document.getElementById('selectedPreview');
+        const previewContainer = document.getElementById('previewContainer');
+        const select = document.getElementById('select');
+        // نمونه تصاویر برای گالری
+        const sampleImages = [
+            @foreach($images as $iamge)
+                { id: '{{$image->id}}', url: '{{$iamge->url}}', name: '{{$image->alt}}' },
+            @endforeach
+        ];
+
+        let selectedImage = null;
+
+        // بارگذاری تصاویر در گالری
+        function loadGalleryImages() {
+            imageGallery.innerHTML = '';
+            
+            sampleImages.forEach(image => {
+                const galleryItem = document.createElement('div');
+
+                if(image.url === "{{ $hero->photo ?? '' }}"){
+                    galleryItem.className = 'gallery-item selected';
+                } else {
+                    galleryItem.className = 'gallery-item';
+                }
+
+                galleryItem.setAttribute('data-image-id', image.id);
+                
+
+                galleryItem.innerHTML = `
+                    <img class="" src="${image.url}" alt="${image.name}" loading="lazy">
+                    <div class="select-overlay">
+                        <i class="fas fa-check"></i>
+                    </div>
+                `;
+                
+                galleryItem.addEventListener('click', () => selectImage(image, galleryItem));
+                imageGallery.appendChild(galleryItem);
+            });
+        }
+
+        // انتخاب تصویر
+        function selectImage(image, element) {
+            // حذف انتخاب از همه تصاویر
+            document.querySelectorAll('.gallery-item').forEach(item => {
+                item.classList.remove('selected');
+            });
+            
+            // انتخاب تصویر جدید
+            element.classList.add('selected');
+            selectedImage = image;
+            
+            // نمایش پیش‌نمایش
+            showSelectedPreview(image);
+        }
+
+        // نمایش پیش‌نمایش تصویر انتخاب شده
+        function showSelectedPreview(image) {
+            previewContainer.innerHTML = `
+                <div style="display: flex; align-items: center; gap: 15px; margin-top: 10px;">
+                    <img id="select" src="${image.url}" alt="${image.name}" class="preview-image">
+                    <input name="photo" type="hidden" value="${image.url}" >
+                    <div>
+                        <div><strong>${image.name}</strong></div>
+                        <div style="font-size: 0.8rem; color: #666;">شناسه: ${image.id}</div>
+                        <button class="btn btn-outline btn-sm" onclick="deselectImage()" style="margin-top: 8px;">
+                            <i class="fas fa-times"></i>
+                            حذف انتخاب
+                        </button>
+                    </div>
+                </div>
+            `;
+            
+            selectedPreview.classList.add('active');
+        }
+
+        // حذف انتخاب تصویر
+        function deselectImage() {
+            selectedImage = null;
+            document.querySelectorAll('.gallery-item').forEach(item => {
+                item.classList.remove('selected');
+            });
+            selectedPreview.classList.remove('active');
+            previewContainer.innerHTML = '';
+        }
+
+        // بارگذاری اولیه گالری
+        loadGalleryImages();
 
         // بستن منو با کلیک روی لینک‌ها
         document.querySelectorAll('.menu a').forEach(link => {

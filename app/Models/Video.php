@@ -13,4 +13,9 @@ class Video extends Model
     public function articles(){
         return $this->hasMany(Article::class);
     }
+
+    protected $casts = [
+        'created_at' => 'datetime:Y-m-d H:i:s',
+        'updated_at' => 'datetime:Y-m-d H:i:s',
+    ];
 }

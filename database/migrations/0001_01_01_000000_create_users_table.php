@@ -18,8 +18,8 @@ return new class extends Migration
             $table->string('username')->unique();
             $table->string('email')->unique();
             $table->string('password');
-            $table->string('role')->default('inactive');
-            $table->string('status');
+            $table->string('role')->default('user');
+            $table->string('status')->default('inactive');
             $table->timestamps();
         });
 

@@ -16,9 +16,11 @@ return new class extends Migration
             $table->foreignId('user_id')->constrained('users')->cascadeOnDelete();
             $table->text('name');
             $table->text('content');
+            $table->text('summery');
+            $table->string('tag')->default('normal');
             $table->string('cover')->nullable();
             $table->integer('view')->default(0);
-            $table->string('status');
+            $table->string('status')->default('unauthorized');
             $table->timestamps();
         });
     }

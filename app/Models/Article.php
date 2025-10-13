@@ -29,4 +29,9 @@ class Article extends Model
     public function images() {
         return $this->belongsToMany(Image::class);
     }
+
+    protected $casts = [
+        'created_at' => 'datetime:Y-m-d H:i:s',
+        'updated_at' => 'datetime:Y-m-d H:i:s',
+    ];
 }
