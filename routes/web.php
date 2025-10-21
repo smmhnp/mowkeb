@@ -1,6 +1,8 @@
 <?php
 
+use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\HomeController;
+use App\Http\Controllers\UserController;
 use Illuminate\Support\Facades\Route;
 
 Route::get('/', [HomeController::class, 'index'])->name('HomeController.index');
@@ -19,21 +21,25 @@ Route::group(['prefix' => 'admin'], function()
     Route::post('/home/hero', [HomeController::class, 'homeHeroStore'])->name('HomeController.homeHeroManage');
     Route::post('/home/special', [HomeController::class, 'homeSpecialStore'])->name('HomeController.homeSpecialStore');
     Route::post('/home/article', [HomeController::class, 'homeArticleStore'])->name('HomeController.homeArticleStore');
+    Route::post('/home/category', [HomeController::class, 'homeCategoryStore'])->name('HomeController.homeCategoryStore');
 
-    Route::get('/category', function () {
-        return view('admin.category');
-    })->name('category');
+    Route::get('/category', [CategoryController::class, 'categoryManager'])->name('CategoryController.categoryManager');
+    Route::post('/add/category', [CategoryController::class, 'addCategoryManager'])->name('CategoryController.addCategoryManager');
+    Route::post('/category/destroy', [CategoryController::class, 'deleteCategoryManager'])->name('CategoryController.deleteCategoryManager');
+
+    Route::get('/user', [UserController::class, 'userManager'])->name('UserController.userManager');
+    Route::get('/add/user', [UserController::class, 'addUserManager'])->name('UserController.addUserManager');
+    Route::post('/add/user', [UserController::class, 'addUserStore'])->name('UserController.addUserStore');
+    Route::get('/update/user/{id}', [UserController::class, 'updateUserManager'])->name('UserController.updateUserManager');
+    Route::post('/update/user/{user}', [UserController::class, 'updateUserStore'])->name('UserController.updateUserStore');
+    Route::post('/user/destroy', [UserController::class, 'deleteUserManager'])->name('UserController.deleteUserManager');
 
     Route::get('/add', function () {
         return view('admin.add');
     });
 
-    Route::get('/user', function () {
-        return view('admin.user');
-    })->name('users');
-       
-    Route::get('/add/user', function () {
-        return view('admin.addUser');
+    Route::get('/article', function () {
+        return view('admin.article');
     });
 
     Route::get('/add/image', function () {
@@ -51,8 +57,4 @@ Route::group(['prefix' => 'admin'], function()
     Route::get('/image', function () {
         return view('admin.image');
     })->name('iamge');
-
-    Route::get('/comment', function () {
-        return view('admin.comment');
-    })->name('comment');
 });

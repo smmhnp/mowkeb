@@ -136,7 +136,7 @@
                 دسته‌بندی‌های
             </h2>
             <div class="categories-grid">
-                @foreach($categorys as $category)
+                @foreach($categories as $category)
                     <div class="category-card">
                         <div class="category-icon">
                             <i class="fas fa-landmark"></i>

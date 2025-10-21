@@ -1,5 +1,49 @@
 @extends('adminBase.baseFormat')
 
+@php
+    function role($inRole){
+        switch ($inRole){
+            case 'super_admin':
+                $role = 'مدیر ارشد';
+                break;
+            case 'admin':
+                $role = 'مدیر';
+                break;
+            case 'editor':
+                $role = 'ویرایشگر';
+                break;
+            default:
+                $role = 'کاربر';            
+        }
+
+        return $role;
+    }
+
+    function status($inStatus){
+        switch ($inStatus){
+            case 'active':
+                $status = 'فعال';
+                break;
+            default:
+                $status = 'غیرفعال';
+                break;            
+        }
+        
+        return $status;
+    }
+
+    function userCheck($users, $op, $data){
+        $num = 0;
+        foreach($users as $user){
+            if($user->$op == $data){
+                $num++;
+            }
+        }
+
+        return $num;
+    }
+@endphp
+
 @section('style')
 
         <link href="{{ asset('css/user.css') }}" rel="stylesheet">
@@ -8,13 +52,18 @@
 
 @section('content')
 
+        @if ($errors->any())
+            <div class="alert alert-danger" role="alert">
+                {{ $errors->first() }}
+            </div>
+        @endif
     <main class="main-content">
         <div class="page-title">
             <h2>مدیریت کاربران</h2>
-            <button class="btn btn-primary">
+            <a href="{{ route('UserController.addUserManager') }}" class="btn btn-primary">
                 <i class="fas fa-user-plus"></i>
                 کاربر جدید
-            </button>
+            </a>
         </div>
 
         <div class="stats-cards">
@@ -23,7 +72,7 @@
                     <i class="fas fa-users"></i>
                 </div>
                 <div class="stat-info">
-                    <h3>۳,۴۵۸</h3>
+                    <h3>{{ count($users) }}</h3>
                     <p>کل کاربران</p>
                 </div>
             </div>
@@ -32,7 +81,7 @@
                     <i class="fas fa-user-check"></i>
                 </div>
                 <div class="stat-info">
-                    <h3>۲,۹۸۷</h3>
+                    <h3>{{ userCheck($users, 'status', 'active') }}</h3>
                     <p>کاربران فعال</p>
                 </div>
             </div>
@@ -41,8 +90,8 @@
                     <i class="fas fa-user-plus"></i>
                 </div>
                 <div class="stat-info">
-                    <h3>۱۲۴</h3>
-                    <p>کاربران جدید (امروز)</p>
+                    <h3>{{ userCheck($users, 'role', 'super_admin') }}</h3>
+                    <p>مدیران ارشد</p>
                 </div>
             </div>
             <div class="stat-card admins">
@@ -50,7 +99,7 @@
                     <i class="fas fa-user-shield"></i>
                 </div>
                 <div class="stat-info">
-                    <h3>۸</h3>
+                    <h3>{{ userCheck($users, 'role', 'admin') }}</h3>
                     <p>مدیران سیستم</p>
                 </div>
             </div>
@@ -101,136 +150,40 @@
                         <th>ایمیل</th>
                         <th>نقش</th>
                         <th>وضعیت</th>
-                        <th>تاریخ عضویت</th>
                         <th>عملیات</th>
                     </tr>
                 </thead>
                 <tbody>
-                    <tr>
-                        <td>
-                            <div style="display: flex; align-items: center; gap: 10px;">
-                                <div class="user-avatar-small">م</div>
-                                <div>
-                                    <div style="font-weight: 600;">مدیر سیستم</div>
-                                    <div style="font-size: 12px; color: #666;">@admin</div>
+                    @foreach($users as $user)
+                        <tr>
+                            <td>
+                                <div style="display: flex; align-items: center; gap: 10px;">
+                                    <div class="user-avatar-small"></div>
+                                    <div>
+                                        <div style="font-weight: 600;">{{ $user->fname . " " . $user->lname }}</div>
+                                        <div style="font-size: 12px; color: #666;">{{ role($user->role) }}</div>
+                                    </div>
                                 </div>
-                            </div>
-                        </td>
-                        <td>admin@example.com</td>
-                        <td><span class="role admin">مدیر</span></td>
-                        <td><span class="status active">فعال</span></td>
-                        <td>۱۴۰۲/۰۱/۱۵</td>
-                        <td>
-                            <div class="action-buttons">
-                                <button class="action-btn edit-btn" title="ویرایش">
-                                    <i class="fas fa-edit"></i>
-                                </button>
-                                <button class="action-btn delete-btn" title="حذف">
-                                    <i class="fas fa-trash"></i>
-                                </button>
-                            </div>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td>
-                            <div style="display: flex; align-items: center; gap: 10px;">
-                                <div class="user-avatar-small">ف</div>
-                                <div>
-                                    <div style="font-weight: 600;">فاطمه کریمی</div>
-                                    <div style="font-size: 12px; color: #666;">@fatemeh_k</div>
+                            </td>
+                            <td>{{ $user->email }}</td>
+                            <td><span class="role admin">{{ role($user->role) }}</span></td>
+                            <td><span class="status active">{{ status($user->status) }}</span></td>
+                            <td>
+                                <div class="action-buttons">
+                                    <a href="{{ route('UserController.updateUserManager', ['id' => $user->id]) }}" class="action-btn edit-btn" title="ویرایش">
+                                        <i class="fas fa-edit"></i>
+                                    </a>
+                                    <form action="{{ route('UserController.deleteUserManager') }}" method="post">
+                                        @csrf
+                                        <input type="hidden" name="user_id" value="{{ $user->id }}">
+                                        <button class="action-btn delete-btn" title="حذف">
+                                            <i class="fas fa-trash"></i>
+                                        </button>
+                                    </form>
                                 </div>
-                            </div>
-                        </td>
-                        <td>fatemeh@example.com</td>
-                        <td><span class="role editor">ویرایشگر</span></td>
-                        <td><span class="status active">فعال</span></td>
-                        <td>۱۴۰۲/۰۳/۲۲</td>
-                        <td>
-                            <div class="action-buttons">
-                                <button class="action-btn edit-btn" title="ویرایش">
-                                    <i class="fas fa-edit"></i>
-                                </button>
-                                <button class="action-btn delete-btn" title="حذف">
-                                    <i class="fas fa-trash"></i>
-                                </button>
-                            </div>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td>
-                            <div style="display: flex; align-items: center; gap: 10px;">
-                                <div class="user-avatar-small">م</div>
-                                <div>
-                                    <div style="font-weight: 600;">محمد رضایی</div>
-                                    <div style="font-size: 12px; color: #666;">@mohammad_r</div>
-                                </div>
-                            </div>
-                        </td>
-                        <td>mohammad@example.com</td>
-                        <td><span class="role user">کاربر عادی</span></td>
-                        <td><span class="status inactive">غیرفعال</span></td>
-                        <td>۱۴۰۲/۰۴/۱۰</td>
-                        <td>
-                            <div class="action-buttons">
-                                <button class="action-btn edit-btn" title="ویرایش">
-                                    <i class="fas fa-edit"></i>
-                                </button>
-                                <button class="action-btn delete-btn" title="حذف">
-                                    <i class="fas fa-trash"></i>
-                                </button>
-                            </div>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td>
-                            <div style="display: flex; align-items: center; gap: 10px;">
-                                <div class="user-avatar-small">ز</div>
-                                <div>
-                                    <div style="font-weight: 600;">زهرا احمدی</div>
-                                    <div style="font-size: 12px; color: #666;">@zahra_a</div>
-                                </div>
-                            </div>
-                        </td>
-                        <td>zahra@example.com</td>
-                        <td><span class="role user">کاربر عادی</span></td>
-                        <td><span class="status banned">مسدود شده</span></td>
-                        <td>۱۴۰۲/۰۲/۱۸</td>
-                        <td>
-                            <div class="action-buttons">
-                                <button class="action-btn edit-btn" title="ویرایش">
-                                    <i class="fas fa-edit"></i>
-                                </button>
-                                <button class="action-btn delete-btn" title="حذف">
-                                    <i class="fas fa-trash"></i>
-                                </button>
-                            </div>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td>
-                            <div style="display: flex; align-items: center; gap: 10px;">
-                                <div class="user-avatar-small">ع</div>
-                                <div>
-                                    <div style="font-weight: 600;">علی محمدی</div>
-                                    <div style="font-size: 12px; color: #666;">@ali_m</div>
-                                </div>
-                            </div>
-                        </td>
-                        <td>ali@example.com</td>
-                        <td><span class="role editor">ویرایشگر</span></td>
-                        <td><span class="status active">فعال</span></td>
-                        <td>۱۴۰۲/۰۵/۰۵</td>
-                        <td>
-                            <div class="action-buttons">
-                                <button class="action-btn edit-btn" title="ویرایش">
-                                    <i class="fas fa-edit"></i>
-                                </button>
-                                <button class="action-btn delete-btn" title="حذف">
-                                    <i class="fas fa-trash"></i>
-                                </button>
-                            </div>
-                        </td>
-                    </tr>
+                            </td>
+                        </tr>
+                    @endforeach
                 </tbody>
             </table>
         </div>

@@ -34,24 +34,24 @@
                     <i class="fas fa-cog"></i>صفحه اصلی</a>
                 </li>
 
-                <li><a href="{{ route('category') }}" class="{{ request()->routeIs('category') ? 'active' : '' }}">
+                <li><a href="{{ route('HomeController.homeManeger') }}" class="{{ request()->routeIs('HomeController.homeManeger') ? 'active' : '' }}">
+                    <i class="fas fa-edit"></i>مقالات</a>
+                </li>
+
+                <li><a href="{{ route('CategoryController.categoryManager') }}" class="{{ request()->routeIs('CategoryController.categoryManager') ? 'active' : '' }}">
                     <i class="fas fa-folder"></i>دسته‌بندی‌ها</a>
                 </li>
 
-                <li><a href="{{ route('users') }}" class="{{ request()->routeIs('users') ? 'active' : '' }}">
+                <li><a href="{{ route('UserController.userManager') }}" class="{{ request()->routeIs('UserController.userManager') ? 'active' : '' }}">
                     <i class="fas fa-users"></i>کاربران</a>
                 </li>
 
-                <li><a href="{{ route('comment') }}" class="{{ request()->routeIs('comment') ? 'active' : '' }}">
-                    <i class="fas fa-chart-bar"></i>نظرات</a>
-                </li>
-
-                <li><a href="{{ route('video') }}" class="{{ request()->routeIs('video') ? 'active' : '' }}">
-                    <i class="fas fa-comments"></i>ویدیوها</a>
-                </li>
-
                 <li><a href="{{ route('iamge') }}" class="{{ request()->routeIs('iamge') ? 'active' : '' }}">
-                    <i class="fas fa-edit"></i>تصاویر</a>
+                    <i class="fas fa-image"></i>تصاویر</a>
+                </li>
+                
+                <li><a href="{{ route('video') }}" class="{{ request()->routeIs('video') ? 'active' : '' }}">
+                    <i class="fas fa-video"></i>ویدیوها</a>
                 </li>
             </ul>
         </aside>

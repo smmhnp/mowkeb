@@ -22,11 +22,11 @@ class ViewServiceProvider extends ServiceProvider
     public function boot(): void
     {
         View::composer('clientBase.nav', function($view){
-            $view->with('category', Categorie::take(4)->get());
+            $view->with('category', Categorie::getTempCategories());
         });
 
         View::composer('clientBase.footer', function($view){
-            $view->with('category', Categorie::take(4)->get());
+            $view->with('category', Categorie::getTempCategories());
         });
     }
 }

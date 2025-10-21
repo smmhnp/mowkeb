@@ -19,11 +19,11 @@
 
 @section('content')
 
-        @if ($errors->any())
-            <div class="alert alert-danger" role="alert">
-                {{ $errors->first() }}
-            </div>
-        @endif
+    @if ($errors->any())
+        <div class="alert alert-danger" role="alert">
+            {{ $errors->first() }}
+        </div>
+    @endif
 
     <main class="main-content">
         <div class="page-title">
@@ -36,6 +36,7 @@
                 <button class="tab-btn active" data-tab="hero">بخش هیرو</button>
                 <button class="tab-btn" data-tab="breaking">خبر فوری</button>
                 <button class="tab-btn" data-tab="featured">اخبار ویژه</button>
+                <button class="tab-btn" data-tab="categories">دسته‌بندی‌ها</button>
             </div>
 
             <!-- hero tab management -->
@@ -218,8 +219,60 @@
                     </form>
                 </div>
             </div>
-        </section> 
-        
+
+            <!-- navbar management -->
+            <div class="tab-content" id="categories-tab">
+                <form action="{{ route('HomeController.homeCategoryStore') }}" method="post">
+                    @csrf
+                    <div class="form-group">
+                        <label for="cat1-name">دسته‌بندی 1 - نام</label>
+                        <select name="first" id="cat1-name" class="form-control">
+                            @foreach($categories as $category)
+                                <option value="{{ $category->id }}">{{ $category->name }}</option>
+                            @endforeach
+                        </select>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="cat2-name">دسته‌بندی ۲ - نام</label>
+                        <select name="seconde" id="cat2-name" class="form-control">
+                            @foreach($categories as $category)
+                                <option value="{{ $category->id }}">{{ $category->name }}</option>
+                            @endforeach
+                        </select>                    
+                    </div>
+
+                    <div class="form-group">
+                        <label for="cat3-name">دسته‌بندی ۳ - نام</label>
+                        <select name="third" id="cat3-name" class="form-control">
+                            @foreach($categories as $category)
+                                <option value="{{ $category->id }}">{{ $category->name }}</option>
+                            @endforeach
+                        </select> 
+                    </div>
+
+                    <div class="form-group">
+                        <label for="cat4-name">دسته‌بندی ۴ - نام</label>
+                        <select name="fourth" id="cat4-name" class="form-control">
+                            @foreach($categories as $category)
+                                <option value="{{ $category->id }}">{{ $category->name }}</option>
+                            @endforeach
+                        </select> 
+                    </div>
+
+                    <div class="form-actions">
+                        <button class="btn btn-success">
+                            <i class="fas fa-save"></i>
+                            ذخیره تغییرات
+                        </button>
+                        <button class="btn btn-outline">
+                            <i class="fas fa-times"></i>
+                            انصراف
+                        </button>
+                    </div>
+                </fomr>
+            </div>
+        </section>
     </main>
 
 @endsection

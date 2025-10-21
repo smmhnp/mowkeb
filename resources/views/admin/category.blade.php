@@ -23,17 +23,8 @@
                         <i class="fas fa-folder"></i>
                     </div>
                     <div class="stat-info">
-                        <h3>۲۴</h3>
+                        <h3>{{ count($categories) }}</h3>
                         <p>کل دسته‌بندی‌ها</p>
-                    </div>
-                </div>
-                <div class="stat-card active-categories">
-                    <div class="stat-icon">
-                        <i class="fas fa-folder-open"></i>
-                    </div>
-                    <div class="stat-info">
-                        <h3>۱۸</h3>
-                        <p>دسته‌بندی‌های فعال</p>
                     </div>
                 </div>
                 <div class="stat-card articles-in-categories">
@@ -58,136 +49,37 @@
                             <th>دسته‌بندی</th>
                             <th>آدرس</th>
                             <th>تعداد مطالب</th>
-                            <th>وضعیت</th>
                             <th>عملیات</th>
                         </tr>
                     </thead>
                     <tbody>
-                        <tr>
-                            <td>
-                                <div style="display: flex; align-items: center; gap: 10px;">
-                                    <div class="category-icon">
-                                        <i class="fas fa-globe"></i>
+                        @foreach($categories as $category)
+                            <tr>
+                                <td>
+                                    <div style="display: flex; align-items: center; gap: 10px;">
+                                        <div class="category-icon">
+                                            <i class="fas fa-globe"></i>
+                                        </div>
+                                        <div>
+                                            <div style="font-weight: 600;">{{ $category->name }}</div>
+                                        </div>
                                     </div>
-                                    <div>
-                                        <div style="font-weight: 600;">سیاسی</div>
+                                </td>
+                                <td>{{ $category->slug }}</td>
+                                <td>۲۴۵</td>
+                                <td>
+                                    <div class="action-buttons">
+                                        <form action="{{ route('CategoryController.deleteCategoryManager') }}" method="post">
+                                            @csrf
+                                            <input type="hidden" name="catrgory_id" value="{{ $category->id }}">
+                                            <button class="action-btn delete-btn" title="حذف">
+                                                <i class="fas fa-trash"></i>
+                                            </button>
+                                        </form>
                                     </div>
-                                </div>
-                            </td>
-                            <td>/category/politics</td>
-                            <td>۲۴۵</td>
-                            <td><span class="status active">فعال</span></td>
-                            <td>
-                                <div class="action-buttons">
-                                    <button class="action-btn edit-btn" title="ویرایش">
-                                        <i class="fas fa-edit"></i>
-                                    </button>
-                                    <button class="action-btn delete-btn" title="حذف">
-                                        <i class="fas fa-trash"></i>
-                                    </button>
-                                </div>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td>
-                                <div style="display: flex; align-items: center; gap: 10px;">
-                                    <div class="category-icon">
-                                        <i class="fas fa-chart-line"></i>
-                                    </div>
-                                    <div>
-                                        <div style="font-weight: 600;">اقتصادی</div>
-                                    </div>
-                                </div>
-                            </td>
-                            <td>/category/economy</td>
-                            <td>۱۸۷</td>
-                            <td><span class="status active">فعال</span></td>
-                            <td>
-                                <div class="action-buttons">
-                                    <button class="action-btn edit-btn" title="ویرایش">
-                                        <i class="fas fa-edit"></i>
-                                    </button>
-                                    <button class="action-btn delete-btn" title="حذف">
-                                        <i class="fas fa-trash"></i>
-                                    </button>
-                                </div>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td>
-                                <div style="display: flex; align-items: center; gap: 10px;">
-                                    <div class="category-icon">
-                                        <i class="fas fa-futbol"></i>
-                                    </div>
-                                    <div>
-                                        <div style="font-weight: 600;">ورزشی</div>
-                                    </div>
-                                </div>
-                            </td>
-                            <td>/category/sports</td>
-                            <td>۳۲۱</td>
-                            <td><span class="status active">فعال</span></td>
-                            <td>
-                                <div class="action-buttons">
-                                    <button class="action-btn edit-btn" title="ویرایش">
-                                        <i class="fas fa-edit"></i>
-                                    </button>
-                                    <button class="action-btn delete-btn" title="حذف">
-                                        <i class="fas fa-trash"></i>
-                                    </button>
-                                </div>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td>
-                                <div style="display: flex; align-items: center; gap: 10px;">
-                                    <div class="category-icon">
-                                        <i class="fas fa-flask"></i>
-                                    </div>
-                                    <div>
-                                        <div style="font-weight: 600;">علم و تکنولوژی</div>
-                                    </div>
-                                </div>
-                            </td>
-                            <td>/category/technology</td>
-                            <td>۱۵۶</td>
-                            <td><span class="status active">فعال</span></td>
-                            <td>
-                                <div class="action-buttons">
-                                    <button class="action-btn edit-btn" title="ویرایش">
-                                        <i class="fas fa-edit"></i>
-                                    </button>
-                                    <button class="action-btn delete-btn" title="حذف">
-                                        <i class="fas fa-trash"></i>
-                                    </button>
-                                </div>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td>
-                                <div style="display: flex; align-items: center; gap: 10px;">
-                                    <div class="category-icon">
-                                        <i class="fas fa-palette"></i>
-                                    </div>
-                                    <div>
-                                        <div style="font-weight: 600;">فرهنگی</div>
-                                    </div>
-                                </div>
-                            </td>
-                            <td>/category/culture</td>
-                            <td>۹۸</td>
-                            <td><span class="status inactive">غیرفعال</span></td>
-                            <td>
-                                <div class="action-buttons">
-                                    <button class="action-btn edit-btn" title="ویرایش">
-                                        <i class="fas fa-edit"></i>
-                                    </button>
-                                    <button class="action-btn delete-btn" title="حذف">
-                                        <i class="fas fa-trash"></i>
-                                    </button>
-                                </div>
-                            </td>
-                        </tr>
+                                </td>
+                            </tr>
+                        @endforeach
                     </tbody>
                 </table>
             </div>
@@ -202,20 +94,18 @@
                     <i class="fas fa-times"></i>
                 </button>
             </div>
-            <form id="categoryForm">
+            <form action="{{ route('CategoryController.addCategoryManager') }}" method="post">
+                @csrf
                 <div class="form-group">
                     <label for="categoryName">نام دسته‌بندی <span style="color: var(--danger);">*</span></label>
-                    <input type="text" id="categoryName" class="form-control" placeholder="نام دسته‌بندی را وارد کنید" required>
+                    <input name="name" type="text" id="categoryName" class="form-control" placeholder="نام دسته‌بندی را وارد کنید" required>
                 </div>
                 <div class="form-group">
                     <label for="categorySlug">آدرس دسته‌بندی <span style="color: var(--danger);">*</span></label>
-                    <input type="text" id="categorySlug" class="form-control" placeholder="آدرس یکتا برای دسته‌بندی" required>
+                    <input name="slug" type="text" id="categorySlug" class="form-control" placeholder="آدرس یکتا برای دسته‌بندی" required>
                     <div style="font-size: 12px; color: #666; margin-top: 5px;">آدرس باید به انگلیسی و بدون فاصله باشد</div>
                 </div>
                 <div class="modal-actions">
-                    <button type="button" class="btn btn-secondary" id="cancelBtn">
-                        انصراف
-                    </button>
                     <button type="submit" class="btn btn-primary">
                         ذخیره دسته‌بندی
                     </button>

@@ -488,7 +488,7 @@ tr:last-child {
     background: none;
     border: none;
     font-size: 24px;
-    color: var(--danger);
+    color: var(--primary);
     cursor: pointer;
     padding: 5px;
     border-radius: 5px;
@@ -496,7 +496,7 @@ tr:last-child {
 }
 
 .close-modal:hover {
-    background: rgba(247, 37, 133, 0.1);
+    color: var(--primary);
 }
 
 .form-group {
