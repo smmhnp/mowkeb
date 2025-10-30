@@ -521,28 +521,14 @@ body {
 
 .video-thumbnail {
     width: 100%;
-    height: 160px;
+    height: 190px;
     background: linear-gradient(45deg, #f72585, #4361ee);
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    position: relative;
 }
 
 .play-icon {
     font-size: 40px;
     color: white;
     opacity: 0.8;
-}
-
-.video-thumbnail::before {
-    content: '';
-    position: absolute;
-    top: 0;
-    right: 0;
-    bottom: 0;
-    left: 0;
-    background: rgba(0, 0, 0, 0.3);
 }
 
 .gallery-info {

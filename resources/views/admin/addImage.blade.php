@@ -2,58 +2,72 @@
 
 @section('style')
 
-        <link href="{{ asset('css/addImage.css') }}" rel="stylesheet">
+    <link href="{{ asset('css/addImage.css') }}" rel="stylesheet">
 
 @endsection
 
 @section('content')
 
-        <main class="main-content">
-            <div class="page-title">
-                <h2>آپلود عکس جدید</h2>
-                <button class="btn btn-secondary">
-                    <i class="fas fa-images"></i>
-                    مشاهده گالری
-                </button>
-            </div>
+    @if ($errors->any())
+        <div class="alert alert-danger" role="alert">
+            {{ $errors->first() }}
+        </div>
+    @endif
 
-            <div class="upload-container">
+    <main class="main-content">
+        <div class="page-title">
+            <h2>{{ isset($currentImage) ? 'ویرایش عکس' : 'آپلود عکس جدید' }}</h2>
+            <a href="{{ route('MedaiControler.ImageGallery') }}" class="btn btn-secondary">
+                <i class="fas fa-images"></i>
+                مشاهده گالری
+            </a>
+        </div>
+
+        <div class="upload-container">
+            <form action="{{ isset($currentImage) ? route('MedaiControler.UpdateImageStore', ['image' => $currentImage->id]) : route('MedaiControler.ImageStore') }}" method="post" enctype="multipart/form-data">
+                @csrf
+
                 <!-- ناحیه آپلود -->
                 <div class="upload-area" id="uploadArea">
-                    <div class="upload-icon">
-                        <i class="fas fa-cloud-upload-alt"></i>
-                    </div>
+                    <div class="upload-icon"><i class="fas fa-cloud-upload-alt"></i></div>
                     <div class="upload-text">
                         <h3>عکس خود را اینجا رها کنید</h3>
                         <p>یا برای انتخاب فایل کلیک کنید</p>
-                        <button class="browse-btn">انتخاب فایل</button>
+                        <a class="browse-btn">انتخاب فایل</a>
                     </div>
-                    <input type="file" id="fileInput" class="file-input" accept="image/*">
+                    <input name="image" type="file" id="fileInput" class="file-input" accept="image/*">
                 </div>
 
                 <!-- پیش‌نمایش عکس -->
-                <div class="preview-container" id="previewContainer">
-                    <h3 class="preview-title">
-                        <i class="fas fa-eye"></i>
-                        پیش‌نمایش عکس
-                    </h3>
-                    <img id="imagePreview" class="image-preview" src="#" alt="پیش‌نمایش عکس">
-                    <div class="image-info" id="imageInfo">
+                <div class="preview-container" id="previewContainer" style="display: {{ isset($currentImage) ? 'block' : 'none' }}">
+                    <h3 class="preview-title"><i class="fas fa-eye"></i> پیش‌نمایش عکس</h3>
+                    <img id="imagePreview" class="image-preview" 
+                        src="{{ isset($currentImage) ? asset('storage/' . $currentImage->url) : '#' }}" 
+                        alt="{{ $currentImage->alt ?? 'پیش‌نمایش عکس' }}">
+                    <div class="image-info">
                         <div class="info-row">
                             <span class="info-label">نام فایل:</span>
-                            <span id="fileName">-</span>
+                            <span id="fileName">{{ $currentImage->name ?? '' }}</span>
                         </div>
                         <div class="info-row">
                             <span class="info-label">اندازه:</span>
-                            <span id="fileSize">-</span>
+                            <span id="fileSize">
+                                {{ isset($currentImage->url) && file_exists(public_path('storage/' . $currentImage->url)) 
+                                    ? number_format(filesize(public_path('storage/' . $currentImage->url)) / 1024, 2) . ' KB' 
+                                    : '-' }}
+                            </span>
                         </div>
                         <div class="info-row">
                             <span class="info-label">ابعاد:</span>
-                            <span id="fileDimensions">-</span>
+                            <span id="fileDimensions">
+                                {{ isset($currentImage->url) && file_exists(public_path('storage/' . $currentImage->url)) 
+                                    ? implode(' × ', getimagesize(public_path('storage/' . $currentImage->url))) . ' px' 
+                                    : '-' }}
+                            </span>
                         </div>
                         <div class="info-row">
                             <span class="info-label">نوع فایل:</span>
-                            <span id="fileType">-</span>
+                            <span id="fileType">{{ isset($currentImage->url) ? pathinfo($currentImage->url, PATHINFO_EXTENSION) : '-' }}</span>
                         </div>
                     </div>
                 </div>
@@ -61,95 +75,57 @@
                 <!-- فرم اطلاعات عکس -->
                 <div class="image-form">
                     <div class="form-section">
-                        <h3 class="section-title">
-                            <i class="fas fa-info-circle"></i>
-                            اطلاعات عکس
-                        </h3>
+                        <h3 class="section-title"><i class="fas fa-info-circle"></i> اطلاعات عکس</h3>
                         
                         <div class="form-group">
                             <label for="imageName">نام عکس <span class="required">*</span></label>
-                            <input type="text" id="imageName" class="form-control" placeholder="نام توصیفی برای عکس وارد کنید" required>
+                            <input name="name" type="text" id="imageName" class="form-control" value="{{ $currentImage->name ?? '' }}" placeholder="نام توصیفی برای عکس وارد کنید" required>
                             <div class="form-hint">این نام در گالری نمایش داده می‌شود</div>
                         </div>
 
                         <div class="form-group">
-                            <label for="imageUrl">آدرس عکس <span class="required">*</span></label>
-                            <input type="text" id="imageUrl" class="form-control" placeholder="آدرس یکتا برای عکس" required>
-                            <div class="form-hint">آدرس باید به انگلیسی و بدون فاصله باشد</div>
-                        </div>
-
-                        <div class="form-group">
                             <label for="imageAlt">متن جایگزین (Alt) <span class="required">*</span></label>
-                            <input type="text" id="imageAlt" class="form-control" placeholder="توضیح مختصر برای عکس" required>
+                            <input name="alt" type="text" id="imageAlt" class="form-control" value="{{ $currentImage->alt ?? '' }}" placeholder="توضیح مختصر برای عکس" required>
                             <div class="form-hint">این متن برای سئو و دسترسی‌پذیری مهم است</div>
                         </div>
 
                         <div class="form-group">
                             <label for="imageDescription">توضیحات</label>
-                            <textarea id="imageDescription" class="form-control" placeholder="توضیحات کامل درباره عکس..."></textarea>
+                            <textarea name="description" id="imageDescription" class="form-control" placeholder="توضیحات کامل درباره عکس...">{{ $currentImage->description ?? '' }}</textarea>
                             <div class="form-hint">این توضیحات در صفحه جزئیات عکس نمایش داده می‌شود</div>
                         </div>
                     </div>
 
                     <div class="form-actions">
-                        <button type="button" class="btn btn-secondary" id="resetBtn">
-                            <i class="fas fa-redo"></i>
-                            بازنشانی
-                        </button>
-                        <button type="submit" class="btn btn-primary" id="uploadBtn">
-                            <i class="fas fa-upload"></i>
-                            آپلود عکس
-                        </button>
+                        <button type="button" class="btn btn-secondary" id="resetBtn"><i class="fas fa-redo"></i> بازنشانی</button>
+                        <button type="submit" class="btn btn-primary" id="uploadBtn"><i class="fas fa-upload"></i> ذخیره عکس</button>
                     </div>
                 </div>
-            </div>
+            </form>
+        </div>
 
-            <!-- گالری عکس‌های آپلود شده -->
-            <div class="gallery-section">
-                <h3 class="section-title">
-                    <i class="fas fa-images"></i>
-                    عکس‌های اخیر
-                </h3>
-                <div class="gallery-grid">
+        <!-- گالری عکس‌های اخیر -->
+        <div class="gallery-section">
+            <h3 class="section-title"><i class="fas fa-images"></i> عکس‌های اخیر</h3>
+            <div class="gallery-grid">
+                @foreach($images as $image)
                     <div class="gallery-item">
-                        <img src="https://via.placeholder.com/300x200/4361ee/ffffff?text=Landscape" class="gallery-image" alt="منظره طبیعی">
+                        <img src="{{ asset('storage/' . $image->url) }}" alt="{{ $image->alt }}" class="gallery-image">
                         <div class="gallery-info">
-                            <div class="gallery-name">منظره کوهستان</div>
-                            <div class="gallery-alt">منظره زیبای کوهستان در بهار</div>
+                            <div class="gallery-name">{{ $image->name }}</div>
                         </div>
                     </div>
-                    <div class="gallery-item">
-                        <img src="https://via.placeholder.com/300x200/f72585/ffffff?text=City" class="gallery-image" alt="شهر">
-                        <div class="gallery-info">
-                            <div class="gallery-name">نمای شهر</div>
-                            <div class="gallery-alt">نمای شبانه شهر با چراغ‌های روشن</div>
-                        </div>
-                    </div>
-                    <div class="gallery-item">
-                        <img src="https://via.placeholder.com/300x200/4cc9f0/ffffff?text=Beach" class="gallery-image" alt="ساحل">
-                        <div class="gallery-info">
-                            <div class="gallery-name">ساحل دریا</div>
-                            <div class="gallery-alt">ساحل شنی با امواج آرام</div>
-                        </div>
-                    </div>
-                    <div class="gallery-item">
-                        <img src="https://via.placeholder.com/300x200/f8961e/ffffff?text=Forest" class="gallery-image" alt="جنگل">
-                        <div class="gallery-info">
-                            <div class="gallery-name">جنگل سبز</div>
-                            <div class="gallery-alt">جنگل انبوه با درختان بلند</div>
-                        </div>
-                    </div>
-                </div>
+                @endforeach
             </div>
-        </main>
+        </div>
+    </main>
 
 @endsection
-
 
 @section('script')
 
     <script>
-        // مدیریت منوی کشویی
+
         const menuToggle = document.getElementById('menuToggle');
         const sidebar = document.getElementById('sidebar');
         const overlay = document.getElementById('overlay');
@@ -164,7 +140,6 @@
             overlay.classList.remove('active');
         });
 
-        // مدیریت آپلود عکس
         const uploadArea = document.getElementById('uploadArea');
         const fileInput = document.getElementById('fileInput');
         const previewContainer = document.getElementById('previewContainer');
@@ -174,142 +149,64 @@
         const fileDimensions = document.getElementById('fileDimensions');
         const fileType = document.getElementById('fileType');
         const resetBtn = document.getElementById('resetBtn');
-        const uploadBtn = document.getElementById('uploadBtn');
 
-        // رویدادهای درگ و دراپ
-        uploadArea.addEventListener('dragover', function(e) {
-            e.preventDefault();
-            uploadArea.classList.add('dragover');
+        // Drag & Drop
+        uploadArea.addEventListener('dragover', e => { e.preventDefault(); uploadArea.classList.add('dragover'); });
+        uploadArea.addEventListener('dragleave', () => uploadArea.classList.remove('dragover'));
+        uploadArea.addEventListener('drop', e => {
+            e.preventDefault(); uploadArea.classList.remove('dragover');
+            if (e.dataTransfer.files.length > 0) handleFileSelect(e.dataTransfer.files[0]);
         });
 
-        uploadArea.addEventListener('dragleave', function() {
-            uploadArea.classList.remove('dragover');
-        });
+        // File select
+        fileInput.addEventListener('change', e => { if (e.target.files.length > 0) handleFileSelect(e.target.files[0]); });
 
-        uploadArea.addEventListener('drop', function(e) {
-            e.preventDefault();
-            uploadArea.classList.remove('dragover');
-            const files = e.dataTransfer.files;
-            if (files.length > 0) {
-                handleFileSelect(files[0]);
-            }
-        });
-
-        // انتخاب فایل از طریق کلیک
-        fileInput.addEventListener('change', function(e) {
-            if (e.target.files.length > 0) {
-                handleFileSelect(e.target.files[0]);
-            }
-        });
-
-        // مدیریت فایل انتخاب شده
-        function handleFileSelect(file) {
-            if (!file.type.match('image.*')) {
-                alert('لطفاً فقط فایل تصویری انتخاب کنید!');
-                return;
-            }
+        // Handle selected file
+        function handleFileSelect(file){
+            if(!file.type.match('image.*')) return alert('لطفاً فقط فایل تصویری انتخاب کنید!');
 
             const reader = new FileReader();
-            
-            reader.onload = function(e) {
+            reader.onload = e => {
                 imagePreview.src = e.target.result;
-                
-                // نمایش اطلاعات فایل
                 fileName.textContent = file.name;
                 fileSize.textContent = formatFileSize(file.size);
                 fileType.textContent = file.type;
-                
-                // محاسبه ابعاد تصویر
+
                 const img = new Image();
-                img.onload = function() {
-                    fileDimensions.textContent = `${img.width} × ${img.height} پیکسل`;
-                };
+                img.onload = () => fileDimensions.textContent = `${img.width} × ${img.height} px`;
                 img.src = e.target.result;
-                
-                // پر کردن خودکار فیلدها
+
                 document.getElementById('imageName').value = file.name.replace(/\.[^/.]+$/, "");
-                document.getElementById('imageUrl').value = generateSlug(file.name.replace(/\.[^/.]+$/, ""));
                 document.getElementById('imageAlt').value = file.name.replace(/\.[^/.]+$/, "");
-                
-                // نمایش پیش‌نمایش
+
                 previewContainer.style.display = 'block';
             };
-            
             reader.readAsDataURL(file);
         }
 
-        // فرمت کردن سایز فایل
-        function formatFileSize(bytes) {
-            if (bytes === 0) return '0 Bytes';
-            const k = 1024;
-            const sizes = ['Bytes', 'KB', 'MB', 'GB'];
-            const i = Math.floor(Math.log(bytes) / Math.log(k));
-            return parseFloat((bytes / Math.pow(k, i)).toFixed(2)) + ' ' + sizes[i];
+        function formatFileSize(bytes){
+            if(bytes===0) return '0 Bytes';
+            const k = 1024, sizes=['Bytes','KB','MB','GB'], i=Math.floor(Math.log(bytes)/Math.log(k));
+            return parseFloat((bytes/Math.pow(k,i)).toFixed(2))+' '+sizes[i];
         }
 
-        // تولید آدرس از نام فایل
-        function generateSlug(text) {
-            return text
-                .toLowerCase()
-                .replace(/[^a-z0-9 -]/g, '')
-                .replace(/\s+/g, '-')
-                .replace(/-+/g, '-');
-        }
-
-        // بازنشانی فرم
-        resetBtn.addEventListener('click', function() {
+        // Reset form
+        resetBtn.addEventListener('click', () => {
             fileInput.value = '';
-            previewContainer.style.display = 'none';
-            document.getElementById('imageName').value = '';
-            document.getElementById('imageUrl').value = '';
-            document.getElementById('imageAlt').value = '';
-            document.getElementById('imageDescription').value = '';
-        });
-
-        // آپلود عکس
-        uploadBtn.addEventListener('click', function() {
-            const imageName = document.getElementById('imageName').value;
-            const imageUrl = document.getElementById('imageUrl').value;
-            const imageAlt = document.getElementById('imageAlt').value;
-            const imageDescription = document.getElementById('imageDescription').value;
-            
-            if (!fileInput.files[0]) {
-                alert('لطفاً یک عکس انتخاب کنید!');
-                return;
-            }
-            
-            if (!imageName || !imageUrl || !imageAlt) {
-                alert('لطفاً فیلدهای ضروری را پر کنید!');
-                return;
-            }
-            
-            // در اینجا می‌توانید کد آپلود به سرور را اضافه کنید
-            console.log('آپلود عکس:', {
-                name: imageName,
-                url: imageUrl,
-                alt: imageAlt,
-                description: imageDescription,
-                file: fileInput.files[0]
-            });
-            
-            alert(`عکس "${imageName}" با موفقیت آپلود شد!`);
-            resetBtn.click();
-        });
-
-        // اضافه کردن افکت شیشه‌ای پویا
-        document.addEventListener('DOMContentLoaded', function() {
-            const cards = document.querySelectorAll('.upload-container, .image-form, .gallery-item, .sidebar, .header');
-            
-            cards.forEach(card => {
-                card.addEventListener('mousemove', function(e) {
-                    const rect = this.getBoundingClientRect();
-                    const x = e.clientX - rect.left;
-                    const y = e.clientY - rect.top;
-                    
-                    this.style.setProperty('--mouse-x', `${x}px`);
-                    this.style.setProperty('--mouse-y', `${y}px`);
-                });
-            });
+            previewContainer.style.display = '{{ isset($currentImage) ? 'block' : 'none' }}';
+            @if(isset($currentImage))
+                imagePreview.src = "{{ asset('storage/' . $currentImage->url) }}";
+                fileName.textContent = "{{ $currentImage->name }}";
+                fileSize.textContent = "{{ number_format(filesize(public_path('storage/' . $currentImage->url)) / 1024, 2) }} KB";
+                fileDimensions.textContent = "{{ implode(' × ', getimagesize(public_path('storage/' . $currentImage->url))) }} px";
+                fileType.textContent = "{{ pathinfo($currentImage->url, PATHINFO_EXTENSION) }}";
+            @else
+                imagePreview.src = '#';
+                fileName.textContent = '';
+                fileSize.textContent = '';
+                fileDimensions.textContent = '-';
+                fileType.textContent = '-';
+            @endif
         });
     </script>
 

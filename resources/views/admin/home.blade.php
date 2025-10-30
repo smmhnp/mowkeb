@@ -62,7 +62,7 @@
                                 <div class="gallery-header">
                                     <div class="gallery-title">گالری تصاویر</div>
                                     <div class="gallery-actions">
-                                        <a href="{{ route('addImage') }}" class="btn btn-outline btn-sm" onclick="openImageManager()">
+                                        <a href="{{ route('MedaiControler.ImageGallery') }}" class="btn btn-outline btn-sm" onclick="openImageGallery()">
                                             <i class="fas fa-plus"></i>
                                             افزودن تصویر جدید
                                         </a>

@@ -46,11 +46,11 @@
                     <i class="fas fa-users"></i>کاربران</a>
                 </li>
 
-                <li><a href="{{ route('iamge') }}" class="{{ request()->routeIs('iamge') ? 'active' : '' }}">
+                <li><a href="{{ route('MedaiControler.ImageGallery') }}" class="{{ request()->routeIs('MedaiControler.ImageGallery') ? 'active' : '' }}">
                     <i class="fas fa-image"></i>تصاویر</a>
                 </li>
                 
-                <li><a href="{{ route('video') }}" class="{{ request()->routeIs('video') ? 'active' : '' }}">
+                <li><a href="{{ route('MedaiControler.VideoGallery') }}" class="{{ request()->routeIs('MedaiControler.VideoGallery') ? 'active' : '' }}">
                     <i class="fas fa-video"></i>ویدیوها</a>
                 </li>
             </ul>

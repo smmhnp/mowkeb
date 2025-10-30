@@ -10,6 +10,13 @@ class Image extends Model
 {
     use HasFactory, Notifiable;
 
+    protected $fillable = [
+        'name',
+        'url',
+        'alt',
+        'description'
+    ];
+
     public function articles() {
         return $this->belongsToMany(Article::class);
     }

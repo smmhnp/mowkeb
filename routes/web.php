@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\HomeController;
+use App\Http\Controllers\MedaiControler;
 use App\Http\Controllers\UserController;
 use Illuminate\Support\Facades\Route;
 
@@ -42,19 +43,17 @@ Route::group(['prefix' => 'admin'], function()
         return view('admin.article');
     });
 
-    Route::get('/add/image', function () {
-        return view('admin.addImage');
-    })->name('addImage');
+    Route::get('/image', [MedaiControler::class, 'ImageGallery'])->name('MedaiControler.ImageGallery');
+    Route::get('/add/image', [MedaiControler::class, 'ImageManager'])->name('MedaiControler.ImageManager');
+    Route::post('/add/image', [MedaiControler::class, 'ImageStore'])->name('MedaiControler.ImageStore');
+    Route::get('/update/image/{id}', [MedaiControler::class, 'UpdateImageManager'])->name('MedaiControler.UpdateImageManager');
+    Route::post('/update/image/{image}', [MedaiControler::class, 'UpdateImageStore'])->name('MedaiControler.UpdateImageStore');
+    Route::post('/delete/image/{image}', [MedaiControler::class, 'DestroyImage'])->name('MedaiControler.DestroyImage');
 
-    Route::get('/add/video', function () {
-        return view('admin.addVideo');
-    });
-
-    Route::get('/video', function () {
-        return view('admin.video');
-    })->name('video');
-
-    Route::get('/image', function () {
-        return view('admin.image');
-    })->name('iamge');
+    Route::get('/video', [MedaiControler::class, 'VideoGallery'])->name('MedaiControler.VideoGallery');
+    Route::get('/add/video', [MedaiControler::class, 'VideoManager'])->name('MedaiControler.VideoManager');
+    Route::post('/add/video', [MedaiControler::class, 'VideoStore'])->name('MedaiControler.VideoStore');
+    Route::get('/update/video/{id}', [MedaiControler::class, 'UpdateVideoManager'])->name('MedaiControler.UpdateVideoManager');
+    Route::post('/update/video/{video}', [MedaiControler::class, 'UpdateVideoStore'])->name('MedaiControler.UpdateVideoStore');
+    Route::post('/delete/video/{video}', [MedaiControler::class, 'DestroyVideo'])->name('MedaiControler.DestroyVideo');
 });

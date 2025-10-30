@@ -7,14 +7,14 @@
 @endsection
 
 @section('content')
-
+   
     <main class="main-content">
         <div class="page-title">
             <h2>گالری تصاویر</h2>
-            <button class="btn btn-primary">
+            <a href="{{ route('MedaiControler.ImageManager') }}" class="btn btn-primary">
                 <i class="fas fa-plus"></i>
                 افزودن تصویر جدید
-            </button>
+            </a>
         </div>
 
         <!-- آمار کلی -->
@@ -24,7 +24,7 @@
                     <i class="fas fa-video"></i>
                 </div>
                 <div class="stat-info">
-                    <h3>۴۸</h3>
+                    <h3>{{ $count }}</h3>
                     <p>کل تصاویر</p>
                 </div>
             </div>
@@ -62,139 +62,51 @@
                 همه تصاویر
             </h3>
             <div class="gallery-grid" id="videoGallery">
+                @foreach($images as $image)
+                    <div class="video-card"
+                        data-url="{{ asset('storage/' . $image->url) }}"
+                        data-title="{{ $image->name }}" 
+                        data-description="{{ $image->description }}" 
+                        data-alt="{{ $image->alt }}" 
+                        data-date="{{ jDate($image->created_at)->format('Y/m/d') }}">
+                        
+                        <div class="video-thumbnail">
+                            <img src="{{ asset('storage/' . $image->url) }}" alt="{{ $image->alt }}">
+                            <div class="play-overlay">
+                                
+                            </div>
+                        </div>
+                        <div class="video-info">
+                            <div class="video-header">
+                                <div class="video-title">{{ $image->name }}</div>
+                                <div class="video-actions">
+                                    <a href="{{ route('MedaiControler.UpdateImageStore', ['image' => $image->id]) }}" class="action-btn edit-btn" title="ویرایش">
+                                        <i class="fas fa-edit"></i>
+                                    </a>
+                                    <a href="#" class="action-btn delete-btn" data-id="{{ $image->id }}" title="حذف">
+                                        <i class="fas fa-trash"></i>
+                                    </a>
+                                </div>
+                            </div>
+                            <div class="video-stats">
+                                <div class="stat">
+                                    <i class="fas fa-calendar"></i>
+                                    <span>{{ jDate($image->created_at)->ago() }}</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                @endforeach
+                </div> 
 
-                <div class="video-card" data-video-id="VID_001">
-                    <div class="video-thumbnail">
-                        <img src="https://via.placeholder.com/400x225/4361ee/ffffff?text=Web+Design+Tutorial" alt="آموزش طراحی وب">
-                        <div class="play-overlay">
-                            
-                        </div>
-                    </div>
-                    <div class="video-info">
-                        <div class="video-header">
-                            <div class="video-title">آموزش کامل طراحی وب سایت ریسپانسیو</div>
-                            <div class="video-actions">
-                                <button class="action-btn edit-btn" title="ویرایش">
-                                    <i class="fas fa-edit"></i>
-                                </button>
-                                <button class="action-btn delete-btn" title="حذف">
-                                    <i class="fas fa-trash"></i>
-                                </button>
-                            </div>
-                        </div>
-                        <div class="video-stats">
-                            <div class="stat">
-                                <i class="fas fa-eye"></i>
-                                <span>۱,۲۴۵ بازدید</span>
-                            </div>
-                            <div class="stat">
-                                <i class="fas fa-calendar"></i>
-                                <span>۱۴۰۲/۰۵/۱۵</span>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="video-card" data-video-id="VID_001">
-                    <div class="video-thumbnail">
-                        <img src="https://via.placeholder.com/400x225/4361ee/ffffff?text=Web+Design+Tutorial" alt="آموزش طراحی وب">
-                        <div class="play-overlay">
-                            
-                        </div>
-                    </div>
-                    <div class="video-info">
-                        <div class="video-header">
-                            <div class="video-title">آموزش کامل طراحی وب سایت ریسپانسیو</div>
-                            <div class="video-actions">
-                                <button class="action-btn edit-btn" title="ویرایش">
-                                    <i class="fas fa-edit"></i>
-                                </button>
-                                <button class="action-btn delete-btn" title="حذف">
-                                    <i class="fas fa-trash"></i>
-                                </button>
-                            </div>
-                        </div>
-                        <div class="video-stats">
-                            <div class="stat">
-                                <i class="fas fa-eye"></i>
-                                <span>۱,۲۴۵ بازدید</span>
-                            </div>
-                            <div class="stat">
-                                <i class="fas fa-calendar"></i>
-                                <span>۱۴۰۲/۰۵/۱۵</span>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="video-card" data-video-id="VID_001">
-                    <div class="video-thumbnail">
-                        <img src="https://via.placeholder.com/400x225/4361ee/ffffff?text=Web+Design+Tutorial" alt="آموزش طراحی وب">
-                        <div class="play-overlay">
-                            
-                        </div>
-                    </div>
-                    <div class="video-info">
-                        <div class="video-header">
-                            <div class="video-title">آموزش کامل طراحی وب سایت ریسپانسیو</div>
-                            <div class="video-actions">
-                                <button class="action-btn edit-btn" title="ویرایش">
-                                    <i class="fas fa-edit"></i>
-                                </button>
-                                <button class="action-btn delete-btn" title="حذف">
-                                    <i class="fas fa-trash"></i>
-                                </button>
-                            </div>
-                        </div>
-                        <div class="video-stats">
-                            <div class="stat">
-                                <i class="fas fa-eye"></i>
-                                <span>۱,۲۴۵ بازدید</span>
-                            </div>
-                            <div class="stat">
-                                <i class="fas fa-calendar"></i>
-                                <span>۱۴۰۲/۰۵/۱۵</span>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="video-card" data-video-id="VID_001">
-                    <div class="video-thumbnail">
-                        <img src="https://via.placeholder.com/400x225/4361ee/ffffff?text=Web+Design+Tutorial" alt="آموزش طراحی وب">
-                        <div class="play-overlay">
-                            
-                        </div>
-                    </div>
-                    <div class="video-info">
-                        <div class="video-header">
-                            <div class="video-title">آموزش کامل طراحی وب سایت ریسپانسیو</div>
-                            <div class="video-actions">
-                                <button class="action-btn edit-btn" title="ویرایش">
-                                    <i class="fas fa-edit"></i>
-                                </button>
-                                <button class="action-btn delete-btn" title="حذف">
-                                    <i class="fas fa-trash"></i>
-                                </button>
-                            </div>
-                        </div>
-                        <div class="video-stats">
-                            <div class="stat">
-                                <i class="fas fa-eye"></i>
-                                <span>۱,۲۴۵ بازدید</span>
-                            </div>
-                            <div class="stat">
-                                <i class="fas fa-calendar"></i>
-                                <span>۱۴۰۲/۰۵/۱۵</span>
-                            </div>
-                        </div>
-                    </div>
+                <div class="pagination-wrapper mt-4">
+                    {{ $images->links() }}
                 </div>
             </div>
         </div>
     </main>
 
-    <!-- مودال نمایش ویدیو -->
+    <!-- مودال نمایش تصویر -->
     <div class="modal" id="videoModal">
         <div class="modal-content">
             <div class="modal-header">
@@ -204,9 +116,7 @@
                 </button>
             </div>
             <div class="modal-body">
-                <img class="modal-video" controls id="modalVideo" alt="test">
-                    مرورگر شما از تگ تصویر پشتیبانی نمی‌کند.
-
+                <img class="modal-video" controls id="modalVideo" alt="">
                 <div class="modal-info">
                     
                     <div style="color: white; margin-bottom: 10px;">
@@ -218,7 +128,7 @@
                     </div>
                     <div class="modal-stats">
                         <div class="modal-stat">
-                            <div class="modal-stat-value">۱۴۰۲/۰۵/۱۵</div>
+                            <div class="modal-stat-value"></div>
                             <div class="modal-stat-label">تاریخ آپلود</div>
                         </div>
                     </div>
@@ -232,6 +142,30 @@
 @section('script')
 
     <script>
+        document.querySelectorAll('.delete-btn').forEach(btn => {
+            btn.addEventListener('click', e => {
+                e.preventDefault();
+                const id = btn.getAttribute('data-id');
+                const card = btn.closest('.video-card');
+
+                if (confirm('آیا از حذف این تصویر مطمئن هستید؟')) {
+                    fetch(`/admin/delete/image/${id}`, {
+                        method: 'POST',
+                        headers: {
+                            'X-CSRF-TOKEN': '{{ csrf_token() }}'
+                        }
+                    })
+                    .then(res => res.ok ? res.json() : Promise.reject())
+                    .then(() => {
+                        card.style.transition = "opacity 0.3s ease";
+                        card.style.opacity = "0";
+                        setTimeout(() => card.remove(), 300);
+                    })
+                    .catch(() => alert('خطا در حذف تصویر'));
+                }
+            });
+        });
+
         // مدیریت منوی کشویی
         const menuToggle = document.getElementById('menuToggle');
         const sidebar = document.getElementById('sidebar');
@@ -257,15 +191,26 @@
         videoCards.forEach(card => {
             card.addEventListener('click', function(e) {
                 if (!e.target.closest('.video-actions')) {
-                    const videoId = this.dataset.videoId;
-                    openVideoModal(videoId);
+                    openVideoModal(this);
                 }
             });
         });
 
-        function openVideoModal(videoId) {
-            // در اینجا می‌توانید ویدیو واقعی را بارگذاری کنید
-            modalVideo.src = `https://example.com/videos/${videoId}.mp4`;
+
+        function openVideoModal(card) {
+            const imageUrl = card.dataset.url;
+            const imageTitle = card.dataset.title;
+            const imageDesc = card.dataset.description;
+            const imageAlt = card.dataset.alt;
+            const imageDate = card.dataset.date;
+
+            // مقداردهی به عناصر داخل مودال
+            modalVideo.src = imageUrl;
+            document.querySelector('.modal-info h4').textContent = imageTitle;
+            document.querySelector('.modal-info p').textContent = imageDesc;
+            document.querySelector('.modal-stat-value').textContent = imageDate;
+            document.querySelector('.modal-video').setAttribute('alt', imageAlt);
+
             videoModal.classList.add('active');
         }
 
@@ -285,27 +230,11 @@
             }
         });
 
-        // مدیریت دکمه‌های ویرایش و حذف
-        document.querySelectorAll('.edit-btn').forEach(btn => {
-            btn.addEventListener('click', function(e) {
-                e.stopPropagation();
-                const videoId = this.closest('.video-card').dataset.videoId;
-                alert(`ویرایش ویدیو: ${videoId}`);
-                // اینجا می‌توانید به صفحه ویرایش هدایت شوید
-            });
-        });
-
         document.querySelectorAll('.delete-btn').forEach(btn => {
             btn.addEventListener('click', function(e) {
                 e.stopPropagation();
                 const videoId = this.closest('.video-card').dataset.videoId;
                 const videoTitle = this.closest('.video-card').querySelector('.video-title').textContent;
-                
-                if (confirm(`آیا از حذف ویدیو "${videoTitle}" مطمئن هستید؟`)) {
-                    // اینجا می‌توانید کد حذف ویدیو را اضافه کنید
-                    this.closest('.video-card').style.display = 'none';
-                    alert(`ویدیو "${videoTitle}" با موفقیت حذف شد!`);
-                }
             });
         });
 

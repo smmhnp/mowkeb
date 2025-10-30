@@ -30,8 +30,6 @@
             </div>
         @endif
 
-       
-
         <div class="layout-container">
             <!-- محتوای اصلی -->
             <div class="main-content">

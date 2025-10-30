@@ -10,6 +10,12 @@ class Video extends Model
 {
     use HasFactory, Notifiable;
 
+    protected $fillable = [
+        'link',
+        'aparatID',
+        'name'
+    ];
+
     public function articles(){
         return $this->hasMany(Article::class);
     }
