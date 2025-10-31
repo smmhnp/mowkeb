@@ -34,7 +34,7 @@
                     <i class="fas fa-cog"></i>صفحه اصلی</a>
                 </li>
 
-                <li><a href="{{ route('HomeController.homeManeger') }}" class="{{ request()->routeIs('HomeController.homeManeger') ? 'active' : '' }}">
+                <li><a href="{{ route('ArticleController.articleManager') }}" class="{{ request()->routeIs('ArticleController.articleManager') ? 'active' : '' }}">
                     <i class="fas fa-edit"></i>مقالات</a>
                 </li>
 

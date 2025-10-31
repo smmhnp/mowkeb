@@ -10,6 +10,18 @@ class Article extends Model
 {
     use HasFactory, Notifiable;
 
+    protected $fillable = [
+        'name',
+        'category_id',
+        'content',
+        'summery',
+        'tag',
+        'status',
+        'video_id',
+        'cover',
+        'user_id'
+    ];
+
     public function user() {
         return $this->belongsTo(User::class);
     }

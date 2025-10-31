@@ -6,15 +6,28 @@
 
 @endsection
 
+@php
+    function status ($input){
+        switch ($input){
+            case 'unauthorized':
+                return 'غیرمجاز';
+            case 'allow':   
+                return 'مجاز';
+            default:
+                return 'ناشناخته';
+        }
+    }
+@endphp
+
 @section('content')
 
     <main class="main-content">
         <div class="page-title">
             <h2>مدیریت مقالات</h2>
-            <button class="btn btn-primary">
+            <a href="{{ route('ArticleController.addArticleManager') }}" class="btn btn-primary">
                 <i class="fas fa-plus"></i>
                 مقاله جدید
-            </button>
+            </a>
         </div>
 
         <!-- بخش فیلترها -->
@@ -65,7 +78,7 @@
         <!-- جدول مقالات -->
         <section class="articles-table">
             <div class="table-header">
-                <div class="table-title">لیست مقالات (۲۴۵ مقاله)</div>
+                <div class="table-title">لیست مقالات ({{ $count }} مقاله)</div>
                 <div class="table-actions">
                     <button class="btn btn-outline btn-sm">
                         <i class="fas fa-download"></i>
@@ -81,152 +94,43 @@
                         <th>عنوان مقاله</th>
                         <th>دسته‌بندی</th>
                         <th>نویسنده</th>
-                        <th>تاریخ انتشار</th>
-                        <th>بازدید</th>
+                        <th>تاریخ ایجاد</th>
                         <th>وضعیت</th>
                         <th>عملیات</th>
                     </tr>
                 </thead>
                 <tbody>
-                    <tr>
-                        <td>
-                            <img src="https://images.unsplash.com/photo-1586339949216-35c2747cc36d?w=100&h=60&fit=crop" alt="مقاله ۱" class="article-image">
-                        </td>
-                        <td>اجلاس سران کشورهای منطقه با موضوع امنیت خلیج فارس</td>
-                        <td>سیاسی</td>
-                        <td>محمد رضایی</td>
-                        <td>۱۴۰۲/۰۵/۱۵</td>
-                        <td>۱,۲۴۵</td>
-                        <td><span class="status-badge status-published">منتشر شده</span></td>
-                        <td>
-                            <div class="action-buttons">
-                                <button class="action-btn view" title="مشاهده">
-                                    <i class="fas fa-eye"></i>
-                                </button>
-                                <button class="action-btn edit" title="ویرایش">
-                                    <i class="fas fa-edit"></i>
-                                </button>
-                                <button class="action-btn delete" title="حذف">
-                                    <i class="fas fa-trash"></i>
-                                </button>
-                            </div>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td>
-                            <img src="https://images.unsplash.com/photo-1504711434969-e33886168f5c?w=100&h=60&fit=crop" alt="مقاله ۲" class="article-image">
-                        </td>
-                        <td>رشد ۱۵ درصدی صادرات غیرنفتی در سه ماهه اول سال</td>
-                        <td>اقتصادی</td>
-                        <td>فاطمه کریمی</td>
-                        <td>۱۴۰۲/۰۵/۱۴</td>
-                        <td>۲,۳۴۱</td>
-                        <td><span class="status-badge status-published">منتشر شده</span></td>
-                        <td>
-                            <div class="action-buttons">
-                                <button class="action-btn view" title="مشاهده">
-                                    <i class="fas fa-eye"></i>
-                                </button>
-                                <button class="action-btn edit" title="ویرایش">
-                                    <i class="fas fa-edit"></i>
-                                </button>
-                                <button class="action-btn delete" title="حذف">
-                                    <i class="fas fa-trash"></i>
-                                </button>
-                            </div>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td>
-                            <img src="https://images.unsplash.com/photo-1495020689067-958852a7765e?w=100&h=60&fit=crop" alt="مقاله ۳" class="article-image">
-                        </td>
-                        <td>قهرمانی تیم ملی والیبال در مسابقات آسیایی</td>
-                        <td>ورزشی</td>
-                        <td>علی محمدی</td>
-                        <td>۱۴۰۲/۰۵/۱۳</td>
-                        <td>۱,۸۷۶</td>
-                        <td><span class="status-badge status-published">منتشر شده</span></td>
-                        <td>
-                            <div class="action-buttons">
-                                <button class="action-btn view" title="مشاهده">
-                                    <i class="fas fa-eye"></i>
-                                </button>
-                                <button class="action-btn edit" title="ویرایش">
-                                    <i class="fas fa-edit"></i>
-                                </button>
-                                <button class="action-btn delete" title="حذف">
-                                    <i class="fas fa-trash"></i>
-                                </button>
-                            </div>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td>
-                            <div style="width: 60px; height: 40px; background: #f0f0f0; border-radius: 6px; display: flex; align-items: center; justify-content: center; color: #999;">
-                                <i class="fas fa-image"></i>
-                            </div>
-                        </td>
-                        <td>مقاله جدید در مورد هوش مصنوعی و آینده تکنولوژی</td>
-                        <td>فناوری</td>
-                        <td>زهرا احمدی</td>
-                        <td>۱۴۰۲/۰۵/۱۲</td>
-                        <td>۰</td>
-                        <td><span class="status-badge status-draft">پیش‌نویس</span></td>
-                        <td>
-                            <div class="action-buttons">
-                                <button class="action-btn view" title="مشاهده">
-                                    <i class="fas fa-eye"></i>
-                                </button>
-                                <button class="action-btn edit" title="ویرایش">
-                                    <i class="fas fa-edit"></i>
-                                </button>
-                                <button class="action-btn delete" title="حذف">
-                                    <i class="fas fa-trash"></i>
-                                </button>
-                            </div>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td>
-                            <img src="https://images.unsplash.com/photo-1557804506-669a67965ba0?w=100&h=60&fit=crop" alt="مقاله ۵" class="article-image">
-                        </td>
-                        <td>گزارش جامع از وضعیت آب و هوا در فصل بهار</td>
-                        <td>محیط زیست</td>
-                        <td>رضا حسینی</td>
-                        <td>۱۴۰۲/۰۵/۱۱</td>
-                        <td>۹۸۷</td>
-                        <td><span class="status-badge status-pending">در انتظار تایید</span></td>
-                        <td>
-                            <div class="action-buttons">
-                                <button class="action-btn view" title="مشاهده">
-                                    <i class="fas fa-eye"></i>
-                                </button>
-                                <button class="action-btn edit" title="ویرایش">
-                                    <i class="fas fa-edit"></i>
-                                </button>
-                                <button class="action-btn delete" title="حذف">
-                                    <i class="fas fa-trash"></i>
-                                </button>
-                            </div>
-                        </td>
-                    </tr>
+                    @foreach($articles as $article)
+                        <tr>
+                            <td>
+                                <img src="{{ asset('storage/' . $article->cover) }}" alt="{{ $article->name }}" class="article-image">
+                            </td>
+                            <td>{{ $article->name }}</td>
+                            <td>{{ $article->category->name }}</td>
+                            <td>{{ $article->user->fname . " " . $article->user->lname }}</td>
+                            <td>{{ jDate($article->created_at)->ago() }}</td>
+                            <td><span class="status-badge status-published">{{ status($article->status) }}</span></td>
+                            <td>
+                                <div class="action-buttons">
+                                    <a href="#" class="action-btn view" title="مشاهده">
+                                        <i class="fas fa-eye"></i>
+                                    </a>
+                                    <a href="#" class="action-btn edit" title="ویرایش">
+                                        <i class="fas fa-edit"></i>
+                                    </a>
+                                    <button class="action-btn delete" title="حذف">
+                                        <i class="fas fa-trash"></i>
+                                    </button>
+                                </div>
+                            </td>
+                        </tr>
+                    @endforeach
                 </tbody>
             </table>
-
-            <!-- صفحه‌بندی -->
-            <div class="pagination">
-                <button class="page-btn">
-                    <i class="fas fa-chevron-right"></i>
-                </button>
-                <button class="page-btn">۱</button>
-                <button class="page-btn active">۲</button>
-                <button class="page-btn">۳</button>
-                <button class="page-btn">۴</button>
-                <button class="page-btn">۵</button>
-                <button class="page-btn">
-                    <i class="fas fa-chevron-left"></i>
-                </button>
-            </div>
+            
+            <div class="pagination-wrapper mt-4">
+               {{ $articles->links() }}
+           </div>           
         </section>
     </main>
 

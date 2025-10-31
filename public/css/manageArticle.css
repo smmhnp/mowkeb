@@ -559,3 +559,53 @@ tr:hover {
         align-items: flex-start;
     }
 }
+
+.pagination-wrapper {
+    display: flex;
+    justify-content: center;
+    margin-top: 20px;
+}
+
+.pagination {
+    display: inline-flex;
+    gap: 6px;
+    background: rgba(255, 255, 255, 0.07);
+    padding: 10px 15px;
+    border-radius: 12px;
+    backdrop-filter: blur(10px);
+}
+
+.pagination li {
+    list-style: none;
+}
+
+.pagination a,
+.pagination span {
+    display: block;
+    padding: 8px 14px;
+    border-radius: 8px;
+    font-size: 14px;
+    color: #fff;
+    text-decoration: none;
+    transition: 0.3s;
+}
+
+.pagination a:hover {
+    background: rgba(255, 255, 255, 0.25);
+    transform: translateY(-2px);
+}
+
+.page-item.active .page-link {
+    background: #007bff;
+    border-color: #005dc1;
+    transform: scale(1.05);
+}
+
+.page-item.disabled .page-link {
+    opacity: 0.4;
+    cursor: not-allowed;
+}
+
+.page-link{
+    color: #000 !important;
+}

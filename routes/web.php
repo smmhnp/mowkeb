@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\ArticleController;
 use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\MedaiControler;
@@ -12,8 +13,7 @@ Route::get('/article', function () {
     return view('client.article');
 });
 
-Route::group(['prefix' => 'admin'], function() 
-{
+Route::group(['prefix' => 'admin'], function(){
     Route::get('', function () {
         return view('admin.admin');
     })->name('dashboard');
@@ -35,14 +35,6 @@ Route::group(['prefix' => 'admin'], function()
     Route::post('/update/user/{user}', [UserController::class, 'updateUserStore'])->name('UserController.updateUserStore');
     Route::post('/user/destroy', [UserController::class, 'deleteUserManager'])->name('UserController.deleteUserManager');
 
-    Route::get('/add', function () {
-        return view('admin.add');
-    });
-
-    Route::get('/article', function () {
-        return view('admin.article');
-    });
-
     Route::get('/image', [MedaiControler::class, 'ImageGallery'])->name('MedaiControler.ImageGallery');
     Route::get('/add/image', [MedaiControler::class, 'ImageManager'])->name('MedaiControler.ImageManager');
     Route::post('/add/image', [MedaiControler::class, 'ImageStore'])->name('MedaiControler.ImageStore');
@@ -56,4 +48,9 @@ Route::group(['prefix' => 'admin'], function()
     Route::get('/update/video/{id}', [MedaiControler::class, 'UpdateVideoManager'])->name('MedaiControler.UpdateVideoManager');
     Route::post('/update/video/{video}', [MedaiControler::class, 'UpdateVideoStore'])->name('MedaiControler.UpdateVideoStore');
     Route::post('/delete/video/{video}', [MedaiControler::class, 'DestroyVideo'])->name('MedaiControler.DestroyVideo');
+
+    Route::get('/article', [ArticleController::class, 'articleManager'])->name('ArticleController.articleManager');
+    Route::get('/add', [ArticleController::class, 'addArticleManager'])->name('ArticleController.addArticleManager');
+    Route::post('/add', [ArticleController::class, 'addArticleStore'])->name('ArticleController.addArticleStore');
+
 });
