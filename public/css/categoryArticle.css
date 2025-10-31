@@ -841,3 +841,14 @@ textarea.form-control {
 .page-link{
     color: #000 !important;
 }
+
+.news-link {
+  text-decoration: none;
+  color: inherit;
+  display: block;
+}
+
+.news-link:hover .news-card {
+  transform: translateY(-5px);
+  transition: 0.3s;
+}

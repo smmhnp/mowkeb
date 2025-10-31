@@ -51,30 +51,32 @@
         <!-- شبکه مقالات -->
         <div class="articles-grid">
             @foreach($articles as $article)
-                <article class="news-card">
-                    <div class="news-image">
-                        <img src="{{ asset('storage/' . $article->cover) }}" alt="مقاله سیاسی">
-                        <div class="image-news">
-                            @if($article->tag == 'special')
-                                <span class="special-badge">ویژه</span>
-                            @endif
-                        </div>
-                    </div>
-                    <div class="news-content">
-                        <div class="news-meta">
-                            <span class="news-category">{{ $article->category->name }}</span>
-                            <span>{{ jDate($article->created_at)->ago() }}</span>
-                        </div>
-                        <h3 class="news-title">{{ $article->name }}</h3>
-                        <p class="news-excerpt">{{ $article->summery }}</p>
-                        <div class="news-footer">
-                            <div class="news-author">
-                                <div class="author-avatar"></div>
-                                <span>{{ $article->user->fname . " " . $article->user->lname }}</span>
+                <a href="{{ route('ArticleController.showArticle', ['id' => $article->id]) }}" class="news-link">
+                    <article class="news-card">
+                        <div class="news-image">
+                            <img src="{{ asset('storage/' . $article->cover) }}" alt="{{ $article->name }}">
+                            <div class="image-news">
+                                @if($article->tag == 'special')
+                                    <span class="special-badge">ویژه</span>
+                                @endif
                             </div>
                         </div>
-                    </div>
-                </article>
+                        <div class="news-content">
+                            <div class="news-meta">
+                                <span class="news-category">{{ $article->category->name }}</span>
+                                <span>{{ jDate($article->created_at)->ago() }}</span>
+                            </div>
+                            <h3 class="news-title">{{ $article->name }}</h3>
+                            <p class="news-excerpt">{{ $article->summary }}</p>
+                            <div class="news-footer">
+                                <div class="news-author">
+                                    <div class="author-avatar"></div>
+                                    <span>{{ $article->user->fname . ' ' . $article->user->lname }}</span>
+                                </div>
+                            </div>
+                        </div>
+                    </article>
+                </a>
             @endforeach
         </div>
 

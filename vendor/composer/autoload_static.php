@@ -43,6 +43,7 @@ class ComposerStaticInitc514d8f7b9fc5970bdd94287905ef584
         'e4e590a9b5afe940db71ee1662c02677' => __DIR__ . '/..' . '/morilog/jalali/src/helpers.php',
         'a1cfe24d14977df6878b9bf804af2d1c' => __DIR__ . '/..' . '/nunomaduro/collision/src/Adapters/Phpunit/Autoload.php',
         'ec07570ca5a812141189b1fa81503674' => __DIR__ . '/..' . '/phpunit/phpunit/src/Framework/Assert/Functions.php',
+        'd21d43db5f6e840ee7b10744ec7fdf66' => __DIR__ . '/../..' . '/app/Helpers/helpers.php',
     );
 
     public static $prefixLengthsPsr4 = array (
@@ -545,10 +546,22 @@ class ComposerStaticInitc514d8f7b9fc5970bdd94287905ef584
     );
 
     public static $classMap = array (
+        'App\\Http\\Controllers\\ArticleController' => __DIR__ . '/../..' . '/app/Http/Controllers/ArticleController.php',
+        'App\\Http\\Controllers\\CategoryController' => __DIR__ . '/../..' . '/app/Http/Controllers/CategoryController.php',
         'App\\Http\\Controllers\\Controller' => __DIR__ . '/../..' . '/app/Http/Controllers/Controller.php',
+        'App\\Http\\Controllers\\DashboardController' => __DIR__ . '/../..' . '/app/Http/Controllers/DashboardController.php',
         'App\\Http\\Controllers\\HomeController' => __DIR__ . '/../..' . '/app/Http/Controllers/HomeController.php',
+        'App\\Http\\Controllers\\MedaiControler' => __DIR__ . '/../..' . '/app/Http/Controllers/MedaiControler.php',
+        'App\\Http\\Controllers\\UserController' => __DIR__ . '/../..' . '/app/Http/Controllers/UserController.php',
+        'App\\Http\\Middleware\\RestrictByIP' => __DIR__ . '/../..' . '/app/Http/Middleware/RestrictByIP.php',
+        'App\\Http\\Requests\\ArticleRequest' => __DIR__ . '/../..' . '/app/Http/Requests/ArticleRequest.php',
         'App\\Http\\Requests\\HomeHeroRequest' => __DIR__ . '/../..' . '/app/Http/Requests/HomeHeroRequest.php',
         'App\\Http\\Requests\\HomeSpecialRequest' => __DIR__ . '/../..' . '/app/Http/Requests/HomeSpecialRequest.php',
+        'App\\Http\\Requests\\ImageRequest' => __DIR__ . '/../..' . '/app/Http/Requests/ImageRequest.php',
+        'App\\Http\\Requests\\UpdateImageRequest' => __DIR__ . '/../..' . '/app/Http/Requests/UpdateImageRequest.php',
+        'App\\Http\\Requests\\UpdateUserRequest' => __DIR__ . '/../..' . '/app/Http/Requests/UpdateUserRequest.php',
+        'App\\Http\\Requests\\VideoRequest' => __DIR__ . '/../..' . '/app/Http/Requests/VideoRequest.php',
+        'App\\Http\\Requests\\registerRequest' => __DIR__ . '/../..' . '/app/Http/Requests/registerRequest.php',
         'App\\Models\\Article' => __DIR__ . '/../..' . '/app/Models/Article.php',
         'App\\Models\\Categorie' => __DIR__ . '/../..' . '/app/Models/Categorie.php',
         'App\\Models\\Comment' => __DIR__ . '/../..' . '/app/Models/Comment.php',
@@ -558,6 +571,7 @@ class ComposerStaticInitc514d8f7b9fc5970bdd94287905ef584
         'App\\Models\\Video' => __DIR__ . '/../..' . '/app/Models/Video.php',
         'App\\Models\\home\\Hero' => __DIR__ . '/../..' . '/app/Models/home/Hero.php',
         'App\\Models\\home\\Specail' => __DIR__ . '/../..' . '/app/Models/home/Specail.php',
+        'App\\Models\\home\\TempCetegories' => __DIR__ . '/../..' . '/app/Models/home/TempCetegories.php',
         'App\\Providers\\AppServiceProvider' => __DIR__ . '/../..' . '/app/Providers/AppServiceProvider.php',
         'App\\Providers\\ViewServiceProvider' => __DIR__ . '/../..' . '/app/Providers/ViewServiceProvider.php',
         'Assert\\Assert' => __DIR__ . '/..' . '/beberlei/assert/lib/Assert/Assert.php',

@@ -2,11 +2,24 @@
         <header class="header">
             <div class="header-right">
                 <div class="user-info">
-                    <div class="user-avatar">مدیر</div>
-                    <div>
-                        <div class="user-name">مدیر سیستم</div>
-                        <small class="user-role">ادمین</small>
+                    <div class="user-avatar"></div>
+
+                    <div class="user-info" id="logoutTrigger" style="cursor: pointer;">
+                        <div class="user-name">{{ $auth->fname . " " . $auth->lname }}</div>
+                        <small class="user-role">({{ role($auth->role) }})</small>
                     </div>
+
+                    <form id="logoutForm" action="{{ route('UserController.logout') }}" method="POST" style="display: none;">
+                        @csrf
+                    </form>
+                    <script>
+                        document.getElementById('logoutTrigger').addEventListener('click', function() {
+                            if (confirm('آیا می‌خواهید خارج شوید؟')) {
+                                document.getElementById('logoutForm').submit();
+                            }
+                        });
+                    </script>
+
                 </div>
             </div>
              <div class="header-left">

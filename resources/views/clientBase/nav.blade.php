@@ -1,7 +1,7 @@
    <!-- header -->
     <header class="site-header">
         <div class="header-container">
-            <a href="#" class="logo">
+            <a href="{{ route('HomeController.index') }}" class="logo">
                 <i class="fas fa-newspaper"></i>
                 <h1>مثل اربعین</h1>
             </a>
@@ -10,7 +10,7 @@
                 <ul class="nav-menu">
                     <li><a href="/" class="{{ request()->routeIs('HomeController.index') ? 'active' : '' }}">خانه</a></li>
                     @foreach($category as $title)
-                        <li><a href="{{ $title->slug }}" class="{{ request()->routeIs('$title->slug') ? 'active' : '' }}">{{ $title->name }}</a></li>
+                        <li><a href="/show/{{ $title->slug }}" class="{{ request()->routeIs('$title->slug') ? 'active' : '' }}">{{ $title->name }}</a></li>
                     @endforeach
                 </ul>
             </nav>
@@ -29,7 +29,7 @@
         <ul class="mobile-nav">
             <li><a href="/" class="{{ request()->routeIs('HomeController.index') ? 'active' : '' }}">خانه</a></li>
             @foreach($category as $title)
-                <li><a href="{{ $title->slug }}" class="{{ request()->routeIs('$title->slug') ? 'active' : '' }}">{{ $title->name }}</a></li>
+                <li><a href="/show/{{ $title->slug }}" class="{{ request()->routeIs('$title->slug') ? 'active' : '' }}">{{ $title->name }}</a></li>
             @endforeach
         </ul>
     </div>

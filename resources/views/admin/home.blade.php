@@ -123,7 +123,7 @@
                             <i class="fas fa-save"></i>
                             ذخیره تغییرات
                         </button>
-                        <a href="{{ route('dashboard') }}" class="btn btn-outline">
+                        <a href="{{ route('DashboardController.dashboard') }}" class="btn btn-outline">
                             <i class="fas fa-times"></i>
                             انصراف
                         </a>
@@ -172,7 +172,7 @@
                             <i class="fas fa-save"></i>
                             ذخیره تغییرات
                         </button>
-                        <a href="{{ route('dashboard') }}" class="btn btn-outline">
+                        <a href="{{ route('DashboardController.dashboard') }}" class="btn btn-outline">
                             <i class="fas fa-times"></i>
                             انصراف
                         </a>
@@ -210,7 +210,7 @@
                                 <i class="fas fa-save"></i>
                                 ذخیره تغییرات
                             </button>
-                            <a href="{{ route('dashboard') }}" class="btn btn-outline">
+                            <a href="{{ route('DashboardController.dashboard') }}" class="btn btn-outline">
                                 <i class="fas fa-times"></i>
                                 انصراف
                             </a>

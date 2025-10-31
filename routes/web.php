@@ -8,12 +8,23 @@ use App\Http\Controllers\MedaiControler;
 use App\Http\Controllers\UserController;
 use Illuminate\Support\Facades\Route;
 
-Route::get('/', [HomeController::class, 'index'])->name('HomeController.index');
-Route::get('/show/{id}', [CategoryController::class, 'showCategoryArticles'])->name('CategoryController.showCategoryArticles');
+// Route::get('/check-ip', function () {
+//     return request()->ip();
+// });
 
+Route::get('/', [HomeController::class, 'index'])->name('HomeController.index');
+Route::get('/show/{slug}', [CategoryController::class, 'showCategoryArticles'])->name('CategoryController.showCategoryArticles');
 Route::get('/article/{id}', [ArticleController::class, 'showArticle'])->name('ArticleController.showArticle');
 
-Route::group(['prefix' => 'admin'], function(){
+
+//.....................Login....................
+Route::get('/admin/login', [UserController::class, 'loginPage'])->middleware('RestrictByIP')->name('UserController.loginPage');
+Route::post('/admin/login', [UserController::class, 'login'])->middleware('RestrictByIP')->name('login');
+Route::post('/admin/logout', [UserController::class, 'logout'])->middleware('RestrictByIP')->name('UserController.logout');
+
+
+Route::group(['prefix' => 'admin', 'middleware' => ['auth', 'RestrictByIP']], function(){
+    //....................Dashboard....................
     Route::get('', [DashboardController::class, 'dashboard'])->name('DashboardController.dashboard');
 
     //....................Home.Manager....................

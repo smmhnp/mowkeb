@@ -6,19 +6,6 @@
 
 @endsection
 
-@php
-    function status ($input){
-        switch ($input){
-            case 'unauthorized':
-                return 'غیرمجاز';
-            case 'allow':   
-                return 'مجاز';
-            default:
-                return 'ناشناخته';
-        }
-    }
-@endphp
-
 @section('content')
 
     <main class="main-content" id="mainContent">

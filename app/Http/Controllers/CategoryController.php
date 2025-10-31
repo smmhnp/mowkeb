@@ -20,12 +20,13 @@ class CategoryController extends Controller
     public function addCategoryManager(Request $request){
         $request = $request->validate([
             'name' => 'required|string|max:20',
-            'slug' => 'required|string|min:10',
+            'slug' => 'required|string|min:10|unique:categories,slug'
         ],[
             'name.required' => 'لطفاً عنوان را وارد کنید.',
             'title.max' => 'عنوان نباید بیشتر از 20 کاراکتر باشد.',
             'slug.required' => 'لطفاً آدرس را وارد کنید.',
             'slug.min' => 'آدرس نباید کمکتر از 10 کاراکتر باشد',
+            'slug.unique' => 'ادرس نمیتواند تکراری باشد.'
         ]);
 
         Categorie::create([
@@ -45,8 +46,11 @@ class CategoryController extends Controller
 
     //............................................show.articles............................................
 
-    public function showCategoryArticles($id){
-        $articles = Article::with('user', 'category')->where('category_id', $id)->latest()->paginate(15);
+    public function showCategoryArticles($slug){
+        $articles = Article::with('user', 'category')
+            ->whereHas('category', function ($query) use ($slug) {
+                $query->where('slug', $slug);
+            })->latest()->paginate(15);
 
         return view('client.categoryArticle', compact('articles'));
     }
