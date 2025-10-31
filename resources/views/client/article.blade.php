@@ -11,11 +11,11 @@
     <main class="main-container">
         <!-- مسیر ناوبری -->
         <div class="breadcrumb">
-            <a href="#">خانه</a>
+            <a href="{{ route('HomeController.index') }}">خانه</a>
             <span>/</span>
-            <a href="#">اخبار سیاسی</a>
+            <a href="">{{ $article->category->name }}</a>
             <span>/</span>
-            <span>اجلاس سران کشورهای منطقه با موضوع امنیت خلیج فارس</span>
+            <span>{{ $article->name }}</span>
         </div>
 
         <div class="layout-container">
@@ -24,47 +24,34 @@
                 <article class="article-container">
                     <!-- هدر مقاله -->
                     <div class="article-header">
-                        <h1 class="article-title">اجلاس سران کشورهای منطقه با موضوع امنیت خلیج فارس</h1>
+                        <h1 class="article-title">{{ $article->name }}</h1>
                         <div class="article-meta">
-                            <span class="article-category">سیاسی</span>
+                            <span class="article-category">{{ $article->category->name }}</span>
                             <div class="article-info">
-                                <span>۲ ساعت پیش</span>
-                                <span> • </span>
-                                <span>۱,۲۴۵ بازدید</span>
-                                <span> • </span>
                                 <div class="article-author">
-                                    <div class="author-avatar">م</div>
-                                    <span>محمد رضایی</span>
+                                    <div class="author-avatar"></div>
+                                    <span>{{ $article->user->fname . " " . $article->user->lname }}</span>
                                 </div>
+                                <span> • </span>
+                                <span>{{ jDate($article->created_at)->ago() }}</span>
                             </div>
                         </div>
                     </div>
 
                     <!-- بخش ویدیو -->
                     <div class="video-section">
-                        <div class="video-container">
-                            <div class="video-placeholder">
-                                <i class="fas fa-play-circle"></i>
-                                <p>ویدیوی خبری اجلاس سران منطقه</p>
-                                <small>برای پخش ویدیو کلیک کنید</small>
-                            </div>
+                        <div id="{{ $article->video->aparatID }}">
+                            <script type="text/JavaScript" src="{{ $article->video->link }}"></script>
                         </div>
                     </div>
 
                     <!-- بخش متن مقاله -->
                     <div class="article-content">
                         <div class="article-text">
-                            <p>سران کشورهای حاشیه خلیج فارس در اجلاس ویژه‌ای در ریاض گرد هم آمدند تا درباره مسائل امنیتی منطقه گفتگو کنند. این نشست با حضور مقامات ارشد ۸ کشور منطقه برگزار شد و موضوعات مختلفی از جمله امنیت دریایی، همکاری‌های اقتصادی و مسائل زیست‌محیطی مورد بحث قرار گرفت.</p>
-                            
-                            <h3>بررسی چالش‌های امنیتی</h3>
-                            <p>در این اجلاس، شرکت‌کنندگان بر ضرورت تقویت همکاری‌های منطقه‌ای برای مقابله با چالش‌های مشترک تأکید کردند. وزیر امور خارجه عربستان در سخنرانی خود گفت: "امنیت خلیج فارس برای همه کشورهای منطقه حیاتی است و ما باید با همکاری یکدیگر، ثبات و امنیت این آبراه مهم را تضمین کنیم."</p>
-                            
-                            <p>وی افزود: "ما در منطقه با چالش‌های متعددی روبرو هستیم که تنها از طریق همکاری و تفاهم متقابل قابل حل هستند. اجلاس امروز گامی مهم در جهت تحکیم روابط و ایجاد زمینه‌های همکاری بیشتر است."</p>
-                            
-                            <h3>توافق‌های امضا شده</h3>
-                            <p>همچنین در این نشست، توافقنامه‌های متعددی در زمینه‌های مختلف از جمله سرمایه‌گذاری مشترک، توسعه زیرساخت‌ها و مقابله با تهدیدات سایبری به امضا رسید. این توافق‌ها گام مهمی در جهت تحکیم روابط بین کشورهای منطقه محسوب می‌شود.</p>
-                            
-                            <p>یکی از مهم‌ترین این توافق‌ها، پروتکل همکاری امنیتی است که به موجب آن کشورهای عضو متعهد به تبادل اطلاعات و همکاری در زمینه مقابله با تروریسم و جرائم سازمان یافته شده‌اند.</p>
+                            <h3>خلاصه مطالب</h3>
+                            {{ $article->summery }}
+                            <h3>توضیحات تکمیلی</h3>
+                            {{ $article->content }}                            
                         </div>
                     </div>
 
@@ -75,62 +62,14 @@
                             گالری تصاویر
                         </h3>
                         <div class="images-grid">
-                            <div class="image-item">
-                                <i class="fas fa-image"></i>
-                            </div>
-                            <div class="image-item">
-                                <i class="fas fa-image"></i>
-                            </div>
-                            <div class="image-item">
-                                <i class="fas fa-image"></i>
-                            </div>
-                        </div>
-                    </div>
-
-                    <!-- دکمه‌های اشتراک -->
-                    <div class="share-section">
-                        <div class="share-title">اشتراک این خبر:</div>
-                        <div class="share-buttons">
-                            <a href="#" class="share-btn telegram">
-                                <i class="fab fa-telegram"></i>
-                            </a>
-                            <a href="#" class="share-btn whatsapp">
-                                <i class="fab fa-whatsapp"></i>
-                            </a>
-                            <a href="#" class="share-btn twitter">
-                                <i class="fab fa-twitter"></i>
-                            </a>
-                            <a href="#" class="share-btn linkedin">
-                                <i class="fab fa-linkedin"></i>
-                            </a>
+                            @foreach($article->images as $image)
+                                <div class="image-item">
+                                    <img src="{{ asset('storage/' . $image->url) }}" alt="{{ $image->name }}">
+                                </div>
+                            @endforeach
                         </div>
                     </div>
                 </article>
-
-                <!-- بخش نظرات -->
-                <section class="comments-section">
-                    <h2 class="comments-title">
-                        <i class="fas fa-comments"></i>
-                        نظرات کاربران
-                    </h2>
-                    
-                    <div class="comment-form">
-                        <h3 style="margin-bottom: 15px;">ثبت نظر جدید</h3>
-                        <div class="form-group">
-                            <label for="name">نام</label>
-                            <input type="text" id="name" class="form-control" placeholder="نام شما">
-                        </div>
-                        <div class="form-group">
-                            <label for="email">ایمیل</label>
-                            <input type="email" id="email" class="form-control" placeholder="ایمیل شما">
-                        </div>
-                        <div class="form-group">
-                            <label for="comment">نظر شما</label>
-                            <textarea id="comment" class="form-control" placeholder="نظر خود را بنویسید..."></textarea>
-                        </div>
-                        <button class="btn btn-primary">ارسال نظر</button>
-                    </div>
-                </section>
             </div>
 
             <!-- سایدبار -->
@@ -218,21 +157,6 @@
                     </ul>
                 </div>
 
-                <!-- خبرنامه -->
-                <div class="sidebar-widget">
-                    <h3 class="widget-title">
-                        <i class="fas fa-envelope"></i>
-                        خبرنامه
-                    </h3>
-                    <p style="margin-bottom: 15px; color: #666;">با عضویت در خبرنامه، آخرین اخبار را در ایمیل خود دریافت کنید</p>
-                    <div class="search-box" style="width: 100%;">
-                        <input type="email" placeholder="آدرس ایمیل شما">
-                    </div>
-                    <button class="btn btn-primary" style="width: 100%; margin-top: 15px;">
-                        <i class="fas fa-paper-plane"></i>
-                        عضویت در خبرنامه
-                    </button>
-                </div>
             </aside>
         </div>
     </main>

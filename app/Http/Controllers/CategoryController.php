@@ -2,8 +2,10 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Article;
 use App\Models\Categorie;
 use Illuminate\Http\Request;
+use Psy\Command\WhereamiCommand;
 
 class CategoryController extends Controller
 {
@@ -12,6 +14,8 @@ class CategoryController extends Controller
 
         return view('admin.category', ['categories' => $categories]);
     }
+
+    //............................................add.category............................................
 
     public function addCategoryManager(Request $request){
         $request = $request->validate([
@@ -32,8 +36,18 @@ class CategoryController extends Controller
         return redirect()->back();
     }
 
+    //............................................delete.category............................................
+
     public function deleteCategoryManager(Request $request){
         Categorie::findOrFail($request->catrgory_id)->delete();
         return redirect()->back();
+    }
+
+    //............................................show.articles............................................
+
+    public function showCategoryArticles($id){
+        $articles = Article::with('user', 'category')->where('category_id', $id)->latest()->paginate(15);
+
+        return view('client.categoryArticle', compact('articles'));
     }
 }

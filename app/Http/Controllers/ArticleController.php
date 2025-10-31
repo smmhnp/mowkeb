@@ -19,6 +19,19 @@ class ArticleController extends Controller
         return view('admin.article', compact('articles', 'count'));
     }
 
+    public function showArticle($id){
+        $article = Article::with([
+            'category',
+            'user',
+            'video',
+            'images' => function ($query) {
+                $query->latest()->take(3);
+            }
+        ])->findOrFail($id);
+
+        return view('client.article', compact('article'));
+    }
+
     //............................................add.article............................................
 
     public function addArticleManager(){
@@ -52,4 +65,46 @@ class ArticleController extends Controller
         return redirect()->route('ArticleController.articleManager')->with('success', 'مقاله با موفقیت ایجاد شد.');
     }
 
+    //............................................upadate.article............................................
+
+    public function updateArticleManager($id){
+        $article = Article::with('category', 'user', 'images', 'video')->findOrFail($id);
+        $categories = Categorie::all();
+        $videos = Video::all();
+        $images = Image::all();
+        $currentImg = Image::where('url', $article->cover)->first();
+
+
+        return view('admin.update', compact('article', 'categories', 'videos', 'images', 'currentImg'));
+    }
+
+    public function updateArticleStore(ArticleRequest $request, Article $article){
+        $article->update([
+            'name' => $request->title,
+            'category_id' => $request->category,
+            'content' => $request->content,
+            'summery' => $request->summary,
+            'tag' => $request->tag,
+            'status' => $request->status,
+            'video_id' => $request->video,
+            'cover' => $request->cover,
+            // 'user_id' => Auth::id(),
+            'user_id' => '2'
+        ]);
+
+        if ($request->has('images')) {
+            $article->images()->sync($request->images);
+        }
+
+        return redirect()->route('ArticleController.articleManager')->with('success', 'مقاله با موفقیت ویرایش شد');
+    }
+
+    //............................................delete.article............................................
+
+    public function deleteArticleStore(Article $article){
+        $article->images()->detach();
+        $article->delete();
+        
+        return response()->json(['success' => true,]);
+    }
 }

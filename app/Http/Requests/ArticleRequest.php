@@ -31,7 +31,7 @@ class ArticleRequest extends FormRequest
             'video' => 'required|exists:videos,id',
             'cover' => 'required|string|max:255',
             'images' => 'required|array',
-            'images.*' => 'string|max:255'
+            'images.*' => 'exists:images,id'
         ];
     }
 
@@ -70,8 +70,7 @@ class ArticleRequest extends FormRequest
 
             'images.required' => 'حداقل یک تصویر باید انتخاب شود.',
             'images.array' => 'فرمت تصاویر نامعتبر است.',
-            'images.*.string' => 'آدرس یکی از تصاویر نامعتبر است.',
-            'images.*.max' => 'آدرس یکی از تصاویر نمی‌تواند بیش از ۲۵۵ کاراکتر باشد.'
+            'images.*.exists' => 'یکی از تصاویر انتخاب شده معتبر نیست.'
         ];
     }
 }

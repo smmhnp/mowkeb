@@ -8,49 +8,6 @@
     <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
 
     <style>
-        :root {
-            --primary: #4361ee;
-            --primary-light: #4895ef;
-            --secondary: #3f37c9;
-            --success: #4cc9f0;
-            --danger: #f72585;
-            --warning: #f8961e;
-            --info: #4895ef;
-            --light: #f8f9fa;
-            --dark: #212529;
-            --glass-bg: rgba(255, 255, 255, 0.25);
-            --glass-border: rgba(255, 255, 255, 0.18);
-            --shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.15);
-            --transition: all 0.3s ease;
-        }
-
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-            font-family: 'Vazirmatn', 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-        }
-
-        body {
-            background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
-            color: var(--dark);
-            min-height: 100vh;
-            padding: 50px 20px;
-            direction: rtl;
-        }
-
-        .container {
-            max-width: 800px;
-            margin: 0 auto;
-            background: var(--glass-bg);
-            backdrop-filter: blur(10px);
-            -webkit-backdrop-filter: blur(10px);
-            border-radius: 16px;
-            border: 1px solid var(--glass-border);
-            box-shadow: var(--shadow);
-            padding: 30px;
-        }
-
         .form-row {
             display: grid;
             grid-template-columns: 1fr 1fr;
@@ -279,7 +236,7 @@
 
         <main class="main-content">
             <div class="page-title">
-                <h2>نوشتن مطلب جدید</h2>
+                <h2>ویرایش مطلب</h2>
                 <div>
                     <a href="{{ route('ArticleController.articleManager') }}" class="btn btn-secondary">
                         <i class="fas fa-times"></i>
@@ -289,20 +246,22 @@
             </div>
 
             <div class="article-form">
-                <form id="new-article-form" action="{{ route('ArticleController.addArticleStore') }}" method="POSt">
+                <form id="new-article-form" action="{{ route('ArticleController.updateArticleStore', ['article' => $article->id]) }}" method="POSt">
                     @csrf
 
                     <div class="form-row">
                         <div class="form-group">
                             <label for="title">عنوان مطلب <span class="required">*</span></label>
-                            <input name="title" type="text" id="title" class="form-control" placeholder="عنوان جذاب و کوتاه وارد کنید" required>
+                            <input name="title" type="text" id="title" class="form-control" placeholder="عنوان جذاب و کوتاه وارد کنید" value="{{ $article->name }}" required>
                         </div>
                         <div class="form-group">
                             <label for="category">دسته‌بندی <span class="required">*</span></label>
                             <select name="category" id="category" class="form-control" required>
-                                <option value="">انتخاب دسته‌بندی</option>
+                                <option value="{{ $article->category->id }}">{{ $article->category->name }}</option>
                                 @foreach($categories as $category)
-                                    <option value="{{ $category->id }}">{{ $category->name }}</option>
+                                    @if($category->id != $article->category->id)
+                                        <option value="{{ $category->id }}">{{ $category->name }}</option>
+                                    @endif
                                 @endforeach
                             </select>
                         </div>
@@ -311,7 +270,7 @@
                     <div class="form-group">
                         <label for="content" class="col-sm-2 control-label">محتوا <span class="required">*</span></label>
                         <div class="col-sm-10">
-                            <textarea name="content" class="form-control" rows="10" id="content" placeholder="متن کامل خبر را اینجا بنویسید..."></textarea>
+                            <textarea name="content" class="form-control" rows="10" id="content" placeholder="متن کامل خبر را اینجا بنویسید...">{{ $article->content }}</textarea>
                         </div>
                     </div>
 
@@ -319,23 +278,34 @@
                         <label for="summary">خلاصه مطلب</label>
                         <textarea name="summary" id="summary" class="form-control" 
                                 maxlength="200"
-                                placeholder="خلاصه کوتاهی از مطلب بنویسید (حداکثر 200 کاراکتر)"></textarea>
+                                placeholder="خلاصه کوتاهی از مطلب بنویسید (حداکثر 200 کاراکتر)">{{ $article->summery }}</textarea>
                         <div class="char-count">0/200</div>
                     </div>
  
                     <div class="form-row">
                         <div class="form-group">
                             <label for="tags">کلمات کلیدی</label>
+                            <label for="tags">کلمات کلیدی</label>
                             <select name="tag" id="tags" class="form-control select2">
-                                <option value="special">ویژه</option>
-                                <option value="normal">معمولی</option>
+                                <@if($article->tag == 'special')
+                                    <option value="special">ویژه</option>
+                                    <option value="normal">معمولی</option>
+                                @else
+                                    <option value="normal">معمولی</option>
+                                    <option value="special">ویژه</option>
+                                @endif
                             </select>                        
                         </div>
                         <div class="form-group">
                             <label for="status">وضعیت</label>
                             <select name="status" id="status" class="form-control select2">
-                                <option value="allow">مجاز</option>
-                                <option value="unauthorized">غیر مجاز</option>
+                                @if($article->status == 'allow')
+                                    <option value="allow">مجاز</option>
+                                    <option value="unauthorized">غیر مجاز</option>
+                                @else
+                                    <option value="unauthorized">غیر مجاز</option>
+                                    <option value="allow">مجاز</option>
+                                @endif
                             </select>
                         </div>
                     </div>
@@ -344,9 +314,11 @@
                         <div class="form-group">
                             <label for="video">ویدیو</label>
                             <select name="video" id="video" class="form-control select2">
-                                <option value="">انتخاب ویدیو</option>
+                                <option value="{{ $article->video->id }}">{{ $article->video->name }}</option>
                                 @foreach($videos as $video)
-                                    <option value="{{ $video->id }}">{{ $video->name }}</option>
+                                    @if($video->id != $article->video->id)
+                                        <option value="{{ $video->id }}">{{ $video->name }}</option>
+                                    @endif
                                 @endforeach
                             </select>
                         </div>
@@ -354,9 +326,11 @@
                         <div class="form-group">
                             <label for="cover">تصویر اصلی</label>
                             <select name="cover" id="cover" class="form-control select2">
-                                <option value="">انتخاب تصویر</option>
+                                <option value="{{ $currentImg->url }}" data-image="{{ asset('storage/' . $currentImg->url) }}">{{ $currentImg->name }}</option>
                                 @foreach($images as $image)
-                                    <option value="{{ $image->url }}" data-image="{{ asset('storage/' . $image->url) }}">{{ $image->name }}</option>
+                                    @if($image->url != $article->cover)
+                                        <option value="{{ $image->url }}" data-image="{{ asset('storage/' . $image->url) }}">{{ $image->name }}</option>
+                                    @endif
                                 @endforeach
                             </select>
                         </div>
@@ -366,16 +340,19 @@
                         <label for="images">انتخاب تصاویر</label>
                         <select name="images[]" id="images" class="form-control select2" multiple>
                             @foreach($images as $image)
-                                <option value="{{ $image->id }}" data-image="{{ asset('storage/' . $image->url) }}">{{ $image->name }}</option>
+                                <option value="{{ $image->id }}"
+                                    data-image="{{ asset('storage/' . $image->url) }}"
+                                    {{ $article->images->contains('id', $image->id) ? 'selected' : '' }}>
+                                    {{ $image->name }}
+                                </option>
                             @endforeach
                         </select>
-                    </div>
-                    
+                    </div>                    
 
                     <div class="form-actions">
                         <button type="submit" class="btn btn-primary">
                             <i class="fas fa-paper-plane"></i>
-                            انتشار مطلب
+                            ویرایش مطلب
                         </button>
                     </div>
                 </form>

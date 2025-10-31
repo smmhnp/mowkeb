@@ -26,7 +26,7 @@
                 <h1>پنل مدیریت</h1>
             </div>
             <ul class="menu">
-                <li><a href="{{ route('dashboard') }}" class="{{ request()->routeIs('dashboard') ? 'active' : '' }}">
+                <li><a href="{{ route('DashboardController.dashboard') }}" class="{{ request()->routeIs('DashboardController.dashboard') ? 'active' : '' }}">
                     <i class="fas fa-home"></i>داشبورد</a>
                 </li>
 

@@ -29,7 +29,7 @@ body {
     overflow-x: hidden;
 }
 
-/* هدر سایت با افکت شیشه‌ای */
+/* هدر سایت */
 .site-header {
     background: var(--glass-bg);
     backdrop-filter: blur(10px);
@@ -82,7 +82,6 @@ body {
     padding: 8px 16px;
     border-radius: 8px;
     transition: var(--transition);
-    position: relative;
 }
 
 .nav-menu a:hover,
@@ -125,43 +124,6 @@ body {
     color: var(--primary);
 }
 
-.auth-buttons {
-    display: flex;
-    gap: 10px;
-}
-
-.btn {
-    padding: 10px 20px;
-    border: none;
-    border-radius: 8px;
-    cursor: pointer;
-    font-weight: 600;
-    transition: var(--transition);
-    display: inline-flex;
-    align-items: center;
-    gap: 8px;
-}
-
-.btn-primary {
-    background: var(--primary);
-    color: white;
-}
-
-.btn-primary:hover {
-    background: var(--secondary);
-}
-
-.btn-outline {
-    background: transparent;
-    color: var(--primary);
-    border: 2px solid var(--primary);
-}
-
-.btn-outline:hover {
-    background: var(--primary);
-    color: white;
-}
-
 .menu-toggle {
     display: none;
     background: none;
@@ -172,180 +134,6 @@ body {
     padding: 5px;
     border-radius: 5px;
     transition: var(--transition);
-}
-
-/* محتوای اصلی */
-.main-container {
-    max-width: 1400px;
-    margin: 0 auto;
-    padding: 30px 20px;
-}
-
-/* مسیر ناوبری */
-.breadcrumb {
-    background: var(--glass-bg);
-    backdrop-filter: blur(10px);
-    -webkit-backdrop-filter: blur(10px);
-    border-radius: 12px;
-    border: 1px solid var(--glass-border);
-    box-shadow: var(--shadow);
-    padding: 15px 25px;
-    margin-bottom: 30px;
-    font-size: 0.9rem;
-}
-
-.breadcrumb a {
-    color: var(--primary);
-    text-decoration: none;
-    transition: var(--transition);
-}
-
-.breadcrumb a:hover {
-    text-decoration: underline;
-}
-
-.breadcrumb span {
-    color: #666;
-    margin: 0 8px;
-}
-
-/* لایه‌بندی محتوا */
-.layout-container {
-    display: grid;
-    grid-template-columns: 2fr 1fr;
-    gap: 30px;
-}
-
-/* محتوای مقاله */
-.article-container {
-    background: var(--glass-bg);
-    backdrop-filter: blur(10px);
-    -webkit-backdrop-filter: blur(10px);
-    border-radius: 20px;
-    border: 1px solid var(--glass-border);
-    box-shadow: var(--shadow);
-    overflow: hidden;
-}
-
-.article-header {
-    padding: 30px;
-    border-bottom: 1px solid rgba(255, 255, 255, 0.3);
-}
-
-.article-title {
-    font-size: 2.2rem;
-    margin-bottom: 20px;
-    line-height: 1.4;
-    color: var(--dark);
-}
-
-.article-meta {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    color: #666;
-    font-size: 0.9rem;
-    flex-wrap: wrap;
-    gap: 15px;
-}
-
-.article-category {
-    background: rgba(67, 97, 238, 0.1);
-    color: var(--primary);
-    padding: 6px 15px;
-    border-radius: 20px;
-    font-weight: 600;
-}
-
-.article-info {
-    display: flex;
-    align-items: center;
-    gap: 15px;
-}
-
-.article-author {
-    display: flex;
-    align-items: center;
-    gap: 8px;
-}
-
-.author-avatar {
-    width: 40px;
-    height: 40px;
-    border-radius: 50%;
-    background: var(--primary);
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    color: white;
-    font-size: 1rem;
-    font-weight: bold;
-}
-
-/* بخش ویدیو */
-.video-section {
-    padding: 0 30px 30px;
-}
-
-/* بخش متن مقاله */
-.article-content {
-    padding: 30px;
-}
-
-.article-text {
-    line-height: 1.9;
-    margin-bottom: 25px;
-    font-size: 1.15rem;
-    color: #444;
-}
-
-.article-text p {
-    margin-bottom: 25px;
-}
-
-.article-text h3 {
-    font-size: 1.5rem;
-    margin: 30px 0 15px;
-    color: var(--dark);
-    padding-bottom: 10px;
-    border-bottom: 2px solid rgba(67, 97, 238, 0.2);
-}
-
-/* بخش تصاویر */
-.article-images {
-    padding: 0 30px 30px;
-}
-
-.images-grid {
-    display: grid;
-    grid-template-columns: repeat(3, 1fr);
-    gap: 15px;
-}
-
-.image-item {
-    height: 200px;
-    background: #ddd;
-    border-radius: 12px;
-    overflow: hidden;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    color: #666;
-    font-size: 1.2rem;
-    transition: var(--transition);
-    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
-}
-
-.image-item img {
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-    transition: var(--transition);
-}
-
-.image-item:hover {
-    transform: translateY(-5px);
-    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.15);
 }
 
 /* سایدبار */
@@ -604,6 +392,241 @@ textarea.form-control {
     cursor: pointer;
 }
 
+/* محتوای اصلی */
+.main-container {
+    max-width: 1400px;
+    margin: 0 auto;
+    padding: 30px 20px;
+}
+
+/* فیلترها */
+.filters-section {
+    background: var(--glass-bg);
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+    border-radius: 16px;
+    border: 1px solid var(--glass-border);
+    box-shadow: var(--shadow);
+    padding: 25px;
+    margin-bottom: 30px;
+}
+
+.filter-row {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 20px;
+    align-items: end;
+}
+
+.form-group {
+    margin-bottom: 0;
+}
+
+.form-group label {
+    display: block;
+    margin-bottom: 8px;
+    font-weight: 600;
+    color: var(--dark);
+}
+
+.form-control {
+    width: 100%;
+    padding: 12px 15px;
+    border: 1px solid rgba(255, 255, 255, 0.3);
+    border-radius: 8px;
+    background: rgba(255, 255, 255, 0.3);
+    font-size: 1rem;
+    transition: var(--transition);
+}
+
+.form-control:focus {
+    outline: none;
+    border-color: var(--primary);
+    background: rgba(255, 255, 255, 0.5);
+}
+
+.btn {
+    padding: 12px 25px;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    font-weight: 600;
+    transition: var(--transition);
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.btn-primary {
+    background: var(--primary);
+    color: white;
+}
+
+.btn-primary:hover {
+    background: var(--secondary);
+}
+
+.btn-outline {
+    background: transparent;
+    color: var(--primary);
+    border: 2px solid var(--primary);
+}
+
+.btn-outline:hover {
+    background: var(--primary);
+    color: white;
+}
+
+/* شبکه مقالات */
+.articles-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
+    gap: 25px;
+    margin-bottom: 40px;
+}
+
+.news-card {
+    background: var(--glass-bg);
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+    border-radius: 16px;
+    border: 1px solid var(--glass-border);
+    box-shadow: var(--shadow);
+    overflow: hidden;
+    transition: var(--transition);
+}
+
+.news-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 15px 35px rgba(0, 0, 0, 0.15);
+}
+
+.news-image {
+    width: 100%;
+    height: 200px;
+    background: linear-gradient(45deg, var(--primary), var(--success));
+    position: relative;
+    overflow: hidden;
+}
+
+.news-image img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.image-news {
+    position: absolute;
+    top: 15px;
+    right: 15px;
+}
+
+.special-badge {
+    background: var(--danger);
+    color: white;
+    padding: 5px 12px;
+    border-radius: 20px;
+    font-size: 0.8rem;
+    font-weight: 600;
+}
+
+.news-content {
+    padding: 25px;
+}
+
+.news-meta {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 12px;
+    font-size: 0.85rem;
+    color: #666;
+}
+
+.news-category {
+    background: rgba(67, 97, 238, 0.1);
+    color: var(--primary);
+    padding: 4px 10px;
+    border-radius: 12px;
+    font-weight: 600;
+}
+
+.news-title {
+    font-size: 1.3rem;
+    margin-bottom: 12px;
+    line-height: 1.4;
+    color: var(--dark);
+}
+
+.news-excerpt {
+    color: #666;
+    line-height: 1.6;
+    margin-bottom: 20px;
+    display: -webkit-box;
+    -webkit-line-clamp: 3;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+}
+
+.news-footer {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding-top: 15px;
+    border-top: 1px solid rgba(255, 255, 255, 0.3);
+}
+
+.news-author {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-size: 0.9rem;
+    color: #666;
+}
+
+.author-avatar {
+    width: 30px;
+    height: 30px;
+    border-radius: 50%;
+    background: var(--primary);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: white;
+    font-size: 0.8rem;
+    font-weight: bold;
+}
+
+/* صفحه‌بندی */
+.pagination {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 10px;
+    margin-top: 40px;
+}
+
+.page-btn {
+    padding: 10px 15px;
+    border: 1px solid rgba(255, 255, 255, 0.3);
+    background: rgba(255, 255, 255, 0.3);
+    border-radius: 8px;
+    cursor: pointer;
+    transition: var(--transition);
+    color: var(--dark);
+    text-decoration: none;
+}
+
+.page-btn:hover {
+    background: rgba(255, 255, 255, 0.5);
+}
+
+.page-btn.active {
+    background: var(--primary);
+    color: white;
+    border-color: var(--primary);
+}
+
 /* فوتر */
 .site-footer {
     background: var(--glass-bg);
@@ -683,20 +706,12 @@ textarea.form-control {
 
 /* ریسپانسیو */
 @media (max-width: 1200px) {
-    .article-title {
-        font-size: 2rem;
+    .articles-grid {
+        grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
     }
 }
 
 @media (max-width: 992px) {
-    .layout-container {
-        grid-template-columns: 1fr;
-    }
-
-    .sidebar {
-        display: none;
-    }
-
     .nav-menu {
         display: none;
     }
@@ -709,34 +724,42 @@ textarea.form-control {
         width: 200px;
     }
 
-    .header-actions.mobile-hidden {
-        display: none;
+    .category-header {
+        padding: 30px;
+    }
+
+    .category-title {
+        font-size: 2rem;
     }
 }
 
 @media (max-width: 768px) {
-    .article-title {
-        font-size: 1.7rem;
-    }
-
-    .video-container {
-        height: 300px;
-    }
-
-    .images-grid {
-        grid-template-columns: repeat(2, 1fr);
+    .articles-grid {
+        grid-template-columns: 1fr;
     }
 
     .search-box {
         width: 150px;
     }
 
-    .article-header,
-    .video-section,
-    .article-content,
-    .article-images,
-    .share-section {
-        padding: 20px;
+    .category-stats {
+        gap: 20px;
+    }
+
+    .stat-number {
+        font-size: 1.5rem;
+    }
+
+    .filter-row {
+        grid-template-columns: 1fr;
+    }
+
+    .pagination {
+        flex-wrap: wrap;
+    }
+
+    .header-actions .search-box {
+        display: none;
     }
 }
 
@@ -750,34 +773,71 @@ textarea.form-control {
         font-size: 20px;
     }
 
-    .search-box {
+    .category-header {
+        padding: 25px 20px;
+    }
+
+    .category-title {
+        font-size: 1.7rem;
+    }
+
+    .category-icon {
+        width: 60px;
+        height: 60px;
+        font-size: 2rem;
+    }
+
+    .header-actions {
         display: none;
     }
+}
 
-    .auth-buttons {
-        display: none;
-    }
+.pagination-wrapper {
+    display: flex;
+    justify-content: center;
+    margin-top: 20px;
+}
 
-    .article-title {
-        font-size: 1.5rem;
-    }
+.pagination {
+    display: inline-flex;
+    gap: 6px;
+    background: rgba(255, 255, 255, 0.07);
+    padding: 10px 15px;
+    border-radius: 12px;
+    backdrop-filter: blur(10px);
+}
 
-    .article-meta {
-        flex-direction: column;
-        align-items: flex-start;
-        gap: 10px;
-    }
+.pagination li {
+    list-style: none;
+}
 
-    .images-grid {
-        grid-template-columns: 1fr;
-    }
+.pagination a,
+.pagination span {
+    display: block;
+    padding: 8px 14px;
+    border-radius: 8px;
+    font-size: 14px;
+    color: #fff;
+    text-decoration: none;
+    transition: 0.3s;
+}
 
-    .image-item {
-        height: 150px;
-    }
+.pagination a:hover {
+    background: rgba(255, 255, 255, 0.25);
+    transform: translateY(-2px);
+}
 
-    .share-section {
-        flex-direction: column;
-        align-items: flex-start;
-    }
+.page-item.active .page-link {
+    background: #007bff;
+    border-color: #005dc1;
+    transform: scale(1.05);
+}
+
+.page-item.disabled .page-link {
+    opacity: 0.4;
+    cursor: not-allowed;
+}
+
+.page-link{
+    color: #000 !important;
 }

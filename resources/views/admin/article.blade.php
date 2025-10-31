@@ -115,12 +115,12 @@
                                     <a href="#" class="action-btn view" title="مشاهده">
                                         <i class="fas fa-eye"></i>
                                     </a>
-                                    <a href="#" class="action-btn edit" title="ویرایش">
+                                    <a href="{{ route('ArticleController.updateArticleManager', ['id' => $article->id]) }}" class="action-btn edit" title="ویرایش">
                                         <i class="fas fa-edit"></i>
                                     </a>
-                                    <button class="action-btn delete" title="حذف">
+                                    <a href="#" class="action-btn delete-btn" data-id="{{ $article->id }}" title="حذف">
                                         <i class="fas fa-trash"></i>
-                                    </button>
+                                    </a>
                                 </div>
                             </td>
                         </tr>
@@ -139,6 +139,34 @@
 @section('script')
 
     <script>
+
+        document.querySelectorAll('.delete-btn').forEach(btn => {
+            btn.addEventListener('click', e => {
+                e.preventDefault();
+
+                const id = btn.getAttribute('data-id');
+                const row = btn.closest('tr');
+
+                if (confirm('آیا از حذف این مقاله مطمئن هستید؟')) {
+                    fetch(`/admin/delete/${id}`, {
+                        method: 'POST',
+                        headers: {
+                            'X-CSRF-TOKEN': '{{ csrf_token() }}',
+                            'Accept': 'application/json',
+                            'Content-Type': 'application/json'
+                        }
+                    })
+                    .then(res => res.ok ? res.json() : Promise.reject())
+                    .then(response => {
+                        row.style.transition = "opacity 0.3s ease";
+                        row.style.opacity = "0";
+                        setTimeout(() => row.remove(), 300);
+                    })
+                    .catch(() => alert('خطا در حذف مقاله'));
+                }
+            });
+        });
+
         // مدیریت منوی کشویی
         const menuToggle = document.getElementById('menuToggle');
         const sidebar = document.getElementById('sidebar');
@@ -165,13 +193,6 @@
                         row.remove();
                     }, 500);
                 }
-            });
-        });
-
-        document.querySelectorAll('.action-btn.edit').forEach(btn => {
-            btn.addEventListener('click', function() {
-                // کد ویرایش مقاله
-                alert('ویرایش مقاله');
             });
         });
 

@@ -6,15 +6,28 @@
 
 @endsection
 
+@php
+    function status ($input){
+        switch ($input){
+            case 'unauthorized':
+                return 'غیرمجاز';
+            case 'allow':   
+                return 'مجاز';
+            default:
+                return 'ناشناخته';
+        }
+    }
+@endphp
+
 @section('content')
 
     <main class="main-content" id="mainContent">
         <div class="page-title">
             <h2>داشبورد مدیریت</h2>
-            <button class="btn btn-primary">
+            <a href="{{ route('ArticleController.articleManager') }}" class="btn btn-primary">
                 <i class="fas fa-plus"></i>
                 نوشتن مطلب جدید
-            </button>
+            </a>
         </div>
 
         <div class="stats-cards">
@@ -23,7 +36,7 @@
                     <i class="fas fa-newspaper"></i>
                 </div>
                 <div class="stat-info">
-                    <h3>۱,۲۴۷</h3>
+                    <h3>{{ $count['article'] }}</h3>
                     <p>تعداد مطالب</p>
                 </div>
             </div>
@@ -32,8 +45,8 @@
                     <i class="fas fa-eye"></i>
                 </div>
                 <div class="stat-info">
-                    <h3>۴۵,۸۲۱</h3>
-                    <p>بازدید امروز</p>
+                    <h3>{{ $count['image'] }}</h3>
+                    <p>تعداد تصاویر</p>
                 </div>
             </div>
             <div class="stat-card users">
@@ -41,8 +54,8 @@
                     <i class="fas fa-users"></i>
                 </div>
                 <div class="stat-info">
-                    <h3>۳,۴۵۸</h3>
-                    <p>کاربران ثبت‌نام شده</p>
+                    <h3>{{ $count['video'] }}</h3>
+                    <p>تعداد ویدیوها</p>
                 </div>
             </div>
             <div class="stat-card comments">
@@ -50,8 +63,8 @@
                     <i class="fas fa-comments"></i>
                 </div>
                 <div class="stat-info">
-                    <h3>۱۲۴</h3>
-                    <p>نظرات جدید</p>
+                    <h3>{{ $count['user'] }}</h3>
+                    <p>تعداد کاربران</p>
                 </div>
             </div>
         </div>
@@ -66,57 +79,24 @@
                     <tr>
                         <th>عنوان مطلب</th>
                         <th>نویسنده</th>
-                        <th>تاریخ انتشار</th>
-                        <th>بازدید</th>
+                        <th>تاریخ ایجاد</th>
                         <th>وضعیت</th>
                         <th>عملیات</th>
                     </tr>
                 </thead>
                 <tbody>
-                    <tr>
-                        <td>بررسی جدیدترین گوشی سامسونگ</td>
-                        <td>محمد رضایی</td>
-                        <td>۱۴۰۲/۰۵/۱۵</td>
-                        <td>۱,۲۴۵</td>
-                        <td><span class="status published">منتشر شده</span></td>
-                        <td>
-                            <button class="action-btn"><i class="fas fa-edit"></i></button>
-                            <button class="action-btn"><i class="fas fa-trash"></i></button>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td>تحلیل بازار بورس امروز</td>
-                        <td>فاطمه کریمی</td>
-                        <td>۱۴۰۲/۰۵/۱۴</td>
-                        <td>۲,۳۴۱</td>
-                        <td><span class="status published">منتشر شده</span></td>
-                        <td>
-                            <button class="action-btn"><i class="fas fa-edit"></i></button>
-                            <button class="action-btn"><i class="fas fa-trash"></i></button>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td>گزارش جامع از وضعیت آب و هوا</td>
-                        <td>علی محمدی</td>
-                        <td>۱۴۰۲/۰۵/۱۳</td>
-                        <td>۱,۸۷۶</td>
-                        <td><span class="status published">منتشر شده</span></td>
-                        <td>
-                            <button class="action-btn"><i class="fas fa-edit"></i></button>
-                            <button class="action-btn"><i class="fas fa-trash"></i></button>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td>مقاله جدید در مورد هوش مصنوعی</td>
-                        <td>زهرا احمدی</td>
-                        <td>۱۴۰۲/۰۵/۱۲</td>
-                        <td>۹۸۷</td>
-                        <td><span class="status draft">پیش‌نویس</span></td>
-                        <td>
-                            <button class="action-btn"><i class="fas fa-edit"></i></button>
-                            <button class="action-btn"><i class="fas fa-trash"></i></button>
-                        </td>
-                    </tr>
+                    @foreach($articles as $article)
+                        <tr>
+                            <td>{{ $article->name }}</td>
+                            <td>{{ $article->user->fname . " " . $article->user->lname}}</td>
+                            <td>{{ jDate($article->created_at)->ago() }}</td>
+                            <td><span class="status published">{{ status($article->status) }}</span></td>
+                            <td>
+                                <a href="{{ route('ArticleController.updateArticleManager', ['id' => $article->id]) }}" class="action-btn"><i class="fas fa-edit"></i></a>
+                                <a href="{{ route('ArticleController.showArticle', ['id' => $article->id]) }}" class="action-btn"><i class="fas fa-eye"></i></a>
+                            </td>
+                        </tr>
+                   @endforeach
                 </tbody>
             </table>
         </div>

@@ -108,22 +108,6 @@
                         </li>
                     </ul>
                 </div>
-
-                <!-- خبرنامه -->
-                <div class="sidebar-widget">
-                    <h3 class="widget-title">
-                        <i class="fas fa-envelope"></i>
-                        خبرنامه
-                    </h3>
-                    <p style="margin-bottom: 15px; color: #666;">با عضویت در خبرنامه، آخرین اخبار را در ایمیل خود دریافت کنید</p>
-                    <div class="search-box" style="width: 100%;">
-                        <input type="email" placeholder="آدرس ایمیل شما">
-                    </div>
-                    <button class="btn btn-primary" style="width: 100%; margin-top: 15px;">
-                        <i class="fas fa-paper-plane"></i>
-                        عضویت در خبرنامه
-                    </button>
-                </div>
             </aside>
         </div>
 
