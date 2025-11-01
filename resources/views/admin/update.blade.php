@@ -285,7 +285,6 @@
                     <div class="form-row">
                         <div class="form-group">
                             <label for="tags">کلمات کلیدی</label>
-                            <label for="tags">کلمات کلیدی</label>
                             <select name="tag" id="tags" class="form-control select2">
                                 <@if($article->tag == 'special')
                                     <option value="special">ویژه</option>

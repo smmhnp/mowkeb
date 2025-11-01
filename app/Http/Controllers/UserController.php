@@ -69,8 +69,13 @@ class UserController extends Controller
             'password' => 'required|string|min:6',
         ], [
             'email.required' => 'ایمیل یا نام کاربری الزامی است.',
+            'email.string' => 'فرمت ایمیل نامعتبر است.',
             'email.email' => 'فرمت ایمیل معتبر نیست.',
+            'email.max' => 'ایمیل نمی‌تواند بیشتر از ۲۵۵ کاراکتر باشد.',
+
             'password.required' => 'رمز عبور الزامی است.',
+            'password.string' => 'رمز عبور نامعتبر است.',
+            'password.min' => 'رمز عبور باید حداقل ۶ کاراکتر باشد.',
         ]);
 
         $user = User::where('email', $request->email)->first();

@@ -310,7 +310,7 @@
 
                     <div class="form-group">
                         <label for="content" class="col-sm-2 control-label">محتوا <span class="required">*</span></label>
-                        <div class="col-sm-10">
+                        <div class="col-sm-12">
                             <textarea name="content" class="form-control" rows="10" id="content" placeholder="متن کامل خبر را اینجا بنویسید..."></textarea>
                         </div>
                     </div>
