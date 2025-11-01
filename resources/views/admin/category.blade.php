@@ -11,10 +11,12 @@
     <main class="main-content">
             <div class="page-title">
                 <h2>مدیریت دسته‌بندی‌ها</h2>
-                <button class="btn btn-primary" id="addCategoryBtn">
-                    <i class="fas fa-plus"></i>
-                    افزودن دسته‌بندی جدید
-                </button>
+                @if(Auth::user()->role != 'editor')
+                    <button class="btn btn-primary" id="addCategoryBtn">
+                        <i class="fas fa-plus"></i>
+                        افزودن دسته‌بندی جدید
+                    </button>
+                @endif
             </div>
 
             <div class="stats-cards">
@@ -69,13 +71,15 @@
                                 <td>۲۴۵</td>
                                 <td>
                                     <div class="action-buttons">
-                                        <form action="{{ route('CategoryController.deleteCategoryManager') }}" method="post">
-                                            @csrf
-                                            <input type="hidden" name="catrgory_id" value="{{ $category->id }}">
-                                            <button class="action-btn delete-btn" title="حذف">
-                                                <i class="fas fa-trash"></i>
-                                            </button>
-                                        </form>
+                                        @if(Auth::user()->role == 'super_admin')
+                                            <form action="{{ route('CategoryController.deleteCategoryManager') }}" method="post">
+                                                @csrf
+                                                <input type="hidden" name="catrgory_id" value="{{ $category->id }}">
+                                                <button class="action-btn delete-btn" title="حذف">
+                                                    <i class="fas fa-trash"></i>
+                                                </button>
+                                            </form>
+                                        @endif
                                     </div>
                                 </td>
                             </tr>

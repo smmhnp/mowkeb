@@ -11,10 +11,12 @@
     <main class="main-content" id="mainContent">
         <div class="page-title">
             <h2>داشبورد مدیریت</h2>
-            <a href="{{ route('ArticleController.articleManager') }}" class="btn btn-primary">
-                <i class="fas fa-plus"></i>
-                نوشتن مطلب جدید
-            </a>
+            @if(Auth::user()->role != 'user')
+                <a href="{{ route('ArticleController.articleManager') }}" class="btn btn-primary">
+                    <i class="fas fa-plus"></i>
+                    نوشتن مطلب جدید
+                </a>
+            @endif
         </div>
 
         <div class="stats-cards">
@@ -79,7 +81,9 @@
                             <td>{{ jDate($article->created_at)->ago() }}</td>
                             <td><span class="status published">{{ status($article->status) }}</span></td>
                             <td>
-                                <a href="{{ route('ArticleController.updateArticleManager', ['id' => $article->id]) }}" class="action-btn"><i class="fas fa-edit"></i></a>
+                                @if(Auth::user()->role != 'user')
+                                    <a href="{{ route('ArticleController.updateArticleManager', ['id' => $article->id]) }}" class="action-btn"><i class="fas fa-edit"></i></a>
+                                @endif
                                 <a href="{{ route('ArticleController.showArticle', ['id' => $article->id]) }}" class="action-btn"><i class="fas fa-eye"></i></a>
                             </td>
                         </tr>

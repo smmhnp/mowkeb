@@ -1,5 +1,8 @@
 <?php
 
+use App\Http\Middleware\CheckAdmin;
+use App\Http\Middleware\CheckSuperAdmin;
+use App\Http\Middleware\CheckWirter;
 use App\Http\Middleware\RestrictByIP;
 use Illuminate\Foundation\Application;
 use Illuminate\Foundation\Configuration\Exceptions;
@@ -13,7 +16,10 @@ return Application::configure(basePath: dirname(__DIR__))
     )
     ->withMiddleware(function (Middleware $middleware): void {
         $middleware->alias([
-            'RestrictByIP' => RestrictByIP::class
+            'RestrictByIP' => RestrictByIP::class,
+            'CheckAdmin' => CheckAdmin::class,
+            'CheckSuperAdmin' => CheckSuperAdmin::class,
+            'CheckWriter' => CheckWirter::class,
         ]);
     })
     ->withExceptions(function (Exceptions $exceptions): void {

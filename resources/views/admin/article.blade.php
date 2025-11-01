@@ -105,9 +105,11 @@
                                     <a href="{{ route('ArticleController.updateArticleManager', ['id' => $article->id]) }}" class="action-btn edit" title="ویرایش">
                                         <i class="fas fa-edit"></i>
                                     </a>
-                                    <a href="#" class="action-btn delete-btn" data-id="{{ $article->id }}" title="حذف">
-                                        <i class="fas fa-trash"></i>
-                                    </a>
+                                    @if(Auth::user()->role == 'super_admin')
+                                        <a href="#" class="action-btn delete-btn" data-id="{{ $article->id }}" title="حذف">
+                                            <i class="fas fa-trash"></i>
+                                        </a>
+                                    @endif
                                 </div>
                             </td>
                         </tr>

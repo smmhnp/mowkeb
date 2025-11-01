@@ -350,7 +350,7 @@
         // نمونه تصاویر برای گالری
         const sampleImages = [
             @foreach($images as $iamge)
-                { id: '{{$image->id}}', url: '{{$iamge->url}}', name: '{{$image->alt}}' },
+                { id: '{{$image->id}}', url: '{{ asset("storage/" . $iamge->url) }}', name: '{{$image->alt}}' },
             @endforeach
         ];
 

@@ -7,8 +7,8 @@ use App\Models\Article;
 use App\Models\Categorie;
 use App\Models\Image;
 use App\Models\Video;
-use Illuminate\Container\Attributes\Auth;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class ArticleController extends Controller
 {
@@ -54,8 +54,7 @@ class ArticleController extends Controller
             'status' => $validated['status'],
             'video_id' => $validated['video'],
             'cover' => $validated['cover'],
-            // 'user_id' => Auth::id()
-            'user_id' => '1'
+            'user_id' => Auth::id()
         ]);
 
         if (!empty($validated['images'])) {
@@ -88,8 +87,7 @@ class ArticleController extends Controller
             'status' => $request->status,
             'video_id' => $request->video,
             'cover' => $request->cover,
-            // 'user_id' => Auth::id(),
-            'user_id' => '2'
+            'user_id' => Auth::id()
         ]);
 
         if ($request->has('images')) {

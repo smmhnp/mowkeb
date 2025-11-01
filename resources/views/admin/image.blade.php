@@ -11,10 +11,12 @@
     <main class="main-content">
         <div class="page-title">
             <h2>گالری تصاویر</h2>
-            <a href="{{ route('MedaiControler.ImageManager') }}" class="btn btn-primary">
-                <i class="fas fa-plus"></i>
-                افزودن تصویر جدید
-            </a>
+            @if(Auth::user()->role != 'editor')
+                <a href="{{ route('MedaiControler.ImageManager') }}" class="btn btn-primary">
+                    <i class="fas fa-plus"></i>
+                    افزودن تصویر جدید
+                </a>
+            @endif
         </div>
 
         <!-- آمار کلی -->
@@ -80,12 +82,16 @@
                             <div class="video-header">
                                 <div class="video-title">{{ $image->name }}</div>
                                 <div class="video-actions">
-                                    <a href="{{ route('MedaiControler.UpdateImageStore', ['image' => $image->id]) }}" class="action-btn edit-btn" title="ویرایش">
-                                        <i class="fas fa-edit"></i>
-                                    </a>
-                                    <a href="#" class="action-btn delete-btn" data-id="{{ $image->id }}" title="حذف">
-                                        <i class="fas fa-trash"></i>
-                                    </a>
+                                    @if(Auth::user()->role != 'editor')
+                                        <a href="{{ route('MedaiControler.UpdateImageStore', ['image' => $image->id]) }}" class="action-btn edit-btn" title="ویرایش">
+                                            <i class="fas fa-edit"></i>
+                                        </a>
+                                        @if(Auth::user()->role == 'super_admin')
+                                            <a href="#" class="action-btn delete-btn" data-id="{{ $image->id }}" title="حذف">
+                                                <i class="fas fa-trash"></i>
+                                            </a>
+                                        @endif
+                                    @endif
                                 </div>
                             </div>
                             <div class="video-stats">
@@ -97,7 +103,6 @@
                         </div>
                     </div>
                 @endforeach
-                </div> 
 
                 <div class="pagination-wrapper mt-4">
                     {{ $images->links() }}

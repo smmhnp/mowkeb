@@ -84,10 +84,12 @@
     <main class="main-content">
         <div class="page-title">
             <h2>گالری ویدیوها</h2>
-            <a href="{{ route('MedaiControler.VideoManager') }}" class="btn btn-primary">
-                <i class="fas fa-plus"></i>
-                افزودن ویدیو جدید
-            </a>
+            @if(Auth::user()->role != 'editor')
+                <a href="{{ route('MedaiControler.VideoManager') }}" class="btn btn-primary">
+                    <i class="fas fa-plus"></i>
+                    افزودن ویدیو جدید
+                </a>
+            @endif
         </div>
 
         <!-- آمار کلی -->
@@ -148,12 +150,16 @@
                             <div class="video-header">
                                 <div class="video-title">{{ $video->name }}</div>
                                 <div class="video-actions">
-                                    <a href="{{ route('MedaiControler.UpdateVideoStore', ['video' => $video->id]) }}" class="action-btn edit-btn" title="ویرایش">
-                                        <i class="fas fa-edit"></i>
-                                    </a>
-                                    <a href="#" class="action-btn delete-btn" data-id="{{ $video->id }}" title="حذف">
-                                        <i class="fas fa-trash"></i>
-                                    </a>
+                                    @if(Auth::user()->role != 'editor')
+                                        <a href="{{ route('MedaiControler.UpdateVideoStore', ['video' => $video->id]) }}" class="action-btn edit-btn" title="ویرایش">
+                                            <i class="fas fa-edit"></i>
+                                        </a>
+                                        @if(Auth::user()->role == 'super_admin')
+                                            <a href="#" class="action-btn delete-btn" data-id="{{ $video->id }}" title="حذف">
+                                                <i class="fas fa-trash"></i>
+                                            </a>
+                                        @endif
+                                    @endif
                                 </div>
                             </div>
                             <div class="video-stats">
