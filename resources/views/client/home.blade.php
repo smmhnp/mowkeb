@@ -3,70 +3,76 @@
 @section('style')
 
     <link href="{{ asset('css/home.css') }}" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 
 @endsection
 
 @section('content')
 
     <main class="main-container">
+        <!-- بخش ویدیو و کارت‌ها -->
+        
         <!-- بخش هیرو -->
         <section class="hero-section">
             <div class="hero-content">
-                <h2>{{ $hero->title }}</h2>
-                <p>{{ $hero->sub_title }}</p>
-                <button class="btn btn-primary">
-                    <i class="fas fa-newspaper"></i>
-                    {{ $hero->btn_text }}
-                </button>
+                <h2>نهضت جهانی هر شب جمعه مثل اربعین</h2>
+                <p>شب های جمعه٬ شب های زیارتی امام حسین علیه‌سلام نام ایشان را در محلات زنده کنیم</p>
             </div>
-            <div class="hero-image" style="background-image: url('{{ $hero->photo }}'); background-size: cover"></div>
+            <div class="hero-image" style="background-image: url('http://localhost:8000/storage/images/1762059350_66598480-9352-l__2990.jpg'); background-size: cover"></div>
         </section>
 
         <!-- خبر فوری -->
-        @if($special->status == 'active')
-            <div class="breaking-news">
-                <div class="breaking-badge">خبر فوری</div>
-                <div class="breaking-text">{{ $special->title }}</div>
-            </div>
-        @endif
-
+        <div class="breaking-news">
+            <div class="breaking-badge">خبر فوری</div>
+            <div class="breaking-text">متن تستی برای خبر ویژه</div>
+        </div>
+        
         <div class="layout-container">
             <!-- محتوای اصلی -->
             <div class="main-content">
                 <!-- اخبار برتر -->
-                <section class="featured-news">
-                    <h2 class="section-title">
-                        <i class="fas fa-fire"></i>
-                        داغ‌ترین اخبار
-                    </h2>
-                    <div class="news-grid">
-                        @foreach($articles as $article)
 
-                            <article class="news-card">
-                                <div class="news-image" style="background-image: url('{{ $article->cover }}'); background-size: cover">
-                                    <span class="special-badge">ویژه</span>
-                                </div>
+                <section class="video-section">
+                    <div class="video-container">
+                       <div id="99771696769"><script type="text/JavaScript" src="https://www.aparat.com/embed/jhj60bp?data[rnddiv]=99771696769&data[responsive]=yes"></script></div>
+                    </div>
 
-                                <div class="news-content">
-                                    <div class="news-meta">
-                                        <span class="news-category">{{ $article->category->name }}</span>
-                                        <span>{{ jDate($article->created_at)->ago() }}</span>
-                                    </div>
-                                    <h3 class="news-title">{{ $article->name }}</h3>
-                                    <p class="news-excerpt">{{ $article->summery }}</p>
-                                    <div class="news-footer">
-                                        <div class="news-author">
-                                            <div class="author-avatar"></div>
-                                            <span>{{ $article->user->fname . " " . $article->user->lname }}</span>
-                                        </div>
-                                        <span>{{ $article->view }} بازدید</span>
-                                    </div>
-                                </div>
-                            </article>
+                    <!-- کارت‌های پوستر -->
+                    <div class="poster-cards">
+                        <div class="poster-card">
+                            <div class="poster-image">
+                                <i class="fas fa-mosque"></i>
+                            </div>
+                        </div>
+                        <div class="poster-card">
+                            <div class="poster-image">
+                                <i class="fas fa-quran"></i>
+                            </div>
+                        </div>
+                        <div class="poster-card">
+                            <div class="poster-image">
+                                <i class="fas fa-hands-helping"></i>
+                            </div>
+                        </div>
+                    </div>
 
-                        @endforeach
+                    <!-- بخش توضیحات -->
+                    <div class="description-section">
+                        <h2>درباره نهضت مثل اربعین</h2>
+                        <p>
+                            نهضت "مثل اربعین" یک حرکت خودجوش مردمی است که با هدف زنده نگه داشتن فرهنگ عاشورایی و 
+                            گسترش ارزش‌های انسان‌ساز قیام اباعبدالله الحسین (ع) در سراسر جهان شکل گرفته است. 
+                            این نهضت هر شب جمعه با برگزاری مراسم زیارت، برنامه‌های فرهنگی و فعالیت‌های خیرخواهانه، 
+                            تلاش می‌کند تا پیام عاشورا را به گوش جهانیان برساند و جامعه‌ای بر اساس ارزش‌های الهی بسازد.
+                        </p>
+                        <p style="margin-top: 15px;">
+                            شرکت در این نهضت برای همه آزاد است و هرکس می‌تواند به فراخور توانایی‌های خود در 
+                            بخش‌های مختلف از جمله موکب‌داری، برنامه‌ریزی فرهنگی، فعالیت‌های رسانه‌ای و خدمات 
+                            خیرخواهانه مشارکت کند.
+                        </p>
                     </div>
                 </section>
+
             </div>
 
             <!-- سایدبار -->
@@ -108,6 +114,38 @@
                         </li>
                     </ul>
                 </div>
+
+                <!-- گالری تصاویر -->
+                <div class="sidebar-gallery">
+                    <h3 class="widget-title">
+                        <i class="fas fa-images"></i>
+                        گالری تصاویر
+                    </h3>
+                    <div class="gallery-slider">
+                        <div class="gallery-slide active">
+                            <i class="fas fa-mosque"></i>
+                            <span>تصویر ۱</span>
+                        </div>
+                        <div class="gallery-slide">
+                            <i class="fas fa-quran"></i>
+                            <span>تصویر ۲</span>
+                        </div>
+                        <div class="gallery-slide">
+                            <i class="fas fa-hands-helping"></i>
+                            <span>تصویر ۳</span>
+                        </div>
+                        <div class="gallery-slide">
+                            <i class="fas fa-users"></i>
+                            <span>تصویر ۴</span>
+                        </div>
+                    </div>
+                    <div class="gallery-nav">
+                        <div class="gallery-dot active" data-slide="0"></div>
+                        <div class="gallery-dot" data-slide="1"></div>
+                        <div class="gallery-dot" data-slide="2"></div>
+                        <div class="gallery-dot" data-slide="3"></div>
+                    </div>
+                </div>
             </aside>
         </div>
 
@@ -118,14 +156,30 @@
                 دسته‌بندی‌های
             </h2>
             <div class="categories-grid">
-                @foreach($categories as $category)
-                    <div class="category-card">
-                        <div class="category-icon">
-                            <i class="fas fa-landmark"></i>
-                        </div>
-                        <h3>{{ $category->name }}</h3>
+                <div class="category-card">
+                    <div class="category-icon">
+                        <i class="fas fa-landmark"></i>
                     </div>
-                @endforeach
+                    <h3>موکب‌مغازه‌ای</h3>
+                </div>
+                <div class="category-card">
+                    <div class="category-icon">
+                        <i class="fas fa-landmark"></i>
+                    </div>
+                    <h3>موکب‌ماشینی</h3>
+                </div>
+                <div class="category-card">
+                    <div class="category-icon">
+                        <i class="fas fa-landmark"></i>
+                    </div>
+                    <h3>موکب‌قرآنی</h3>
+                </div>
+                <div class="category-card">
+                    <div class="category-icon">
+                        <i class="fas fa-landmark"></i>
+                    </div>
+                    <h3>کارناوال</h3>
+                </div>
             </div>
         </section>
 
@@ -169,6 +223,40 @@
                 closeMobileMenu();
             }
         });
+
+        // اسلایدشوی گالری تصاویر
+        let currentSlide = 0;
+        const slides = document.querySelectorAll('.gallery-slide');
+        const dots = document.querySelectorAll('.gallery-dot');
+        const totalSlides = slides.length;
+
+        function showSlide(n) {
+            // مخفی کردن همه اسلایدها
+            slides.forEach(slide => slide.classList.remove('active'));
+            dots.forEach(dot => dot.classList.remove('active'));
+            
+            // نمایش اسلاید جاری
+            currentSlide = (n + totalSlides) % totalSlides;
+            slides[currentSlide].classList.add('active');
+            dots[currentSlide].classList.add('active');
+        }
+
+        function nextSlide() {
+            showSlide(currentSlide + 1);
+        }
+
+        // کلیک روی دات‌ها
+        dots.forEach((dot, index) => {
+            dot.addEventListener('click', () => {
+                showSlide(index);
+            });
+        });
+
+        // تغییر خودکار اسلایدها هر 3 ثانیه
+        setInterval(nextSlide, 3000);
+
+        // نمایش اولین اسلاید
+        showSlide(0);
     </script>
 
 @endsection

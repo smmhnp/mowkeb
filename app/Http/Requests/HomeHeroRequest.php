@@ -24,7 +24,6 @@ class HomeHeroRequest extends FormRequest
         return [
             'title' => 'required|string|max:100',
             'subTitle' => 'required|string|min:30',
-            'btnText' => 'required|string|max:20',
             'photo' => 'required'
         ];
     }

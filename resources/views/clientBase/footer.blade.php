@@ -3,7 +3,7 @@
         <div class="footer-container">
             <div class="footer-col">
                 <h3>درباره ما</h3>
-                <p style="color: #666; line-height: 1.6;">سایت خبری مرجع معتبر اخبار ایران و جهان. ما با تیمی از خبرنگاران و معتبرترین اخبار را در سریع‌ترین زمان ممکن منتشر می‌کنیم.</p>
+                <p style="color: #666; line-height: 1.6;">اربعین تنها یک روز در سال نیست، یک روش زندگی است. این نهضت، دعوتی است برای همه انسان ها تا در هر کجای جهان، هر شب جمعه با هر نیت خیری، قدمی برداریم تا شاهد برکات اربعین به صورت هفتگی باشیم.</p>
                 <div class="social-links">
                     <a href="#"><i class="fab fa-telegram"></i></a>
                     <a href="#"><i class="fab fa-twitter"></i></a>
@@ -12,13 +12,8 @@
                 </div>
             </div>
             <div class="footer-col">
-                <h3>لینک‌های سریع</h3>
-                <ul class="footer-links">
-                    <li><a href="#" class="active">خانه</a></li>
-                    @foreach($category as $title)
-                        <li><a href="{{ $title->slug }}">{{ $title->name }}</a></li>
-                    @endforeach
-                </ul>
+                <h3>چگونه مشارکت کنیم؟</h3>
+                <p style="color: #666; line-height: 1.6;">موکب دار شو!<br>سهم تو در این جریان عشق چیه؟</p>
             </div>
             <div class="footer-col">
                 <h3>دسته‌بندی‌ها</h3>

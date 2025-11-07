@@ -117,6 +117,7 @@ body {
     display: flex;
     align-items: center;
     gap: 10px;
+    cursor: pointer;
 }
 
 .user-avatar {
@@ -281,6 +282,7 @@ body {
     margin-bottom: 25px;
     border-bottom: 1px solid rgba(255, 255, 255, 0.3);
     padding-bottom: 15px;
+    flex-wrap: wrap;
 }
 
 .tab-btn {
@@ -362,15 +364,158 @@ textarea.form-control {
     flex: 1;
 }
 
-.news-preview {
-    background: rgba(255, 255, 255, 0.2);
+/* استایل Select2 */
+.select2-container--default .select2-selection--single,
+.select2-container--default .select2-selection--multiple {
+    background: rgba(255, 255, 255, 0.3);
+    border: 1px solid rgba(255, 255, 255, 0.3);
+    border-radius: 8px;
+    transition: var(--transition);
+}
+
+.select2-container--default .select2-selection--single:focus,
+.select2-container--default .select2-selection--multiple:focus {
+    outline: none;
+    border-color: var(--primary);
+    background: rgba(255, 255, 255, 0.5);
+}
+
+.select2-container--default .select2-selection--single {
+    height: 45px;
+    padding: 8px 15px;
+}
+
+.select2-container--default .select2-selection--single .select2-selection__rendered {
+    color: var(--dark);
+    line-height: 28px;
+    padding: 0;
+}
+
+.select2-container--default .select2-selection--single .select2-selection__arrow {
+    height: 43px;
+    left: 15px;
+    right: auto;
+}
+
+.select2-container--default .select2-selection--single .select2-selection__arrow b {
+    border-color: var(--primary) transparent transparent transparent;
+}
+
+.select2-container--default .select2-selection--multiple {
+    min-height: 45px;
+    padding: 5px 10px;
+}
+
+.select2-container--default .select2-selection--multiple .select2-selection__choice {
+    background: var(--primary);
+    color: white;
+    border: none;
+    border-radius: 20px;
+    padding: 5px 12px;
+    margin: 3px;
+    font-size: 0.85rem;
+    display: flex;
+    align-items: center;
+    gap: 5px;
+}
+
+.select2-container--default .select2-selection--multiple .select2-selection__choice__remove {
+    color: white;
+    margin-left: 5px;
+    order: 2;
+}
+
+.select2-container--default .select2-selection--multiple .select2-selection__choice__remove:hover {
+    color: rgba(255, 255, 255, 0.8);
+}
+
+.select2-container--default .select2-search--inline .select2-search__field {
+    color: var(--dark);
+    margin-top: 5px;
+    padding: 5px;
+    background: transparent;
+    border: none;
+    box-shadow: none;
+}
+
+.select2-container--default .select2-results__option--highlighted[aria-selected] {
+    background: var(--primary);
+    color: white;
+}
+
+.select2-container--default .select2-results__option[aria-selected=true] {
+    background: rgba(67, 97, 238, 0.1);
+    color: var(--primary);
+}
+
+.select2-dropdown {
+    background: var(--glass-bg);
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+    border: 1px solid var(--glass-border);
+    border-radius: 8px;
+    box-shadow: var(--shadow);
+}
+
+.select2-container--default .select2-search--dropdown .select2-search__field {
+    border: 1px solid rgba(255, 255, 255, 0.3);
+    border-radius: 6px;
+    background: rgba(255, 255, 255, 0.3);
+    padding: 8px 12px;
+    margin-bottom: 10px;
+}
+
+/* استایل برای تصاویر در dropdown */
+.select2-image-option {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 10px 15px;
+}
+
+.select2-image-option img {
+    width: 50px;
+    height: 40px;
+    border-radius: 6px;
+    object-fit: cover;
+    border: 1px solid rgba(255, 255, 255, 0.3);
+}
+
+.select2-image-option .image-info {
+    display: flex;
+    flex-direction: column;
+}
+
+.select2-image-option .image-name {
+    font-weight: 600;
+    color: var(--dark);
+}
+
+.select2-image-option .image-details {
+    font-size: 0.8rem;
+    color: #666;
+}
+
+/* استایل برای گزینه‌های انتخاب شده با تصویر */
+.select2-selection__choice__image {
+    width: 20px;
+    height: 20px;
+    border-radius: 3px;
+    object-fit: cover;
+    margin-left: 5px;
+}
+
+/* پیش‌نمایش */
+.preview-section {
+    background: rgba(255, 255, 255, 0.3);
     border-radius: 12px;
     padding: 20px;
     margin-top: 30px;
+    border: 1px solid rgba(255, 255, 255, 0.3);
 }
 
 .preview-title {
-    font-size: 1.3rem;
+    font-size: 1.2rem;
     margin-bottom: 15px;
     color: var(--dark);
     display: flex;
@@ -383,119 +528,6 @@ textarea.form-control {
     border-radius: 8px;
     padding: 20px;
     box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
-}
-
-/* گالری تصاویر */
-.gallery-section {
-    margin-top: 20px;
-}
-
-.gallery-header {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    margin-bottom: 15px;
-}
-
-.gallery-title {
-    font-size: 1.1rem;
-    font-weight: 600;
-    color: var(--dark);
-}
-
-.gallery-actions {
-    display: flex;
-    gap: 10px;
-}
-
-.gallery-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
-    gap: 15px;
-    margin-top: 15px;
-}
-
-.gallery-item {
-    position: relative;
-    height: 120px;
-    border-radius: 8px;
-    overflow: hidden;
-    cursor: pointer;
-    transition: var(--transition);
-    border: 2px solid transparent;
-}
-
-.gallery-item:hover {
-    transform: translateY(-3px);
-    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
-}
-
-.gallery-item.selected {
-    border-color: var(--primary);
-    box-shadow: 0 0 0 2px var(--primary);
-}
-
-.gallery-item img {
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-}
-
-.gallery-item .image-placeholder {
-    width: 100%;
-    height: 100%;
-    background: #f0f0f0;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    color: #999;
-    font-size: 2rem;
-}
-
-.gallery-item .select-overlay {
-    position: absolute;
-    top: 5px;
-    left: 5px;
-    width: 20px;
-    height: 20px;
-    border-radius: 50%;
-    background: rgba(255, 255, 255, 0.9);
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    font-size: 0.7rem;
-    color: var(--primary);
-    opacity: 0;
-    transition: var(--transition);
-}
-
-.gallery-item:hover .select-overlay,
-.gallery-item.selected .select-overlay {
-    opacity: 1;
-}
-
-.gallery-item.selected .select-overlay {
-    background: var(--primary);
-    color: white;
-}
-
-.selected-image-preview {
-    margin-top: 20px;
-    padding: 15px;
-    background: rgba(255, 255, 255, 0.3);
-    border-radius: 8px;
-    display: none;
-}
-
-.selected-image-preview.active {
-    display: block;
-}
-
-.preview-image {
-    max-width: 200px;
-    max-height: 150px;
-    border-radius: 6px;
-    margin-top: 10px;
 }
 
 /* منوی کشویی برای موبایل */
@@ -551,8 +583,12 @@ textarea.form-control {
         grid-template-columns: 1fr;
     }
 
-    .gallery-grid {
-        grid-template-columns: repeat(auto-fill, minmax(120px, 1fr));
+    .admin-tabs {
+        flex-direction: column;
+    }
+
+    .tab-btn {
+        text-align: right;
     }
 }
 
@@ -569,8 +605,15 @@ textarea.form-control {
         flex-direction: column;
     }
 
-    .gallery-grid {
-        grid-template-columns: repeat(3, 1fr);
+    .select2-image-option {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 8px;
+    }
+    
+    .select2-image-option img {
+        width: 100%;
+        height: 80px;
     }
 }
 
@@ -594,9 +637,5 @@ textarea.form-control {
     .tab-btn {
         flex: 1;
         min-width: 120px;
-    }
-
-    .gallery-grid {
-        grid-template-columns: repeat(2, 1fr);
     }
 }

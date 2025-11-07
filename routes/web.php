@@ -12,6 +12,10 @@ Route::get('/check-ip', function () {
     return request()->ip();
 });
 
+Route::get('/test', function(){
+    return view('test');
+});
+
 Route::get('/', [HomeController::class, 'index'])->name('HomeController.index');
 Route::get('/show/{slug}', [CategoryController::class, 'showCategoryArticles'])->name('CategoryController.showCategoryArticles');
 Route::get('/article/{id}', [ArticleController::class, 'showArticle'])->name('ArticleController.showArticle');
@@ -34,6 +38,9 @@ Route::group(['prefix' => 'admin', 'middleware' => ['auth', 'RestrictByIP']], fu
             Route::get('/home', [HomeController::class, 'homeManeger'])->name('HomeController.homeManeger');
             Route::post('/home/hero', [HomeController::class, 'homeHeroStore'])->name('HomeController.homeHeroManage');
             Route::post('/home/special', [HomeController::class, 'homeSpecialStore'])->name('HomeController.homeSpecialStore');
+            Route::post('/home/media', [HomeController::class, 'homeMediaStore'])->name('HomeController.homeMediaStore');
+            Route::post('/home/content', [HomeController::class, 'homeContentStore'])->name('HomeController.homeContentStore');
+            Route::post('/home/gallery', [HomeController::class, 'homeGalleryStore'])->name('HomeController.homeGalleryStore');
             Route::post('/home/article', [HomeController::class, 'homeArticleStore'])->name('HomeController.homeArticleStore');
             Route::post('/home/category', [HomeController::class, 'homeCategoryStore'])->name('HomeController.homeCategoryStore');
         });

@@ -181,8 +181,81 @@ body {
     padding: 30px 20px;
 }
 
-/* بخش هیرو */
-.hero-section {
+.video-container {
+    background: linear-gradient(45deg, var(--primary), var(--success));
+    border-radius: 20px;
+    overflow: hidden;
+    box-shadow: var(--shadow);
+    margin-bottom: 30px;
+    position: relative;
+}
+
+.video-placeholder {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    color: white;
+    text-align: center;
+    padding: 20px;
+}
+
+.video-placeholder i {
+    font-size: 4rem;
+    margin-bottom: 20px;
+}
+
+.video-placeholder h3 {
+    font-size: 1.8rem;
+    margin-bottom: 10px;
+}
+
+.video-placeholder p {
+    font-size: 1.1rem;
+    opacity: 0.9;
+}
+
+/* کارت‌های پوستر */
+.poster-cards {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 20px;
+    margin-bottom: 40px;
+}
+
+.poster-card {
+    background: var(--glass-bg);
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+    border-radius: 15px;
+    border: 1px solid var(--glass-border);
+    box-shadow: var(--shadow);
+    overflow: hidden;
+    transition: var(--transition);
+    aspect-ratio: 3/2;
+    position: relative;
+}
+
+.poster-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 15px 35px rgba(0, 0, 0, 0.15);
+}
+
+.poster-image {
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(45deg, var(--primary-light), var(--info));
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: white;
+    font-size: 2rem;
+}
+
+/* بخش توضیحات */
+.description-section {
     background: var(--glass-bg);
     backdrop-filter: blur(10px);
     -webkit-backdrop-filter: blur(10px);
@@ -191,22 +264,63 @@ body {
     box-shadow: var(--shadow);
     padding: 40px;
     margin-bottom: 40px;
+}
+
+.description-section h2 {
+    font-size: 2rem;
+    margin-bottom: 20px;
+    color: var(--dark);
+    text-align: center;
+}
+
+.description-section p {
+    font-size: 1.1rem;
+    line-height: 1.8;
+    color: #555;
+    text-align: justify;
+}
+
+/* بخش هیرو */
+.hero-section {
+    position: relative;
+    overflow: hidden;
+    border-radius: 20px;
+    box-shadow: var(--shadow);
     display: grid;
     grid-template-columns: 2fr 1fr;
     gap: 30px;
     align-items: center;
+    padding: 40px;
+    margin-bottom: 40px;
+}
+
+/* تصویر زمینه در لایه‌ی زیر */
+.hero-section::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background: url('../cover.jpg') center/cover no-repeat;
+    filter: blur(10px); /* تاری اصلاح شده */
+    transform: scale(1.1); /* برای جلوه‌گری از لبه‌های تار */
+    z-index: 0;
+}
+
+/* محتوای اصلی روی تصویر */
+.hero-section > * {
+    position: relative;
+    z-index: 1;
 }
 
 .hero-content h2 {
     font-size: 2.5rem;
     margin-bottom: 20px;
-    color: var(--dark);
+    color: var(--light);
     line-height: 1.3;
 }
 
 .hero-content p {
     font-size: 1.1rem;
-    color: #666;
+    color: var(--light);
     margin-bottom: 30px;
     line-height: 1.6;
 }
@@ -490,6 +604,65 @@ body {
     color: #666;
 }
 
+/* گالری تصاویر در سایدبار */
+.sidebar-gallery {
+    background: var(--glass-bg);
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+    border-radius: 15px;
+    border: 1px solid var(--glass-border);
+    box-shadow: var(--shadow);
+    padding: 20px;
+    overflow: hidden;
+}
+
+.gallery-slider {
+    position: relative;
+    height: 300px;
+    border-radius: 10px;
+    overflow: hidden;
+}
+
+.gallery-slide {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    opacity: 0;
+    transition: opacity 0.5s ease;
+    background: linear-gradient(45deg, var(--primary-light), var(--info));
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: white;
+    font-size: 1.5rem;
+}
+
+.gallery-slide.active {
+    opacity: 1;
+}
+
+.gallery-nav {
+    display: flex;
+    justify-content: center;
+    gap: 10px;
+    margin-top: 15px;
+}
+
+.gallery-dot {
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;
+    background: rgba(67, 97, 238, 0.3);
+    cursor: pointer;
+    transition: var(--transition);
+}
+
+.gallery-dot.active {
+    background: var(--primary);
+}
+
 /* منوی کشویی شیشه‌ای */
 .mobile-menu {
     position: fixed;
@@ -649,6 +822,10 @@ body {
     .hero-image {
         height: 200px;
     }
+
+    .hero-image{
+        display: none;
+    }
 }
 
 @media (max-width: 992px) {
@@ -670,6 +847,30 @@ body {
 
     .header-actions.mobile-hidden {
         display: none;
+    }
+        
+    .hero-image{
+        display: none;
+    }
+
+    .sidebar {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 20px;
+        align-items: start;
+    }
+    
+    .sidebar-widget,
+    .sidebar-gallery {
+        margin-bottom: 0;
+    }
+    
+    .gallery-slider {
+        height: 250px;
+    }
+    
+    .categories-section {
+        margin-top: 40px;
     }
 }
 
@@ -694,6 +895,24 @@ body {
         flex-direction: column;
         text-align: center;
         gap: 10px;
+    }
+
+    .poster-cards {
+        grid-template-columns: 1fr;
+    }
+    .hero-image,
+    .breaking-badge,
+    .poster-cards{
+        display: none;
+    }
+
+    .sidebar {
+        grid-template-columns: 1fr;
+        gap: 30px;
+    }
+    
+    .gallery-slider {
+        height: 300px;
     }
 }
 
@@ -729,6 +948,24 @@ body {
 
     .section-title {
         font-size: 1.5rem;
+    }
+
+    .description-section {
+        padding: 25px;
+    }
+
+    .description-section h2 {
+        font-size: 1.5rem;
+    }
+    
+    .hero-image,
+    .breaking-badge,
+    .poster-cards{
+        display: none;
+    }
+
+    .description-section{
+        margin-bottom: 0;
     }
 }
 

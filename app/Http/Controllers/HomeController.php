@@ -2,15 +2,21 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\ContentRequest;
 use App\Http\Requests\HomeHeroRequest;
 use App\Http\Requests\HomeSpecialRequest;
+use App\Http\Requests\MediaRequest;
 use App\Models\Article;
 use App\Models\Categorie;
+use App\Models\Content;
+use App\Models\Gallery;
 use App\Models\home\Hero;
 use App\Models\home\TempCetegories;
 use App\Models\home\Specail;
 use App\Models\Image;
+use App\Models\Media;
 use App\Models\TempArticle;
+use App\Models\Video;
 use Illuminate\Http\Request;
 
 class HomeController extends Controller
@@ -33,19 +39,22 @@ class HomeController extends Controller
         $images = Image::all();
         $hero = Hero::first();
         $special = Specail::first();
+        $media = Media::first();
+        $content = Content::first();
+        $gallery = Gallery::all();
         $articles = Article::all();
         $categories = Categorie::all();
+        $videos = Video::all();
 
-        return view('admin.home', ['images' => $images, 'hero' => $hero, 'special' => $special, 'articles' => $articles, 'categories' => $categories]);
+        return view('admin.home', compact('images' , 'hero', 'special', 'media', 'content', 'gallery', 'articles', 'categories', 'videos'));
     }
 
     //............................................set.data.for.hero.section............................................
 
     public function homeHeroStore(HomeHeroRequest $request){
-        Hero::first()->update([
+        Hero::first()->updateOrCreate([
             'title' => $request->title,
             'sub_title' => $request->subTitle,
-            'btn_text' => $request->btnText,
             'photo' => $request->photo
         ]);
 
@@ -55,12 +64,49 @@ class HomeController extends Controller
     //............................................set.data.for.special.section............................................
 
     public function homeSpecialStore(HomeSpecialRequest $request){
-        Specail::first()->update([
+        Specail::first()->updateOrCreate([
             'title' => $request->title,
             'status' => $request->status
         ]);
 
         return redirect()->back()->with('success', 'قسمت خبر فوری با موفقیت بروز شد.'); 
+    }
+
+    //............................................set.data.for.media.section............................................
+
+    public function homeMediaStore(MediaRequest $request){
+        Media::updateOrCreate([
+            'video' => $request->video,
+            'first' => $request->first_poster,
+            'second' => $request->second_poster,
+            'third' => $request->third_poster
+        ]);
+
+        return redirect()->back()->with('success', 'قسمت ویدیو و پوسترها با موفقیت بروز شد.'); 
+    }
+
+    //............................................set.data.for.media.section............................................
+
+    public function homeContentStore(ContentRequest $request){
+        Content::updateOrCreate([
+            'title' => $request->title,
+            'content' => $request->content
+        ]);
+
+        return redirect()->back()->with('success', 'قسمت محتوا با موفقیت بروز شد.'); 
+    }
+    
+    //............................................set.data.for.gallery.section............................................
+
+    public function homeGalleryStore(Request $request){
+
+        foreach($request->gallery as $image){
+            Gallery::updateOrCreate([
+                'image' => $image
+            ]);
+        }
+
+        return redirect()->back()->with('success', 'قسمت گالری با موفقیت بروز شد.'); 
     }
 
     //............................................set.data.for.article.section............................................
