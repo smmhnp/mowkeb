@@ -41,7 +41,6 @@ Route::group(['prefix' => 'admin', 'middleware' => ['auth', 'RestrictByIP']], fu
             Route::post('/home/media', [HomeController::class, 'homeMediaStore'])->name('HomeController.homeMediaStore');
             Route::post('/home/content', [HomeController::class, 'homeContentStore'])->name('HomeController.homeContentStore');
             Route::post('/home/gallery', [HomeController::class, 'homeGalleryStore'])->name('HomeController.homeGalleryStore');
-            Route::post('/home/article', [HomeController::class, 'homeArticleStore'])->name('HomeController.homeArticleStore');
             Route::post('/home/category', [HomeController::class, 'homeCategoryStore'])->name('HomeController.homeCategoryStore');
         });
 

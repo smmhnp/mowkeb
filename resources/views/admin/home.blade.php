@@ -21,12 +21,6 @@
 
 @section('content')
 
-    @if ($errors->any())
-        <div class="alert alert-danger" role="alert">
-            {{ $errors->first() }}
-        </div>
-    @endif
-
     <main class="main-content">
         <div class="page-title">
             <h2>مدیریت محتوای صفحه اصلی</h2>
@@ -40,6 +34,7 @@
                 <button class="tab-btn" data-tab="video">ویدیو و پوسترها</button>
                 <button class="tab-btn" data-tab="description">متن توضیحات</button>
                 <button class="tab-btn" data-tab="gallery">گالری تصاویر</button>
+                <button class="tab-btn" data-tab="category">دسته بندی ها</button>
             </div>
 
             <!-- مدیریت بخش هیرو -->
@@ -236,6 +231,66 @@
                                 @endforeach
                             @endforeach
                         </select>
+                    </div>
+
+                    <div class="form-actions">
+                        <button type="submit" class="btn btn-success">
+                            <i class="fas fa-save"></i>
+                            ذخیره تغییرات
+                        </button>
+                        <a href="{{ route('DashboardController.dashboard') }}" class="btn btn-outline">
+                            <i class="fas fa-times"></i>
+                            انصراف
+                        </a>
+                    </div>
+                </form>
+            </div>
+
+            <!-- مدیریت دسته بندی ها -->
+            <div class="tab-content" id="category-tab">
+                <form id="videoForm" action="{{ route('HomeController.homeCategoryStore') }}" method="post">
+                    @csrf
+                    
+                    <div class="form-grid">
+                        <div class="form-group">
+                            <label for="first">اولین دسته بندی</label>
+                            <select name="first" id="first" class="form-control">
+                                <option value=""></option>
+                                @foreach($categories as $category)
+                                    <option value="{{ $category->id }}">{{ $category->name }}</option>
+                                @endforeach
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label for="seconde">دومین دسته بندی</label>
+                            <select name="seconde" id="seconde" class="form-control">
+                                <option value=""></option>
+                                @foreach($categories as $category)
+                                    <option value="{{ $category->id }}">{{ $category->name }}</option>
+                                @endforeach
+                            </select>
+                        </div>
+                    </div>
+
+                    <div class="form-grid">
+                        <div class="form-group">
+                            <label for="third">سومین دسته بندی</label>
+                            <select name="third" id="third" class="form-control">
+                                <option value=""></option>
+                                @foreach($categories as $category)
+                                    <option value="{{ $category->id }}">{{ $category->name }}</option>
+                                @endforeach
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label for="fourth">چهارمین دسته بندی</label>
+                            <select name="fourth" id="fourth" class="form-control">
+                                <option value=""></option>
+                                @foreach($categories as $category)
+                                    <option value="{{ $category->id }}">{{ $category->name }}</option>
+                                @endforeach
+                            </select>
+                        </div>
                     </div>
 
                     <div class="form-actions">

@@ -12,4 +12,8 @@ class Media extends Model
         'second',
         'third'
     ];
+
+    public function video(){
+        return $this->belongsTo(Video::class);
+    }
 }

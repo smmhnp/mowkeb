@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\CaregoryRequest;
 use App\Http\Requests\ContentRequest;
 use App\Http\Requests\HomeHeroRequest;
 use App\Http\Requests\HomeSpecialRequest;
@@ -26,11 +27,12 @@ class HomeController extends Controller
     public function index(){
         $hero = Hero::first();
         $special = Specail::first();
-        $articleID = TempArticle::pluck('article_id');
-        $articles = Article::with(['user', 'category'])->whereIn('id', $articleID)->get();
+        $media = Media::with('video')->first();
+        $content = Content::first();
+        $gallery = Gallery::all();
         $categories = Categorie::getTempCategories();
 
-        return view('client.home', ['hero' => $hero, 'special' => $special, 'articles' => $articles, 'categories' => $categories]);
+        return view('client.home', compact('hero', 'special', 'media', 'content', 'gallery', 'categories'));
     }
 
     //............................................send.data.manage.home............................................
@@ -85,7 +87,7 @@ class HomeController extends Controller
         return redirect()->back()->with('success', 'قسمت ویدیو و پوسترها با موفقیت بروز شد.'); 
     }
 
-    //............................................set.data.for.media.section............................................
+    //............................................set.data.for.content.section............................................
 
     public function homeContentStore(ContentRequest $request){
         Content::updateOrCreate([
@@ -109,43 +111,10 @@ class HomeController extends Controller
         return redirect()->back()->with('success', 'قسمت گالری با موفقیت بروز شد.'); 
     }
 
-    //............................................set.data.for.article.section............................................
-
-    public function homeArticleStore(Request $request){
-        
-        $request->validate([
-            'article_ids' => 'required|array|min:2|max:6',
-            'article_ids.*' => 'exists:articles,id'
-        ], [
-            'article_ids.max' => 'شما فقط می‌توانید حداکثر ۶ مقاله انتخاب کنید.',
-            'article_ids.min' => 'شما فقط می‌توانید حداقل ۲ مقاله انتخاب کنید.',
-            'article_ids.required' => 'هیچ مقاله‌ای انتخاب نشده است.',
-        ]);
-
-
-        $data = collect($request->article_ids)->map(fn($id) => [
-            'article_id' => $id,
-        ])->toArray();
-
-        
-        $recordes = TempArticle::all();
-
-        foreach($recordes as $recorde){
-            TempArticle::findOrFail($recorde->id)->delete();
-        }
-
-        foreach($data as $article){
-            TempArticle::create([
-                'article_id' => $article['article_id']
-            ]);
-        }
-
-        return redirect()->back()->with('success', 'قسمت لیست اخبار با موفقیت بروز شد.'); 
-    }
-
     //............................................set.data.for.category.section............................................
 
-    public function homeCategoryStore(Request $request){
+    public function homeCategoryStore(CaregoryRequest $request){
+
         if(TempCetegories::first())
             TempCetegories::firstOrFail()->delete();
 

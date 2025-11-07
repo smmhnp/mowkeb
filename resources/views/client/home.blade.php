@@ -10,21 +10,20 @@
 @section('content')
 
     <main class="main-container">
-        <!-- بخش ویدیو و کارت‌ها -->
         
         <!-- بخش هیرو -->
         <section class="hero-section">
             <div class="hero-content">
-                <h2>نهضت جهانی هر شب جمعه مثل اربعین</h2>
-                <p>شب های جمعه٬ شب های زیارتی امام حسین علیه‌سلام نام ایشان را در محلات زنده کنیم</p>
+                <h2>{{ $hero->title }}</h2>
+                <p>{{ $hero->sub_title }}</p>
             </div>
-            <div class="hero-image" style="background-image: url('http://localhost:8000/storage/images/1762059350_66598480-9352-l__2990.jpg'); background-size: cover"></div>
+            <div class="hero-image" style="background-image: url('{{ asset('storage/' . $hero->photo) }}'); background-size: cover;"></div>
         </section>
 
         <!-- خبر فوری -->
         <div class="breaking-news">
             <div class="breaking-badge">خبر فوری</div>
-            <div class="breaking-text">متن تستی برای خبر ویژه</div>
+            <div class="breaking-text">{{ $special->title }}</div>
         </div>
         
         <div class="layout-container">
@@ -34,42 +33,35 @@
 
                 <section class="video-section">
                     <div class="video-container">
-                       <div id="99771696769"><script type="text/JavaScript" src="https://www.aparat.com/embed/jhj60bp?data[rnddiv]=99771696769&data[responsive]=yes"></script></div>
+                       <div id="{{ $media->video->aparatID }}">
+                            <script type="text/JavaScript" src="{{ $media->video->link }}"></script>
+                        </div>
                     </div>
 
                     <!-- کارت‌های پوستر -->
                     <div class="poster-cards">
                         <div class="poster-card">
                             <div class="poster-image">
-                                <i class="fas fa-mosque"></i>
+                                <img class="poster-img" src="{{ asset('storage/' . $media->first) }}">
                             </div>
                         </div>
                         <div class="poster-card">
                             <div class="poster-image">
-                                <i class="fas fa-quran"></i>
+                                <img class="poster-img" src="{{ asset('storage/' . $media->second) }}">
                             </div>
                         </div>
                         <div class="poster-card">
                             <div class="poster-image">
-                                <i class="fas fa-hands-helping"></i>
+                                <img class="poster-img" src="{{ asset('storage/' . $media->third) }}">
                             </div>
                         </div>
                     </div>
 
                     <!-- بخش توضیحات -->
                     <div class="description-section">
-                        <h2>درباره نهضت مثل اربعین</h2>
-                        <p>
-                            نهضت "مثل اربعین" یک حرکت خودجوش مردمی است که با هدف زنده نگه داشتن فرهنگ عاشورایی و 
-                            گسترش ارزش‌های انسان‌ساز قیام اباعبدالله الحسین (ع) در سراسر جهان شکل گرفته است. 
-                            این نهضت هر شب جمعه با برگزاری مراسم زیارت، برنامه‌های فرهنگی و فعالیت‌های خیرخواهانه، 
-                            تلاش می‌کند تا پیام عاشورا را به گوش جهانیان برساند و جامعه‌ای بر اساس ارزش‌های الهی بسازد.
-                        </p>
-                        <p style="margin-top: 15px;">
-                            شرکت در این نهضت برای همه آزاد است و هرکس می‌تواند به فراخور توانایی‌های خود در 
-                            بخش‌های مختلف از جمله موکب‌داری، برنامه‌ریزی فرهنگی، فعالیت‌های رسانه‌ای و خدمات 
-                            خیرخواهانه مشارکت کند.
-                        </p>
+                        <h2>{{ $content->title }}</h2>
+                        
+                        {!! $content->content !!}
                     </div>
                 </section>
 
@@ -122,28 +114,16 @@
                         گالری تصاویر
                     </h3>
                     <div class="gallery-slider">
-                        <div class="gallery-slide active">
-                            <i class="fas fa-mosque"></i>
-                            <span>تصویر ۱</span>
-                        </div>
-                        <div class="gallery-slide">
-                            <i class="fas fa-quran"></i>
-                            <span>تصویر ۲</span>
-                        </div>
-                        <div class="gallery-slide">
-                            <i class="fas fa-hands-helping"></i>
-                            <span>تصویر ۳</span>
-                        </div>
-                        <div class="gallery-slide">
-                            <i class="fas fa-users"></i>
-                            <span>تصویر ۴</span>
-                        </div>
+                        @foreach($gallery as $index => $image)
+                            <div class="gallery-slide" {{ $index === 0 ? 'active' : '' }}>
+                                <img src="{{ asset('storage/' . $image->image) }}">
+                            </div>
+                        @endforeach
                     </div>
                     <div class="gallery-nav">
-                        <div class="gallery-dot active" data-slide="0"></div>
-                        <div class="gallery-dot" data-slide="1"></div>
-                        <div class="gallery-dot" data-slide="2"></div>
-                        <div class="gallery-dot" data-slide="3"></div>
+                        @foreach($gallery as $index => $image)
+                            <div class="gallery-dot" {{ $index === 0 ? 'active' : '' }} data-slide="{{ $image->id }}"></div>
+                        @endforeach
                     </div>
                 </div>
             </aside>
@@ -156,30 +136,14 @@
                 دسته‌بندی‌های
             </h2>
             <div class="categories-grid">
-                <div class="category-card">
-                    <div class="category-icon">
-                        <i class="fas fa-landmark"></i>
+                @foreach($categories as $category)
+                    <div class="category-card">
+                        <div class="category-icon">
+                            <i class="fas fa-landmark"></i>
+                        </div>
+                        <h3>{{ $category->name }}</h3>
                     </div>
-                    <h3>موکب‌مغازه‌ای</h3>
-                </div>
-                <div class="category-card">
-                    <div class="category-icon">
-                        <i class="fas fa-landmark"></i>
-                    </div>
-                    <h3>موکب‌ماشینی</h3>
-                </div>
-                <div class="category-card">
-                    <div class="category-icon">
-                        <i class="fas fa-landmark"></i>
-                    </div>
-                    <h3>موکب‌قرآنی</h3>
-                </div>
-                <div class="category-card">
-                    <div class="category-icon">
-                        <i class="fas fa-landmark"></i>
-                    </div>
-                    <h3>کارناوال</h3>
-                </div>
+                @endforeach
             </div>
         </section>
 

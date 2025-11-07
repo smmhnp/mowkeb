@@ -51,7 +51,7 @@
                             <h3>خلاصه مطالب</h3>
                             {{ $article->summery }}
                             <h3>توضیحات تکمیلی</h3>
-                            {{ $article->content }}                            
+                            {!! $article->content !!}
                         </div>
                     </div>
 
