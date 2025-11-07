@@ -60,7 +60,7 @@
 
                     <div class="form-group">
                         <label for="hero-subtitle">زیرعنوان</label>
-                        <textarea name="subTitle" type="text" id="hero-subtitle" class="form-control" placeholder="زیرعنوان بخش هیرو را وارد کنید">{{ $hero->sub_title }}"</textarea>
+                        <textarea name="subTitle" type="text" id="hero-subtitle" class="form-control" placeholder="زیرعنوان بخش هیرو را وارد کنید">{{ $hero->sub_title }}</textarea>
                     </div>
 
                     <div class="form-actions">
@@ -226,9 +226,7 @@
                         <select name="gallery[]" id="sidebar-gallery" class="form-control select2-image" multiple>
                             <option value=""></option>
                             @foreach($images as $image)
-                                @foreach($gallery as $select)
-                                    <option value="{{ $image->url }}" data-image="{{ asset('storage/' . $image->url) }}" {{ $select->image == $image->url ? 'selected' : '' }}>{{ $image->name }}</option>
-                                @endforeach
+                                <option value="{{ $image->url }}" data-image="{{ asset('storage/' . $image->url) }}" {{ in_array($image->url, $gallery) ? 'selected' : '' }}>{{ $image->name }}</option>
                             @endforeach
                         </select>
                     </div>

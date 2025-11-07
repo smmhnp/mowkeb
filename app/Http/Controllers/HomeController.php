@@ -43,10 +43,15 @@ class HomeController extends Controller
         $special = Specail::first();
         $media = Media::first();
         $content = Content::first();
-        $gallery = Gallery::all();
         $articles = Article::all();
         $categories = Categorie::all();
         $videos = Video::all();
+        
+        $tempGallery = Gallery::all();
+        $gallery = [];
+        foreach($tempGallery as $image){
+            $gallery[] = $image->image;
+        }
 
         return view('admin.home', compact('images' , 'hero', 'special', 'media', 'content', 'gallery', 'articles', 'categories', 'videos'));
     }
@@ -54,7 +59,7 @@ class HomeController extends Controller
     //............................................set.data.for.hero.section............................................
 
     public function homeHeroStore(HomeHeroRequest $request){
-        Hero::first()->updateOrCreate([
+        Hero::first()->update([
             'title' => $request->title,
             'sub_title' => $request->subTitle,
             'photo' => $request->photo
@@ -66,7 +71,7 @@ class HomeController extends Controller
     //............................................set.data.for.special.section............................................
 
     public function homeSpecialStore(HomeSpecialRequest $request){
-        Specail::first()->updateOrCreate([
+        Specail::first()->update([
             'title' => $request->title,
             'status' => $request->status
         ]);
@@ -77,8 +82,8 @@ class HomeController extends Controller
     //............................................set.data.for.media.section............................................
 
     public function homeMediaStore(MediaRequest $request){
-        Media::updateOrCreate([
-            'video' => $request->video,
+        Media::first()->update([
+            'video_id' => $request->video,
             'first' => $request->first_poster,
             'second' => $request->second_poster,
             'third' => $request->third_poster
@@ -90,7 +95,7 @@ class HomeController extends Controller
     //............................................set.data.for.content.section............................................
 
     public function homeContentStore(ContentRequest $request){
-        Content::updateOrCreate([
+        Content::first()->update([
             'title' => $request->title,
             'content' => $request->content
         ]);
@@ -102,8 +107,10 @@ class HomeController extends Controller
 
     public function homeGalleryStore(Request $request){
 
+        Gallery::truncate();
+
         foreach($request->gallery as $image){
-            Gallery::updateOrCreate([
+            Gallery::create([
                 'image' => $image
             ]);
         }

@@ -79,29 +79,29 @@
                         <li class="trending-item">
                             <div class="trending-number">۱</div>
                             <div class="trending-content">
-                                <h4>تغییرات کابینه در هفته آینده</h4>
-                                <div class="trending-meta">سیاسی - ۵,۲۴۱ بازدید</div>
+                                <h4>شرکت حجت  السلام موسی در موکب</h4>
+                                <div class="trending-meta">موکب - ۵,۲۴۱ بازدید</div>
                             </div>
                         </li>
                         <li class="trending-item">
                             <div class="trending-number">۲</div>
                             <div class="trending-content">
-                                <h4>افتتاح خط تولید جدید خودروسازی</h4>
-                                <div class="trending-meta">اقتصادی - ۴,۸۷۶ بازدید</div>
+                                <h4>صحبت های حاج حسین یکتا</h4>
+                                <div class="trending-meta">موکب - ۴,۸۷۶ بازدید</div>
                             </div>
                         </li>
                         <li class="trending-item">
                             <div class="trending-number">۳</div>
                             <div class="trending-content">
-                                <h4>نتایج قرعه کشی لیگ قهرمانان آسیا</h4>
-                                <div class="trending-meta">ورزشی - ۴,۱۲۳ بازدید</div>
+                                <h4>صحبت های حجت السلام پناهیان</h4>
+                                <div class="trending-meta">موکب - ۴,۱۲۳ بازدید</div>
                             </div>
                         </li>
                         <li class="trending-item">
                             <div class="trending-number">۴</div>
                             <div class="trending-content">
-                                <h4>جشنواره بین المللی فیلم فجر</h4>
-                                <div class="trending-meta">فرهنگی - ۳,۹۸۷ بازدید</div>
+                                <h4>روایات مریوط یه موکب</h4>
+                                <div class="trending-meta">موکب - ۳,۹۸۷ بازدید</div>
                             </div>
                         </li>
                     </ul>
