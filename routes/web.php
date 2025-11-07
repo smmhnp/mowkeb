@@ -12,10 +12,6 @@ Route::get('/check-ip', function () {
     return request()->ip();
 });
 
-Route::get('/test', function(){
-    return view('test');
-});
-
 Route::get('/', [HomeController::class, 'index'])->name('HomeController.index');
 Route::get('/show/{slug}', [CategoryController::class, 'showCategoryArticles'])->name('CategoryController.showCategoryArticles');
 Route::get('/article/{id}', [ArticleController::class, 'showArticle'])->name('ArticleController.showArticle');
