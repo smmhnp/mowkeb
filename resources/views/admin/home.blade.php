@@ -107,8 +107,8 @@
                         </h3>
                         <div class="preview-content">
                             <div style="background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); color: white; padding: 15px; border-radius: 8px; display: flex; align-items: center; gap: 15px;">
-                                <div style="background: rgba(255, 255, 255, 0.2); padding: 5px 12px; border-radius: 6px; font-weight: 700;">خبر فوری</div>
-                                <div style="flex: 1; font-weight: 600;" id="preview-breaking-text">متن تستی برای خبر ویژه</div>
+                                <div style="background: rgba(255, 255, 255, 0.2); padding: 5px 12px; border-radius: 6px; font-weight: 700;">حدیث روز</div>
+                                <div style="flex: 1; font-weight: 600;" id="preview-breaking-text">{{ $special->title }}</div>
                             </div>
                         </div>
                     </div>

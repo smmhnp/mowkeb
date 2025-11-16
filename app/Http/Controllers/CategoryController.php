@@ -2,8 +2,10 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\categoryContent;
 use App\Models\Article;
 use App\Models\Categorie;
+use App\Models\Video;
 use Illuminate\Http\Request;
 use Psy\Command\WhereamiCommand;
 
@@ -17,26 +19,43 @@ class CategoryController extends Controller
 
     //............................................add.category............................................
 
-    public function addCategoryManager(Request $request){
-        $request = $request->validate([
-            'name' => 'required|string|max:20',
-            'slug' => 'required|string|min:10|unique:categories,slug'
-        ],[
-            'name.required' => 'لطفاً عنوان را وارد کنید.',
-            'title.max' => 'عنوان نباید بیشتر از 20 کاراکتر باشد.',
-            'slug.required' => 'لطفاً آدرس را وارد کنید.',
-            'slug.min' => 'آدرس نباید کمکتر از 10 کاراکتر باشد',
-            'slug.unique' => 'ادرس نمیتواند تکراری باشد.'
-        ]);
+    public function addCategoryManager(){
+        $videos = Video::all();
 
-        Categorie::create([
-            'name' => $request['name'],
-            'slug' => $request['slug']
-        ]);
-
-        return redirect()->back();
+        return view('admin.addCategory', compact('videos'));
     }
 
+    public function CategoryStoreManager(categoryContent $request){
+    
+        Categorie::create([
+            'name' => $request['name'],
+            'slug' => $request['slug'],
+            'video_id' => $request['video'],
+            'content' => $request['content']
+        ]);
+
+        return redirect()->route('CategoryController.categoryManager')->with('success', 'دسته بندی با موفقیت اضافه شد');
+    }
+
+    //............................................update.category............................................
+
+    public function updateCategoryManager($slug){
+        $category = Categorie::where('slug', $slug)->with('video')->first();
+        $videos = Video::all();
+
+        return view('admin.updateCategory', compact('category', 'videos'));
+    }
+
+    public function updateCategoryStore(categoryContent $request, Categorie $category){
+        $category->update([
+            'name' => $request['name'],
+            'slug' => $request['slug'],
+            'video_id' => $request['video'],
+            'content' => $request['content']
+        ]);
+
+        return redirect()->route('CategoryController.categoryManager')->with('success', 'دسته بندی با موفقیت ویرایش شد');
+    }
     //............................................delete.category............................................
 
     public function deleteCategoryManager(Request $request){
@@ -52,6 +71,8 @@ class CategoryController extends Controller
                 $query->where('slug', $slug);
             })->latest()->paginate(15);
 
-        return view('client.categoryArticle', compact('articles'));
+        $content = Categorie::where('slug', $slug)->first();
+
+        return view('client.categoryArticle', compact('articles', 'content'));
     }
 }

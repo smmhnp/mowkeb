@@ -43,7 +43,10 @@ Route::group(['prefix' => 'admin', 'middleware' => ['auth', 'RestrictByIP']], fu
         // /....................Categories.Manager....................
         Route::get('/category', [CategoryController::class, 'categoryManager'])->name('CategoryController.categoryManager');
         Route::group(['middleware' => 'CheckAdmin'], function(){
-            Route::post('/add/category', [CategoryController::class, 'addCategoryManager'])->name('CategoryController.addCategoryManager');
+            Route::get('/add/category', [CategoryController::class, 'addCategoryManager'])->name('CategoryController.addCategoryManager');
+            Route::post('/add/category', [CategoryController::class, 'CategoryStoreManager'])->name('CategoryController.CategoryStoreManager');
+            Route::get('/update/category/{slug}', [CategoryController::class, 'updateCategoryManager'])->name('CategoryController.updateCategoryManager');
+            Route::post('/update/category/{category}', [CategoryController::class, 'updateCategoryStore'])->name('CategoryController.updateCategoryStore');
             Route::post('/category/destroy', [CategoryController::class, 'deleteCategoryManager'])->middleware('CheckSuperAdmin')->name('CategoryController.deleteCategoryManager');
         });
 

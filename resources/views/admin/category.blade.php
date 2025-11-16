@@ -12,10 +12,10 @@
             <div class="page-title">
                 <h2>مدیریت دسته‌بندی‌ها</h2>
                 @if(Auth::user()->role != 'editor')
-                    <button class="btn btn-primary" id="addCategoryBtn">
+                    <a href="{{ route('CategoryController.addCategoryManager') }}" class="btn btn-primary" id="addCategoryBtn">
                         <i class="fas fa-plus"></i>
                         افزودن دسته‌بندی جدید
-                    </button>
+                    </a>
                 @endif
             </div>
 
@@ -71,6 +71,7 @@
                                 <td>۲۴۵</td>
                                 <td>
                                     <div class="action-buttons">
+                                        <a href="{{ route('CategoryController.updateCategoryManager', ['slug' => $category->slug]) }}" class="action-btn"><i class="fas fa-edit"></i></a>
                                         @if(Auth::user()->role == 'super_admin')
                                             <form action="{{ route('CategoryController.deleteCategoryManager') }}" method="post">
                                                 @csrf
@@ -88,35 +89,6 @@
                 </table>
             </div>
     </main>
-
-    <!-- مودال افزودن دسته‌بندی -->
-    <div class="modal" id="categoryModal">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h3>افزودن دسته‌بندی جدید</h3>
-                <button class="close-modal" id="closeModal">
-                    <i class="fas fa-times"></i>
-                </button>
-            </div>
-            <form action="{{ route('CategoryController.addCategoryManager') }}" method="post">
-                @csrf
-                <div class="form-group">
-                    <label for="categoryName">نام دسته‌بندی <span style="color: var(--danger);">*</span></label>
-                    <input name="name" type="text" id="categoryName" class="form-control" placeholder="نام دسته‌بندی را وارد کنید" required>
-                </div>
-                <div class="form-group">
-                    <label for="categorySlug">آدرس دسته‌بندی <span style="color: var(--danger);">*</span></label>
-                    <input name="slug" type="text" id="categorySlug" class="form-control" placeholder="آدرس یکتا برای دسته‌بندی" required>
-                    <div style="font-size: 12px; color: #666; margin-top: 5px;">آدرس باید به انگلیسی و بدون فاصله باشد</div>
-                </div>
-                <div class="modal-actions">
-                    <button type="submit" class="btn btn-primary">
-                        ذخیره دسته‌بندی
-                    </button>
-                </div>
-            </form>
-        </div>
-    </div>
 
 @endsection
 
@@ -136,53 +108,6 @@
         overlay.addEventListener('click', function() {
             sidebar.classList.remove('active');
             overlay.classList.remove('active');
-        });
-
-        // مدیریت مودال
-        const addCategoryBtn = document.getElementById('addCategoryBtn');
-        const categoryModal = document.getElementById('categoryModal');
-        const closeModal = document.getElementById('closeModal');
-        const cancelBtn = document.getElementById('cancelBtn');
-        const categoryForm = document.getElementById('categoryForm');
-
-        // باز کردن مودال
-        addCategoryBtn.addEventListener('click', function() {
-            categoryModal.classList.add('active');
-        });
-
-        // بستن مودال
-        function closeCategoryModal() {
-            categoryModal.classList.remove('active');
-            categoryForm.reset();
-        }
-
-        closeModal.addEventListener('click', closeCategoryModal);
-        cancelBtn.addEventListener('click', closeCategoryModal);
-
-        // بستن مودال با کلیک خارج از آن
-        categoryModal.addEventListener('click', function(e) {
-            if (e.target === categoryModal) {
-                closeCategoryModal();
-            }
-        });
-
-        // مدیریت ارسال فرم
-        categoryForm.addEventListener('submit', function(e) {
-            e.preventDefault();
-            
-            const categoryName = document.getElementById('categoryName').value;
-            const categorySlug = document.getElementById('categorySlug').value;
-            
-            // در اینجا می‌توانید کد ارسال فرم به سرور را اضافه کنید
-            console.log('دسته‌بندی جدید:', {
-                name: categoryName,
-                slug: categorySlug
-            });
-            
-            alert(`دسته‌بندی "${categoryName}" با موفقیت اضافه شد!`);
-            closeCategoryModal();
-            
-            // اینجا می‌توانید دسته‌بندی جدید را به جدول اضافه کنید
         });
 
         // اضافه کردن افکت شیشه‌ای پویا

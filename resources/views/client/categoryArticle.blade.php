@@ -1,82 +1,54 @@
 @extends('clientBase.baseFormat')
 
 @section('style')
-
-    <link href="{{ asset('css/categoryArticle.css') }}" rel="stylesheet">
+    
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="{{ asset('css/show.css') }}" rel="stylesheet">
 
 @endsection
 
 @section('content')
-
+    
     <main class="main-container">
-
-        <!-- بخش فیلترها -->
-        <section class="filters-section">
-            <div class="filter-row">
-                <div class="form-group">
-                    <label for="sort">مرتب‌سازی بر اساس</label>
-                    <select id="sort" class="form-control">
-                        <option value="newest">جدیدترین</option>
-                        <option value="popular">پربازدیدترین</option>
-                        <option value="featured">مقالات ویژه</option>
-                    </select>
+        <!-- بخش ویدیو و توضیحات -->
+        <section class="hero-section hero-content">
+            <div class="video-container">
+                <div id="{{ $content->video->aparatID }}">
+                    <script type="text/JavaScript" src="{{ $content->video->link }}"></script>
                 </div>
-                <div class="form-group">
-                    <label for="date">تاریخ انتشار</label>
-                    <select id="date" class="form-control">
-                        <option value="">همه تاریخ‌ها</option>
-                        <option value="today">امروز</option>
-                        <option value="week">هفته جاری</option>
-                        <option value="month">ماه جاری</option>
-                    </select>
-                </div>
-                <div class="form-group">
-                    <label for="author">نویسنده</label>
-                    <select id="author" class="form-control">
-                        <option value="">همه نویسندگان</option>
-                        <option value="1">محمد رضایی</option>
-                        <option value="2">فاطمه کریمی</option>
-                        <option value="3">علی محمدی</option>
-                    </select>
-                </div>
-                <div class="form-group">
-                    <button class="btn btn-outline" style="width: 100%;">
-                        <i class="fas fa-filter"></i>
-                        اعمال فیلتر
-                    </button>
-                </div>
+            </div>
+            <div>
+                {{ $content->content }}
             </div>
         </section>
 
         <!-- شبکه مقالات -->
         <div class="articles-grid">
             @foreach($articles as $article)
-                <a href="{{ route('ArticleController.showArticle', ['id' => $article->id]) }}" class="news-link">
-                    <article class="news-card">
-                        <div class="news-image">
-                            <img src="{{ asset('storage/' . $article->cover) }}" alt="{{ $article->name }}">
-                            <div class="image-news">
-                                @if($article->tag == 'special')
-                                    <span class="special-badge">ویژه</span>
-                                @endif
+                <article class="news-card">
+                    <div class="news-image">
+                        <img src="{{ asset('storage/' . $article->cover) }}" alt="مقاله سیاسی">
+                        <div class="image-news">
+                            @if($article->tag == 'special')
+                                <span class="special-badge">ویژه</span>
+                            @endif
+                        </div>
+                    </div>
+                    <div class="news-content">
+                        <div class="news-meta">
+                            <span class="news-category">{{ $article->category->name }}</span>
+                            <span>{{ jDate($article->created_at)->ago() }}</span>
+                        </div>
+                        <h3 class="news-title">{{ $article->name }}</h3>
+                        <p class="news-excerpt">{{ $article->summery }}</p>
+                        <div class="news-footer">
+                            <div class="news-author">
+                                <div class="author-avatar"></div>
+                                <span>{{ $article->user->fname . " " . $article->user->lname }}</span>
                             </div>
                         </div>
-                        <div class="news-content">
-                            <div class="news-meta">
-                                <span class="news-category">{{ $article->category->name }}</span>
-                                <span>{{ jDate($article->created_at)->ago() }}</span>
-                            </div>
-                            <h3 class="news-title">{{ $article->name }}</h3>
-                            <p class="news-excerpt">{{ $article->summary }}</p>
-                            <div class="news-footer">
-                                <div class="news-author">
-                                    <div class="author-avatar"></div>
-                                    <span>{{ $article->user->fname . ' ' . $article->user->lname }}</span>
-                                </div>
-                            </div>
-                        </div>
-                    </article>
-                </a>
+                    </div>
+                </article>
             @endforeach
         </div>
 
@@ -129,6 +101,16 @@
             if (window.innerWidth > 992) {
                 closeMobileMenu();
             }
+        });
+
+        // مدیریت دکمه‌های بخش ویدیو
+        document.querySelector('.btn-primary').addEventListener('click', function() {
+            const video = document.querySelector('video');
+            video.play();
+        });
+
+        document.querySelector('.btn-outline').addEventListener('click', function() {
+            alert('اطلاعات بیشتر درباره راهپیمایی اربعین');
         });
     </script>
 

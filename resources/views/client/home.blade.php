@@ -22,7 +22,7 @@
 
         <!-- خبر فوری -->
         <div class="breaking-news">
-            <div class="breaking-badge">خبر فوری</div>
+            <div class="breaking-badge">حدیث روز</div>
             <div class="breaking-text">{{ $special->title }}</div>
         </div>
         

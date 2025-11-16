@@ -289,20 +289,26 @@
             </div>
 
             <div class="article-form">
-                <form id="new-article-form" action="{{ route('ArticleController.addArticleStore') }}" method="post">
+                <form id="new-article-form" action="{{ route('CategoryController.updateCategoryStore', ['category' => $category->id]) }}" method="post">
                     @csrf
 
                     <div class="form-row">
                         <div class="form-group">
-                            <label for="title">عنوان مطلب <span class="required">*</span></label>
-                            <input name="title" type="text" id="title" class="form-control" placeholder="عنوان جذاب و کوتاه وارد کنید" required>
+                            <label for="name">عنوان دسته بندی <span class="required">*</span></label>
+                            <input name="name" type="text" id="name" class="form-control" placeholder="عنوان را وارد کنید" value="{{ $category->name }}" required>
                         </div>
                         <div class="form-group">
-                            <label for="category">دسته‌بندی <span class="required">*</span></label>
-                            <select name="category" id="category" class="form-control" required>
-                                <option value="">انتخاب دسته‌بندی</option>
-                                @foreach($categories as $category)
-                                    <option value="{{ $category->id }}">{{ $category->name }}</option>
+                            <label for="slug">آدرس دسته بندی (slug) <span class="required">*</span></label>
+                            <input name="slug" type="text" id="slug" class="form-control" placeholder="آدرس دسته بندی را وارد کنید" value="{{ $category->slug }}" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="video">ویدیو</label>
+                            <select name="video" id="video" class="form-control select2">
+                                <option value="{{ $category->video->id }}">{{ $category->video->name }}</option>
+                                @foreach($videos as $video)
+                                    @if($video->id != $category->video->id)
+                                        <option value="{{ $video->id }}">{{ $video->name }}</option>
+                                    @endif
                                 @endforeach
                             </select>
                         </div>
@@ -311,66 +317,9 @@
                     <div class="form-group">
                         <label for="content" class="col-sm-2 control-label">محتوا <span class="required">*</span></label>
                         <div class="col-sm-12">
-                            <textarea name="content" class="form-control" rows="10" id="content" placeholder="متن کامل خبر را اینجا بنویسید..."></textarea>
+                            <textarea name="content" class="form-control" rows="10" id="content" placeholder="متن کامل دسته بندی را اینجا بنویسید...">{{ $category->content }}</textarea>
                         </div>
-                    </div>
-
-                    <div class="form-group">
-                        <label for="summary">خلاصه مطلب</label>
-                        <textarea name="summary" id="summary" class="form-control" 
-                                maxlength="200"
-                                placeholder="خلاصه کوتاهی از مطلب بنویسید (حداکثر 200 کاراکتر)"></textarea>
-                        <div class="char-count">0/200</div>
-                    </div>
- 
-                    <div class="form-row">
-                        <div class="form-group">
-                            <label for="tags">کلمات کلیدی</label>
-                            <select name="tag" id="tags" class="form-control select2">
-                                <option value="special">ویژه</option>
-                                <option value="normal">معمولی</option>
-                            </select>                        
-                        </div>
-                        <div class="form-group">
-                            <label for="status">وضعیت</label>
-                            <select name="status" id="status" class="form-control select2">
-                                <option value="allow">مجاز</option>
-                                <option value="unauthorized">غیر مجاز</option>
-                            </select>
-                        </div>
-                    </div>
-
-                    <div class="form-row">
-                        <div class="form-group">
-                            <label for="video">ویدیو</label>
-                            <select name="video" id="video" class="form-control select2">
-                                <option value="">انتخاب ویدیو</option>
-                                @foreach($videos as $video)
-                                    <option value="{{ $video->id }}">{{ $video->name }}</option>
-                                @endforeach
-                            </select>
-                        </div>
-
-                        <div class="form-group">
-                            <label for="cover">تصویر اصلی</label>
-                            <select name="cover" id="cover" class="form-control select2">
-                                <option value="">انتخاب تصویر</option>
-                                @foreach($images as $image)
-                                    <option value="{{ $image->url }}" data-image="{{ asset('storage/' . $image->url) }}">{{ $image->name }}</option>
-                                @endforeach
-                            </select>
-                        </div>
-                    </div>
-
-                    <div class="form-group">
-                        <label for="images">انتخاب تصاویر</label>
-                        <select name="images[]" id="images" class="form-control select2" multiple>
-                            @foreach($images as $image)
-                                <option value="{{ $image->id }}" data-image="{{ asset('storage/' . $image->url) }}">{{ $image->name }}</option>
-                            @endforeach
-                        </select>
-                    </div>
-                    
+                    </div>                    
 
                     <div class="form-actions">
                         <button type="submit" class="btn btn-primary">

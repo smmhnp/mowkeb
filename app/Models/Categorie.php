@@ -15,11 +15,17 @@ class Categorie extends Model
 
     protected $fillable = [
         'name',
-        'slug'
+        'slug',
+        'video_id',
+        'content'
     ];
 
     public function articles() {
         return $this->hasMany(Article::class);
+    }
+
+    public function video() {
+        return $this->belongsTo(Video::class);
     }
 
     protected $casts = [
