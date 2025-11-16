@@ -18,7 +18,7 @@
                 </div>
             </div>
             <div>
-                {{ $content->content }}
+                {!! $content->content !!}
             </div>
         </section>
 
