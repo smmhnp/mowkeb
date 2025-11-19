@@ -21,11 +21,20 @@ class DatabaseSeeder extends Seeder
         // ----------------------------
         $usersData = [
             [
+                'fname' => 'مدیر',
+                'lname' => 'ارشد',
+                'username' => 'admin',
+                'email' => 'admin@gmail.com',
+                'password' => 'zxcv1234',
+                'role' => 'super_admin',
+                'status' => 'active'
+            ],
+            [
                 'fname' => 'Ali',
                 'lname' => 'alavi',
                 'username' => 'aliii',
                 'email' => 'ali@gmail.com',
-                'password' => '1234',
+                'password' => 'zxcv1234',
                 'role' => 'admin',
                 'status' => 'active'
             ],
@@ -34,7 +43,7 @@ class DatabaseSeeder extends Seeder
                 'lname' => 'hasani',
                 'username' => 'hasan',
                 'email' => 'hasan@gmail.com',
-                'password' => '1234',
+                'password' => 'zxcv1234',
                 'role' => 'admin',
                 'status' => 'active'
             ],
@@ -43,7 +52,7 @@ class DatabaseSeeder extends Seeder
                 'lname' => 'ahmadi',
                 'username' => 'ahmad',
                 'email' => 'ahmad@gmail.com',
-                'password' => '1234',
+                'password' => 'zxcv1234',
                 'role' => 'writter',
                 'status' => 'active'
             ],
@@ -52,7 +61,7 @@ class DatabaseSeeder extends Seeder
                 'lname' => 'mohammadi',
                 'username' => 'mohammad',
                 'email' => 'mohammad@gmail.com',
-                'password' => '1234',
+                'password' => 'zxcv1234',
                 'role' => 'user',
                 'status' => 'active'
             ]
@@ -65,22 +74,6 @@ class DatabaseSeeder extends Seeder
         $users = User::all();
 
         // ----------------------------
-        // Categories
-        // ----------------------------
-        $categoriesData = [
-            ['name' => 'موکب‌مغازه‌ای', 'slug' => '#'],
-            ['name' => 'موکب‌ماشینی', 'slug' => '##'],
-            ['name' => 'موکب‌قرآنی', 'slug' => '###'],
-            ['name' => 'کارناوال', 'slug' => '####'],
-        ];
-
-        foreach ($categoriesData as $cat) {
-            Categorie::create($cat);
-        }
-
-        $categories = Categorie::all();
-
-        // ----------------------------
         // Videos
         // ----------------------------
         $videosData = [
@@ -89,10 +82,46 @@ class DatabaseSeeder extends Seeder
             ['name' => '‌ویدیو تست2', 'aparatID' => 'vid', 'link' => 'https://www.aparat.com/video'],
             ['name' => '‌ویدیو تست3', 'aparatID' => 'vid', 'link' => 'https://www.aparat.com/video'],
         ];
-
+        
         foreach ($videosData as $video) {
             Video::create($video);
         }
+
+        // ----------------------------
+        // Categories
+        // ----------------------------
+        $categoriesData = [
+            [
+                'name'      => 'موکب‌مغازه‌ای',
+                'slug'      => 'موکب‌مغازه‌ای',
+                'video_id'  => 1,
+                'content'   => 'متن تستی برای نمایش دسته بندی موکب مغازه‌ای',
+            ],
+            [
+                'name'      => 'موکب‌ماشینی',
+                'slug'      => 'موکب‌ماشینی',
+                'video_id'  => 1,
+                'content'   => 'متن تستی برای نمایش دسته بندی موکب ماشینی',
+            ],
+            [
+                'name'      => 'موکب‌قرآنی',
+                'slug'      => 'موکب‌قرآنی',
+                'video_id'  => 1,
+                'content'   => 'متن تستی برای نمایش دسته بندی موکب قرآنی',
+            ],
+            [
+                'name'      => 'کارناوال',
+                'slug'      => 'کارناوال',
+                'video_id'  => 1,
+                'content'   => 'متن تستی برای نمایش دسته بندی کارناوال',
+            ],
+        ];
+
+        foreach ($categoriesData as $cat) {
+            Categorie::create($cat);
+        }
+
+        $categories = Categorie::all();
 
         // ----------------------------
         // Images

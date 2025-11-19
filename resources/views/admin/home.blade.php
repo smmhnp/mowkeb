@@ -45,14 +45,14 @@
                     <div class="form-grid">
                         <div class="form-group">
                             <label for="hero-title">عنوان اصلی</label>
-                            <input name="title" type="text" id="hero-title" class="form-control" placeholder="عنوان بخش هیرو را وارد کنید" value="{{ $hero->title }}">
+                            <input name="title" type="text" id="hero-title" class="form-control" placeholder="عنوان بخش هیرو را وارد کنید" value="{{ $hero->title ?? '' }}">
                         </div>
                         <div class="form-group">
                             <label for="hero-image">تصویر هیرو</label>
                             <select name="photo" id="hero-image" class="form-control select2-image">
                                 <option value=""></option>
                                 @foreach($images as $image)
-                                    <option value="{{ $image->url }}" data-image="{{ asset('storage/' . $image->url) }}" {{ $hero->photo == $image->url ? 'selected' : '' }}>{{ $image->name }}</option>
+                                    <option value="{{ $image->url }}" data-image="{{ asset('storage/' . $image->url) }}" {{ $hero->photo ?? '' == $image->url ? 'selected' : '' }}>{{ $image->name }}</option>
                                 @endforeach
                             </select>
                         </div>
@@ -60,7 +60,7 @@
 
                     <div class="form-group">
                         <label for="hero-subtitle">زیرعنوان</label>
-                        <textarea name="subTitle" type="text" id="hero-subtitle" class="form-control" placeholder="زیرعنوان بخش هیرو را وارد کنید">{{ $hero->sub_title }}</textarea>
+                        <textarea name="subTitle" type="text" id="hero-subtitle" class="form-control" placeholder="زیرعنوان بخش هیرو را وارد کنید">{{ $hero->sub_title ?? '' }}</textarea>
                     </div>
 
                     <div class="form-actions">
@@ -84,12 +84,12 @@
                     <div class="form-grid">
                         <div class="form-group">
                             <label for="breaking-text">متن خبر فوری</label>
-                            <input name="title" type="text" id="breaking-text" class="form-control" placeholder="متن خبر فوری را وارد کنید" value="{{ $special->title }}">
+                            <input name="title" type="text" id="breaking-text" class="form-control" placeholder="متن خبر فوری را وارد کنید" value="{{ $special->title ?? '' }}">
                         </div>
                         <div class="form-group">
                             <label for="breaking-status">وضعیت نمایش</label>
                             <select name="status" id="breaking-status" class="form-control">
-                                @if($special->status == 'active')
+                                @if($special->status ?? '' == 'active')
                                     <option value="active">فعال</option>
                                     <option value="inactive">غیرفعال</option>
                                 @else
@@ -108,7 +108,7 @@
                         <div class="preview-content">
                             <div style="background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); color: white; padding: 15px; border-radius: 8px; display: flex; align-items: center; gap: 15px;">
                                 <div style="background: rgba(255, 255, 255, 0.2); padding: 5px 12px; border-radius: 6px; font-weight: 700;">حدیث روز</div>
-                                <div style="flex: 1; font-weight: 600;" id="preview-breaking-text">{{ $special->title }}</div>
+                                <div style="flex: 1; font-weight: 600;" id="preview-breaking-text">{{ $special->title ?? '' }}</div>
                             </div>
                         </div>
                     </div>
@@ -146,7 +146,7 @@
                             <select name="first_poster" id="first-poster" class="form-control select2-image">
                                 <option value=""></option>
                                 @foreach($images as $image)
-                                    <option value="{{ $image->url }}" data-image="{{ asset('storage/' . $image->url) }}" {{ $media->first == $image->url ? 'selected' : '' }}>{{ $image->name }}</option>
+                                    <option value="{{ $image->url }}" data-image="{{ asset('storage/' . $image->url) }}" {{ $media->first ?? '' == $image->url ? 'selected' : '' }}>{{ $image->name }}</option>
                                 @endforeach
                             </select>
                         </div>
@@ -158,7 +158,7 @@
                             <select name="second_poster" id="second-poster" class="form-control select2-image">
                                 <option value=""></option>
                                 @foreach($images as $image)
-                                    <option value="{{ $image->url }}" data-image="{{ asset('storage/' . $image->url) }}" {{ $media->second == $image->url ? 'selected' : '' }}>{{ $image->name }}</option>
+                                    <option value="{{ $image->url }}" data-image="{{ asset('storage/' . $image->url) }}" {{ $media->second ?? '' == $image->url ? 'selected' : '' }}>{{ $image->name }}</option>
                                 @endforeach
                             </select>
                         </div>
@@ -167,7 +167,7 @@
                             <select name="third_poster" id="third-poster" class="form-control select2-image">
                                 <option value=""></option>
                                 @foreach($images as $image)
-                                    <option value="{{ $image->url }}" data-image="{{ asset('storage/' . $image->url) }}" {{ $media->third == $image->url ? 'selected' : '' }}>{{ $image->name }}</option>
+                                    <option value="{{ $image->url }}" data-image="{{ asset('storage/' . $image->url) }}" {{ $media->third ?? '' == $image->url ? 'selected' : '' }}>{{ $image->name }}</option>
                                 @endforeach
                             </select>
                         </div>
@@ -193,13 +193,13 @@
 
                     <div class="form-group">
                         <label for="description-title">عنوان بخش توضیحات</label>
-                        <input name="title" type="text" id="description-title" class="form-control" placeholder="عنوان بخش توضیحات را وارد کنید" value="{{ $content->title }}">
+                        <input name="title" type="text" id="description-title" class="form-control" placeholder="عنوان بخش توضیحات را وارد کنید" value="{{ $content->title ?? '' }}">
                     </div>
 
                     <div class="form-group">
                         <label for="content" class="col-sm-2 control-label">محتوا <span class="required">*</span></label>
                         <div class="col-sm-12">
-                            <textarea name="content" class="form-control" rows="10" id="content" placeholder="متن کامل خبر را اینجا بنویسید...">{{ $content->content }}</textarea>
+                            <textarea name="content" class="form-control" rows="10" id="content" placeholder="متن کامل خبر را اینجا بنویسید...">{{ $content->content ?? '' }}</textarea>
                         </div>
                     </div>
 

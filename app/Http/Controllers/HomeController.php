@@ -59,7 +59,10 @@ class HomeController extends Controller
     //............................................set.data.for.hero.section............................................
 
     public function homeHeroStore(HomeHeroRequest $request){
-        Hero::first()->update([
+        if(Hero::first())
+            Hero::firstOrFail()->delete();
+
+        Hero::create([
             'title' => $request->title,
             'sub_title' => $request->subTitle,
             'photo' => $request->photo
@@ -71,7 +74,10 @@ class HomeController extends Controller
     //............................................set.data.for.special.section............................................
 
     public function homeSpecialStore(HomeSpecialRequest $request){
-        Specail::first()->update([
+        if(Specail::first())
+            Specail::firstOrFail()->delete();
+
+        Specail::create([
             'title' => $request->title,
             'status' => $request->status
         ]);
@@ -82,7 +88,10 @@ class HomeController extends Controller
     //............................................set.data.for.media.section............................................
 
     public function homeMediaStore(MediaRequest $request){
-        Media::first()->update([
+        if(Media::first())
+            Media::firstOrFail()->delete();
+
+        Media::create([
             'video_id' => $request->video,
             'first' => $request->first_poster,
             'second' => $request->second_poster,
@@ -95,7 +104,10 @@ class HomeController extends Controller
     //............................................set.data.for.content.section............................................
 
     public function homeContentStore(ContentRequest $request){
-        Content::first()->update([
+        if(Content::first())
+            Content::firstOrFail()->delete();
+        
+        Content::create([
             'title' => $request->title,
             'content' => $request->content
         ]);

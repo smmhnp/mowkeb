@@ -14,17 +14,19 @@
         <!-- بخش هیرو -->
         <section class="hero-section">
             <div class="hero-content">
-                <h2>{{ $hero->title }}</h2>
-                <p>{{ $hero->sub_title }}</p>
+                <h2>{{ $hero->title ?? '' }}</h2>
+                <p>{{ $hero->sub_title ?? ''}}</p>
             </div>
             <div class="hero-image" style="background-image: url('{{ asset('storage/' . $hero->photo) }}'); background-size: cover;"></div>
         </section>
 
-        <!-- خبر فوری -->
-        <div class="breaking-news">
-            <div class="breaking-badge">حدیث روز</div>
-            <div class="breaking-text">{{ $special->title }}</div>
-        </div>
+        @if($special->status ?? ''== 'active')
+            <!-- خبر فوری -->
+            <div class="breaking-news">
+                <div class="breaking-badge">حدیث روز</div>
+                <div class="breaking-text">{{ $special->title ?? ''}}</div>
+            </div>
+        @endif
         
         <div class="layout-container">
             <!-- محتوای اصلی -->

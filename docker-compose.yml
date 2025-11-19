@@ -31,7 +31,9 @@ services:
       - 8000:8000
     volumes:
       - ./:/var/www
-      - ./docker/nginx/:/etc/nginx/conf.d  
+      - ./docker/nginx/default.conf:/etc/nginx/conf.d/default.conf
+      - ./docker/nginx/ip-allow.conf:/etc/nginx/ip-allow.conf
+      - ./resources/views/errors/error403.html:/etc/nginx/errors/error403.html
     networks:
       - laravel-network
     
