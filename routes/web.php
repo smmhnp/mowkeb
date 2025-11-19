@@ -17,7 +17,7 @@ Route::get('/show/{slug}', [CategoryController::class, 'showCategoryArticles'])-
 Route::get('/article/{id}', [ArticleController::class, 'showArticle'])->name('ArticleController.showArticle');
 
 //.....................admin.panel....................
-Route::group(['prefix' => 'admin'], function(){
+Route::group(['prefix' => 'system-access/admin-control-panel'], function(){
     //.....................Login....................
     Route::get('/login', [UserController::class, 'loginPage'])->name('UserController.loginPage');
     Route::post('/login', [UserController::class, 'login'])->name('login');
