@@ -26,6 +26,7 @@ class categoryContent extends FormRequest
             'slug' => 'required|string|min:3|max:255',
             'content' => 'required|string|min:10',
             'video' => 'required|exists:videos,id',
+            'icon' => 'required|string|regex:/^fa[a-z-]+ fa-[a-z-]+$/'
         ];
     }
 
@@ -47,7 +48,11 @@ class categoryContent extends FormRequest
             'content.min' => 'متن مطلب باید حداقل ۱۰ کاراکتر داشته باشد.',
 
             'video.required' => 'ویدیو الزامی است.',
-            'video.exists' => 'ویدیوی انتخاب شده معتبر نیست.'
+            'video.exists' => 'ویدیوی انتخاب شده معتبر نیست.',
+
+            'icon.regex' => 'فرمت آیکون باید به صورت: faxxx fa-xxx باشد (مثل: fa-solid fa-house)',
+            'icon.required' => 'وارد کردن آیکون الزامی است.',
+            'icon.string' => 'آیکون باید به صورت متن باشد.'
         ];
     }
 }

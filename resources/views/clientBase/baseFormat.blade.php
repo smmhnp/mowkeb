@@ -8,6 +8,7 @@
     @yield('style')
 </head>
 <body>
+    
     @include('clientBase.nav')
 
     @yield('content')

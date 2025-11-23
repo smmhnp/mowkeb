@@ -141,7 +141,7 @@
                 @foreach($categories as $category)
                     <div class="category-card">
                         <div class="category-icon">
-                            <i class="fas fa-landmark"></i>
+                            <i class="{{ $category->icon }}"></i>
                         </div>
                         <h3>{{ $category->name }}</h3>
                     </div>

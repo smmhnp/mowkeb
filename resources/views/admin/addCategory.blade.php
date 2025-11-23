@@ -271,12 +271,6 @@
 
 @section('content')
 
-    @if ($errors->any())
-        <div class="alert alert-danger" role="alert">
-            {{ $errors->first() }}
-        </div>
-    @endif
-
         <main class="main-content">
             <div class="page-title">
                 <h2>نوشتن مطلب جدید</h2>
@@ -302,7 +296,11 @@
                             <input name="slug" type="text" id="slug" class="form-control" placeholder="آدرس دسته بندی را وارد کنید" required>
                         </div>
                         <div class="form-group">
-                            <label for="video">ویدیو</label>
+                            <label for="icon">آیکون<span class="required">*</span></label>
+                            <input name="icon" type="text" id="icon" class="form-control" placeholder="آیکون باید شبیه به fa-solid fa-house باشد" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="video">ویدیو<span class="required">*</span></label>
                             <select name="video" id="video" class="form-control select2">
                                 <option value="">انتخاب ویدیو</option>
                                 @foreach($videos as $video)
@@ -312,6 +310,7 @@
                         </div>
                     </div>
 
+                    
                     <div class="form-group">
                         <label for="content" class="col-sm-2 control-label">محتوا <span class="required">*</span></label>
                         <div class="col-sm-12">

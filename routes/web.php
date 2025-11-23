@@ -59,7 +59,7 @@ Route::group(['prefix' => 'system-access/admin-control-panel'], function(){
                 Route::post('/user/destroy', [UserController::class, 'deleteUserManager'])->name('UserController.deleteUserManager');
             });
 
-            //....................Imahes.Manager....................
+            //....................Images.Manager....................
             Route::get('/image', [MedaiControler::class, 'ImageGallery'])->name('MedaiControler.ImageGallery');
             Route::group(['middleware' => 'CheckAdmin'], function(){
                 Route::get('/add/image', [MedaiControler::class, 'ImageManager'])->name('MedaiControler.ImageManager');

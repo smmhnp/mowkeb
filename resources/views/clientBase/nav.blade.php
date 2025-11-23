@@ -10,7 +10,11 @@
                 <ul class="nav-menu">
                     <li><a href="/" class="{{ request()->routeIs('HomeController.index') ? 'active' : '' }}">خانه</a></li>
                     @foreach($category as $title)
-                        <li><a href="/show/{{ $title->slug }}" class="{{ request()->routeIs('$title->slug') ? 'active' : '' }}">{{ $title->name }}</a></li>
+                        <li>
+                            <a href="/show/{{ $title->slug }}" class="{{ request()->is('show/'.$title->slug) ? 'active' : '' }}">
+                                {{ $title->name }}
+                            </a>
+                        </li>
                     @endforeach
                 </ul>
             </nav>
@@ -23,13 +27,19 @@
     <!-- mobile menu -->
     <div class="mobile-overlay" id="mobileOverlay"></div>
     <div class="mobile-menu" id="mobileMenu">
-        <button class="close-menu" id="closeMenu">
-            <i class="fas fa-times"></i>
-        </button>
+        <div class="logo-nav">
+            <i class="fas fa-newspaper"></i>
+            <h1>پنل مدیریت</h1>
+        </div>
         <ul class="mobile-nav">
             <li><a href="/" class="{{ request()->routeIs('HomeController.index') ? 'active' : '' }}">خانه</a></li>
             @foreach($category as $title)
-                <li><a href="/show/{{ $title->slug }}" class="{{ request()->routeIs('$title->slug') ? 'active' : '' }}">{{ $title->name }}</a></li>
+                <li>
+                    <a href="/show/{{ $title->slug }}" class="{{ request()->is('show/'.$title->slug) ? 'active' : '' }}">
+                        <i class="{{ $title->icon }}"></i>
+                        {{ $title->name }}
+                    </a>
+                </li>
             @endforeach
         </ul>
     </div>

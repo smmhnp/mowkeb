@@ -440,10 +440,6 @@ tr:last-child {
     font-weight: 600;
 }
 
-.active {
-    color: var(--success);
-}
-
 .inactive {
     background: rgba(248, 150, 30, 0.2);
     color: var(--warning);

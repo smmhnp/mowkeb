@@ -302,6 +302,10 @@
                             <input name="slug" type="text" id="slug" class="form-control" placeholder="آدرس دسته بندی را وارد کنید" value="{{ $category->slug }}" required>
                         </div>
                         <div class="form-group">
+                            <label for="icon">آیکون<span class="required">*</span></label>
+                            <input name="icon" type="text" id="icon" class="form-control" placeholder="آیکون باید شبیه به fa-solid fa-house باشد" value="{{ $category->icon }}" required>
+                        </div>
+                        <div class="form-group">
                             <label for="video">ویدیو</label>
                             <select name="video" id="video" class="form-control select2">
                                 <option value="{{ $category->video->id }}">{{ $category->video->name }}</option>

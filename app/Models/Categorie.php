@@ -17,7 +17,8 @@ class Categorie extends Model
         'name',
         'slug',
         'video_id',
-        'content'
+        'content', 
+        'icon'
     ];
 
     public function articles() {

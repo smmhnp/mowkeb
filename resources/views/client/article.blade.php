@@ -118,44 +118,7 @@
                             </div>
                         </li>
                     </ul>
-                </div>
-
-                <!-- پربازدیدترین‌ها -->
-                <div class="sidebar-widget">
-                    <h3 class="widget-title">
-                        <i class="fas fa-chart-line"></i>
-                        پربازدیدترین‌ها
-                    </h3>
-                    <ul class="news-list">
-                        <li class="news-item">
-                            <div class="news-image">
-                                <i class="fas fa-newspaper"></i>
-                            </div>
-                            <div class="news-content">
-                                <h4>تغییرات کابینه در هفته آینده</h4>
-                                <div class="news-meta">سیاسی - ۵,۲۴۱ بازدید</div>
-                            </div>
-                        </li>
-                        <li class="news-item">
-                            <div class="news-image">
-                                <i class="fas fa-newspaper"></i>
-                            </div>
-                            <div class="news-content">
-                                <h4>افتتاح خط تولید جدید خودروسازی</h4>
-                                <div class="news-meta">اقتصادی - ۴,۸۷۶ بازدید</div>
-                            </div>
-                        </li>
-                        <li class="news-item">
-                            <div class="news-image">
-                                <i class="fas fa-newspaper"></i>
-                            </div>
-                            <div class="news-content">
-                                <h4>نتایج قرعه کشی لیگ قهرمانان آسیا</h4>
-                                <div class="news-meta">ورزشی - ۴,۱۲۳ بازدید</div>
-                            </div>
-                        </li>
-                    </ul>
-                </div>
+                </div>            
 
             </aside>
         </div>

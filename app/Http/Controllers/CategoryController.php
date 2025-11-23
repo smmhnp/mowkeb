@@ -31,7 +31,8 @@ class CategoryController extends Controller
             'name' => $request['name'],
             'slug' => $request['slug'],
             'video_id' => $request['video'],
-            'content' => $request['content']
+            'content' => $request['content'],
+            'icon' => $request['icon']
         ]);
 
         return redirect()->route('CategoryController.categoryManager')->with('success', 'دسته بندی با موفقیت اضافه شد');
@@ -51,7 +52,8 @@ class CategoryController extends Controller
             'name' => $request['name'],
             'slug' => $request['slug'],
             'video_id' => $request['video'],
-            'content' => $request['content']
+            'content' => $request['content'],
+            'icon' => $request['icon']
         ]);
 
         return redirect()->route('CategoryController.categoryManager')->with('success', 'دسته بندی با موفقیت ویرایش شد');
